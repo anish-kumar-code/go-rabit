@@ -2,7 +2,7 @@ import { Button, Space, Table, Tag } from 'antd';
 import { FaTrash } from 'react-icons/fa';
 import { IoMdEye } from 'react-icons/io';
 import { useNavigate } from 'react-router';
-import dataSource from '../data.json'; // your actual data.json
+import dataSource from '../data.json'; 
 
 const OrderTable = ({ searchText, onDelete }) => {
     const navigate = useNavigate();

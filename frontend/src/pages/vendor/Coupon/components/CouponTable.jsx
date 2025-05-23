@@ -1,29 +1,19 @@
 import { Avatar, Button, Space, Spin, Switch, Table } from 'antd'
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
-import {  updateStatus } from '../../../../services/vendor/apiCoupon';
+import { updateStatus } from '../../../../services/vendor/apiCoupon';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const CategoryTable = ({ searchText, data, onEdit, onDelete, loading }) => {
 
     const columns = [
-        // {
-        //     title: 'Image',
-        //     key: 'avatar',
-        //     align: "center",
-        //     render: (_, { image }) => (
-        //         <Avatar size={60} style={{ backgroundColor: '#fff', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)' }}>
-        //             {image ? <img src={`${BASE_URL}/${image}`} /> : "?"}
-        //         </Avatar>
-        //     )
-        // },
         {
             title: 'Code',
             dataIndex: 'code',
             key: 'code',
             align: "center"
         },
-         {
+        {
             title: 'Discount value',
             dataIndex: 'discountValue',
             key: 'discountValue',
@@ -35,7 +25,7 @@ const CategoryTable = ({ searchText, data, onEdit, onDelete, loading }) => {
             key: 'minOrderAmount',
             align: "center"
         },
-         {
+        {
             title: 'Use Limit',
             dataIndex: 'usageLimit',
             key: 'usageLimit',

@@ -5,7 +5,7 @@ exports.updateCoupon = catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const updateData = req.body;
 
-    // Optional: validate fields here before update
+    console.log(req.body)
 
     const updatedCoupon = await Coupon.findByIdAndUpdate(id, updateData, {
         new: true,

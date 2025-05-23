@@ -27,6 +27,8 @@ const { getAllToppins } = require("../controllers/user/toppinsController/getTopp
 const updateLatLong = require("../controllers/user/authController/updateLatLong");
 const { getExplore } = require("../controllers/user/exploreController/getExploreController");
 const { getHomeDataGrocery } = require("../controllers/user/homeController/getHomeDataGrocery");
+const { getsubCategoryList } = require("../controllers/user/homeController/getsubCategoryList");
+const { getsubCategoryProductList } = require("../controllers/user/homeController/getsubCategoryProductList");
 const router = express.Router()
 
 // router.get("/test", (req,res)=>{
@@ -56,6 +58,8 @@ router.get('/product/category/:categoryId/list', userAuthenticate, getProductOfC
 router.get('/product/:categoryId/shop', userAuthenticate, getShopOfCategory);
 router.get('/product/shop/:shopId/list', userAuthenticate, getProductOfShop);
 router.get('/product/productdetail/:productId', userAuthenticate, getProductDetail);
+router.get("/subCategoryList/:categoryId", userAuthenticate, getsubCategoryList);
+router.get("/getsubCategoryProductList/:subCategoryId", userAuthenticate, getsubCategoryProductList);
 
 
 //------------------------------------------------

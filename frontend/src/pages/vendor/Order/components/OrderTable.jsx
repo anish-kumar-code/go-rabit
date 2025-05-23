@@ -21,6 +21,7 @@ const OrderTable = ({ searchText, data, loading }) => {
     };
 
     const handleStatusChange = async (newStatus, orderId) => {
+        console.log(newStatus, orderId)
         try {
             alert("working")
         } catch (error) {

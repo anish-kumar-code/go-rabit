@@ -69,8 +69,8 @@ function App() {
           {/* <Route path='grocery-product' element={<GroceryProduct />} /> */}
           <Route path='category' element={<Category />} />
           <Route path='sub-category' element={<SubCategory />} />
-           <Route path='coupon' element={<Coupon/>} />
-              <Route path='driver' element={<Driver/>} />
+          <Route path='coupon' element={<Coupon />} />
+          <Route path='driver' element={<Driver />} />
           <Route path='vendor' element={<Vendor />} />
           <Route path='vendor/:id' element={<VendorDetails />} />
           <Route path='vendor/shops/:id' element={<VendorProducts />} />
@@ -105,7 +105,7 @@ function App() {
           <Route path='wallet/history' element={<WalletHistory />} />
           <Route path='profile' element={<VendorProfile />} />
           <Route path='settings' element={<VendorSettings />} />
-           <Route path='coupon' element={<CouponVendor/>} />
+          <Route path='coupon' element={<CouponVendor />} />
         </Route>
         <Route path='*' element={<LandingPage />} />
       </Routes>

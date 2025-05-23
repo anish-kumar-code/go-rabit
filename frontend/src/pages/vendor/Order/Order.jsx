@@ -9,7 +9,7 @@ function Order() {
     const [loading, setLoading] = useState(false);
 
 
-    useEffect(()=> {fetchOrderList()},[]);
+    useEffect(() => { fetchOrderList() }, []);
 
     const fetchOrderList = async () => {
         setLoading(true)
@@ -18,7 +18,7 @@ function Order() {
             setOrders(res.orders)
         } catch (error) {
             message.error("something went wrong")
-        }finally{
+        } finally {
             setLoading(false)
         }
     }
@@ -36,7 +36,7 @@ function Order() {
                     size="large"
                 />
             </div>
-            <OrderTable searchText={searchText} loading={loading} data={orders}/>
+            <OrderTable searchText={searchText} loading={loading} data={orders} />
         </>
     )
 }
