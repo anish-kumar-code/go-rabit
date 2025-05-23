@@ -1,0 +1,102 @@
+[
+    {
+        "_id": "1",
+        "name": "Chicken Biryani",
+        "image": ["https://via.placeholder.com/150/FF0000/FFFFFF?Text=ChickenBiryani"],
+        "category": "Main Course",
+        "price": 250,
+        "stock": 50,
+        "status": "active",
+        "description": "Aromatic basmati rice cooked with tender chicken pieces and special spices"
+    },
+    {
+        "_id": "2",
+        "name": "Veg Fried Rice",
+        "image": ["https://via.placeholder.com/150/00FF00/FFFFFF?Text=VegFriedRice"],
+        "category": "Main Course",
+        "price": 180,
+        "stock": 30,
+        "status": "active",
+        "description": "Stir-fried rice with fresh vegetables and soy sauce"
+    },
+    {
+        "_id": "3",
+        "name": "Butter Chicken",
+        "image": ["https://via.placeholder.com/150/0000FF/FFFFFF?Text=ButterChicken"],
+        "category": "Main Course",
+        "price": 280,
+        "stock": 25,
+        "status": "active",
+        "description": "Tender chicken pieces in rich and creamy tomato gravy"
+    },
+    {
+        "_id": "4",
+        "name": "Paneer Tikka",
+        "image": ["https://via.placeholder.com/150/FFFF00/FFFFFF?Text=PaneerTikka"],
+        "category": "Appetizer",
+        "price": 200,
+        "stock": 0,
+        "status": "inactive",
+        "description": "Marinated cottage cheese cubes grilled to perfection"
+    },
+    {
+        "_id": "5",
+        "name": "Gulab Jamun",
+        "image": ["https://via.placeholder.com/150/FF00FF/FFFFFF?Text=GulabJamun"],
+        "category": "Dessert",
+        "price": 80,
+        "stock": 40,
+        "status": "active",
+        "description": "Sweet milk dumplings soaked in sugar syrup"
+    },
+    {
+        "_id": "6",
+        "name": "Masala Dosa",
+        "image": ["https://via.placeholder.com/150/00FFFF/FFFFFF?Text=MasalaDosa"],
+        "category": "Breakfast",
+        "price": 120,
+        "stock": 35,
+        "status": "active",
+        "description": "Crispy rice crepe filled with spiced potato mixture"
+    },
+    {
+        "_id": "7",
+        "name": "Chicken Tikka",
+        "image": ["https://via.placeholder.com/150/FFA500/FFFFFF?Text=ChickenTikka"],
+        "category": "Appetizer",
+        "price": 220,
+        "stock": 20,
+        "status": "active",
+        "description": "Marinated chicken pieces grilled in tandoor"
+    },
+    {
+        "_id": "8",
+        "name": "Dal Makhani",
+        "image": ["https://via.placeholder.com/150/800080/FFFFFF?Text=DalMakhani"],
+        "category": "Main Course",
+        "price": 160,
+        "stock": 15,
+        "status": "active",
+        "description": "Creamy black lentils cooked with butter and spices"
+    },
+    {
+        "_id": "9",
+        "name": "Rasmalai",
+        "image": ["https://via.placeholder.com/150/008000/FFFFFF?Text=Rasmalai"],
+        "category": "Dessert",
+        "price": 90,
+        "stock": 0,
+        "status": "inactive",
+        "description": "Soft cottage cheese dumplings in sweetened milk"
+    },
+    {
+        "_id": "10",
+        "name": "Veg Manchurian",
+        "image": ["https://via.placeholder.com/150/FFC0CB/FFFFFF?Text=VegManchurian"],
+        "category": "Appetizer",
+        "price": 150,
+        "stock": 30,
+        "status": "active",
+        "description": "Deep-fried vegetable balls in spicy sauce"
+    }
+] 

@@ -1,0 +1,26 @@
+import React from 'react';
+import { Card, Statistic, Row, Col } from 'antd';
+import { ShoppingCartOutlined, DollarOutlined, UserOutlined } from '@ant-design/icons';
+import CountStats from './components/CountStats';
+import SaleChart from './components/SaleChart';
+import OrderChart from './components/OrderChart';
+import EarningChart from './components/EarningChart';
+
+const Dashboard = () => {
+    return (
+        <div className="space-y-6">
+            <h2 className="text-2xl font-semibold text-gray-700">Dashboard Overview</h2>
+
+            <CountStats />
+
+            <SaleChart />
+
+            <OrderChart />
+
+            <EarningChart />
+
+        </div>
+    );
+};
+
+export default Dashboard;
