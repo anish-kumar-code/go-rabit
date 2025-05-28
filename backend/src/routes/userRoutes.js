@@ -31,6 +31,7 @@ const { getsubCategoryList } = require("../controllers/user/homeController/getsu
 const { getsubCategoryProductList } = require("../controllers/user/homeController/getsubCategoryProductList");
 const { getProductDetailOfGrocery } = require("../controllers/user/homeController/getProductDetailOfGrocery");
 const { getSpecialGroceryProduct } = require("../controllers/user/homeController/getSpecialGroceryProduct");
+const { deleteCart } = require("../controllers/user/cartController/deleteCart");
 const router = express.Router()
 
 // router.get("/test", (req,res)=>{
@@ -89,8 +90,9 @@ router.get("/toppins", getAllToppins);
 //------------------------------------------------
 // cart
 //------------------------------------------------
-router.get("/cart", userAuthenticate, getCart)
 router.post("/cart", userAuthenticate, createCart)
+router.get("/cart", userAuthenticate, getCart)
+router.delete("/cart/:cartItemId", userAuthenticate, deleteCart)
 
 
 //------------------------------------------------

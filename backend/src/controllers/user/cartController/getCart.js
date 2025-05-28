@@ -6,7 +6,14 @@ exports.getCart = async (req, res) => {
         const userId = req.user.id;
 
         // Fetch cart items with product and topping details
-        const cartItems = await cart.find({ userId, status: "active" }).populate("productId").populate("toppings.toppingId");
+        // const cartItems = await cart.find({ userId, status: "active" }).populate("productId").populate("toppings.toppingId").populate("productId.vendorId");
+
+        const cartItems = await cart.find({ userId, status: "active" }).populate([
+            { path: "productId", populate: { path: "vendorId" } },
+            { path: "toppings.toppingId" }
+        ])
+
+        // console.log("Cart Items:", cartItems);
 
         // Transform the cart items to return only required fields
         const items = cartItems.map(item => ({
@@ -15,6 +22,7 @@ exports.getCart = async (req, res) => {
             product_id: item.productId?._id,
             primary_image: item.productId?.primary_image,
             name: item.productId?.name,
+            vendorName: item.productId?.vendorId?.name,
             shortDescription: item.productId?.shortDescription,
             price: item.productId?.vendorSellingPrice,
             toppings: item.toppings.map(topping => ({
