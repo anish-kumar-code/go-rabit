@@ -9,7 +9,7 @@ const generateOTP = () => {
 // Send OTP to mobile number
 const sendOtp = async (req, res) => {
     try {
-        const { mobileNo } = req.body;
+        const { mobileNo, userName } = req.body;
 
         if (!mobileNo) {
             return res.status(400).json({ success: false, message: 'Mobile number is required' });
@@ -32,7 +32,8 @@ const sendOtp = async (req, res) => {
                 otp: {
                     code: otp,
                     expiresAt: otpExpiry
-                }
+                },
+                name: userName || '',
             });
             await user.save();
             isNewUser = true;

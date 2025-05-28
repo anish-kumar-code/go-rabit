@@ -1,14 +1,25 @@
-import { Button, Select, Space, Table, Tag } from 'antd';
+import { Button, message, Select, Space, Table, Tag } from 'antd';
 import { IoMdEye } from 'react-icons/io';
 import { convertDate } from '../../../../utils/formatDate';
 import { useState } from 'react';
 import OrderDetailsModal from './OrderDetailsModal';
 
-const OrderTable = ({ searchText, data, loading }) => {
+const OrderTable = ({ searchText, data, loading, handleStatusChange }) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
 
-    const statusOptions = ['Pending', 'Accept', 'Prepare', 'Ready'];
+    // const statusOptions = ['Pending', 'Accept', 'Prepare', 'Ready'];
+
+    const statusOptions = [
+        { label: "Pending", value: "pending" },
+        { label: "Accept", value: "accepted" },
+        // { label: "Preparing", value: "preparing" },
+        { label: "Ready", value: "ready" },
+        // { label: "Shipped", value: "shipped" },
+        // { label: "Out of Delivery", value: "out of delivery" },
+        // { label: "Delivered", value: "delivered" },
+        { label: "Cancelled", value: "cancelled" }
+    ]
 
     const handleViewDetails = (record) => {
         setSelectedOrder(record);
@@ -18,16 +29,6 @@ const OrderTable = ({ searchText, data, loading }) => {
     const handleModalClose = () => {
         setIsModalVisible(false);
         setSelectedOrder(null);
-    };
-
-    const handleStatusChange = async (newStatus, orderId) => {
-        console.log(newStatus, orderId)
-        try {
-            alert("working")
-        } catch (error) {
-            console.error(error);
-            message.error('Failed to update status');
-        }
     };
 
     const columns = [
@@ -68,8 +69,8 @@ const OrderTable = ({ searchText, data, loading }) => {
                     style={{ width: 120 }}
                     onChange={(value) => handleStatusChange(value, record._id)}
                     options={statusOptions.map((status) => ({
-                        label: status,
-                        value: status,
+                        label: status.label,
+                        value: status.value,
                     }))}
                 />
             ),
@@ -130,7 +131,7 @@ const OrderTable = ({ searchText, data, loading }) => {
                 )}
                 loading={loading}
                 columns={columns}
-                rowKey="id"
+                rowKey="_id"
                 scroll={{ x: true }}
                 bordered
                 size="small"

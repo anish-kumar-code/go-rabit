@@ -46,6 +46,7 @@ exports.getHomeDataGrocery = catchAsync(async (req, res) => {
             seasonalProducts: seasonalRaw.map(formatProduct),
             vegetableslProducts: vegRaw.map(formatProduct),
             fruitsProducts: fruitRaw.map(formatProduct),
+            kitchenProducts: fruitRaw.map(formatProduct),
         },
     });
 });

@@ -4,63 +4,30 @@ const { Schema } = mongoose;
 
 const driverSchema = new Schema({
     // --- Driver basic details ---
-    name: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    image: {
-        type: String, // URL or path to profile image
-        default: ''
-    },
-    status: {
-        type: String,
-        enum: ['active', 'inactive'],
-        default: 'active'
-    },
+    name: { type: String, required: true, trim: true },
+    email: { type: String, required: true, unique: true },
+    mobileNo: { type: String, required: true, unique: true },
+    password: { type: String },
+    address: String,
+    image: { type: String, default: '' },
+    status: { type: String, enum: ['active', 'inactive'], default: 'active' },
+    licenseNumber: { type: String, trim: true },
 
     // --- Vehicle basic details ---
     vehicle: {
-        type: {
-            type: String,           // e.g. "Truck", "Van", "Car"
-            required: true,
-            trim: true
-        },
-        model: {
-            type: String,           // e.g. "Ford F-150", "Mahindra Scorpio"
-            required: true,
-            trim: true
-        },
-        registrationNumber: {
-            type: String,           // e.g. "KA05AB1234"
-            required: true,
-            unique: true,
-            trim: true
-        },
-        licenseNumber: {
-            type: String,           // Driver's DL number if you want
-            trim: true
-        }
+        type: { type: String, required: true, trim: true },
+        model: { type: String, required: true, trim: true },
+        registrationNumber: { type: String, required: true, unique: true, trim: true },
+        insuranceNumber: { type: String, trim: true }
     },
-
-    // --- (Optional) Attach arbitrary documents ---
-    documents: [
-        {
-            name: {               // e.g. "Registration Certificate"
-                type: String,
-                required: true,
-                trim: true
-            },
-            fileUrl: {            // stored path/URL
-                type: String,
-                required: true
-            },
-            uploadedAt: {
-                type: Date,
-                default: Date.now
-            }
-        }
-    ]
+    // --- Driver documents ---
+    vehicleRcImage: { type: String, default: '' },
+    insuranceImage: { type: String, default: '' },
+    licenseImage: { type: String, default: '' },
+    // --- commission and wallet details ---
+    commission: { type: Number, default: 0 },
+    wallet_balance: { type: Number, default: 0 },
+    isBlocked: { type: Boolean, default: false },
 }, {
     timestamps: true
 });

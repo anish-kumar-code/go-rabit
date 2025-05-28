@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-import { Select, Button, message, Card, Typography, Spin, Table } from 'antd';
-import dataSource from '../data.json';
+import { Select, Button, message, Card, Typography, Spin, Table, Row, Col } from 'antd';
+import { assignDriver, getOrderDetails } from '../../../../services/admin/apiOrder';
+import { getAllDrivers } from '../../../../services/admin/apiDrivers';
 
 const { Option } = Select;
 const { Title, Text } = Typography;
@@ -15,19 +16,33 @@ const deliveryBoys = [
 const OrderDetails = () => {
   const { id } = useParams();
   const [orderData, setOrderData] = useState(null);
-  const [assignedTo, setAssignedTo] = useState(null);
+  const [deliveryBoy, setDeliveryBoy] = useState([]);
   const [selectedBoy, setSelectedBoy] = useState(null);
   const [loadingAssign, setLoadingAssign] = useState(false);
 
-  useEffect(() => {
-    const found = dataSource.find((o) => o.booking_id === id);
-    if (found) {
-      setOrderData(found);
-      setAssignedTo(found.assignedTo || null);
-    }
-  }, [id]);
+  useEffect(() => { fetchOrderDetails(id); fetchDriverList(); }, [id]);
 
-  if (!orderData) {
+  const fetchOrderDetails = async (id) => {
+    try {
+      const res = await getOrderDetails(id);
+      // console.log(res);
+      setOrderData(res.order);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchDriverList = async () => {
+    try {
+      const res = await getAllDrivers();
+      console.log(res.data);
+      setDeliveryBoy(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  if (!orderData || !deliveryBoy) {
     return (
       <div className="flex justify-center mt-20">
         <Spin size="large" />
@@ -35,58 +50,76 @@ const OrderDetails = () => {
     );
   }
 
-  const handleAssign = () => {
+  const handleAssign = async () => {
     if (!selectedBoy) {
       return message.warning('Please select a delivery boy');
     }
-    setLoadingAssign(true);
-    setTimeout(() => {
-      setAssignedTo(selectedBoy);
-      message.success(`Order assigned to ${selectedBoy.name}`);
-      setLoadingAssign(false);
-    }, 1000);
+
+    const driverId = selectedBoy._id;
+    setLoadingAssign(true)
+    try {
+      const res = await assignDriver(id, driverId)
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoadingAssign(false)
+      fetchOrderDetails(id)
+    }
   };
 
   const columns = [
-    { title: 'Item Name', dataIndex: 'name', key: 'name' },
+    { title: 'Item Name', key: 'name', render: (_, record) => `${record.product_id.name}` },
     { title: 'Quantity', dataIndex: 'quantity', key: 'quantity', align: 'center' },
-    { title: 'Price', dataIndex: 'price', key: 'price', align: 'center', render: (p) => `₹${p}` },
-    { title: 'Total', key: 'total', align: 'center', render: (_, r) => `₹${r.quantity * r.price}` },
+    { title: 'Price', key: 'price', align: 'center', render: (_, record) => `₹${record.product_id.vendorSellingPrice}` },
+    { title: 'Total', key: 'total', align: 'center', render: (_, record) => `₹${record.finalPrice}` },
   ];
 
   return (
     <Card className="max-w-xl mx-auto my-4 shadow-md rounded-xl border p-6">
       <Title level={4}>Order ID: {orderData.booking_id}</Title>
-      <Text className="block mb-2">Delivery Date: {orderData.delivery_date}</Text>
-      <Text className="block mb-4">Delivery Time: {orderData.delivery_time}</Text>
+      <Text className="block mb-2">Delivery Date: {new Date(orderData.deliveryDate).toLocaleDateString()}</Text>
+      <Text className="block mb-4">Delivery Time: {orderData.deliveryTime}</Text>
 
       <Title level={5}>Items</Title>
-      <Table dataSource={orderData.items} columns={columns} rowKey="id" pagination={false} bordered size="small" />
+      <Table
+        dataSource={[orderData.productData]}
+        columns={columns}
+        rowKey="_id"
+        pagination={false}
+        bordered
+        size="small"
+      />
 
-      <div className="my-4">
-        <Title level={5}>Shop Details</Title>
-        <Text>Shop Name: {orderData.shop.name}</Text><br />
-        <Text>Address: {orderData.shop.address}</Text>
-      </div>
-
-      <div className="my-4">
-        <Title level={5}>Vendor Details</Title>
-        <Text>Vendor Name: {orderData.vendor.name}</Text><br />
-        <Text>Phone: {orderData.vendor.phone}</Text>
-      </div>
+      <Row>
+        <Col span={12}>
+          <div className="my-4">
+            <Title level={5}>Shop Details</Title>
+            <Text>Shop Name: {orderData.shopId.name}</Text><br />
+            <Text>Packing Charge: ₹ {orderData.shopId.packingCharge}</Text>
+          </div>
+        </Col>
+        <Col span={12}>
+          <div className="my-4">
+            <Title level={5}>Vendor Details</Title>
+            <Text>Vendor Name: {orderData.vendorId.name}</Text><br />
+            <Text>Email: {orderData.vendorId.email}</Text>
+          </div>
+        </Col>
+      </Row>
 
       <div className="my-4">
         <Title level={5}>Payment Details</Title>
-        <Text>Method: {orderData.payment.method}</Text><br />
-        <Text>Status: {orderData.payment.status}</Text><br />
-        <Text>Total: ₹{orderData.payment.total}</Text><br />
-        <Text>Transaction ID: {orderData.payment.txn_id}</Text>
+        <Text>Method: {orderData.paymentMode}</Text><br />
+        <Text>Status: {orderData.paymentStatus}</Text><br />
+        <Text>Total: ₹ {orderData.finalTotalPrice}</Text><br />
+        <Text>Transaction ID: {orderData.paymentId}</Text>
       </div>
 
-      {assignedTo ? (
+      {orderData.assignedDriver ? (
         <div className="mb-4">
           <Text strong>Assigned To:</Text>
-          <Text className="ml-2 text-green-600">{assignedTo.name}</Text>
+          <Text className="ml-2 text-green-600">{orderData.assignedDriver.name}</Text>
         </div>
       ) : (
         <div className="mb-4">
@@ -98,10 +131,11 @@ const OrderDetails = () => {
         <Select
           placeholder="Select Delivery Boy"
           style={{ width: 220 }}
-          onChange={(val) => setSelectedBoy(deliveryBoys.find((b) => b.id === val))}
+          onChange={(val) => setSelectedBoy(deliveryBoy.find((b) => b._id === val))}
+          defaultValue={orderData.assignedDriver?._id}
         >
-          {deliveryBoys.map((boy) => (
-            <Option key={boy.id} value={boy.id}>
+          {deliveryBoy.map((boy) => (
+            <Option key={boy._id} value={boy._id}>
               {boy.name}
             </Option>
           ))}

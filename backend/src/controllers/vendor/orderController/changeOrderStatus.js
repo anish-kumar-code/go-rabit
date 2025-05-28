@@ -4,7 +4,10 @@ const catchAsync = require("../../../utils/catchAsync");
 exports.changeOrderStatus = catchAsync(async (req, res, next) => {
     try {
         const { orderId } = req.params;
-        const { status, preparationTime } = req.body; // Accept prep time optionally when status is accepted or preparing
+        const { status, preparationTime } = req.body;
+
+        // console.log(req.body)
+        // return;
 
         const order = await Order.findById(orderId);
         if (!order) {
@@ -26,21 +29,21 @@ exports.changeOrderStatus = catchAsync(async (req, res, next) => {
                 }
                 break;
 
-            case "preparing":
-                if (!order.preparationStartedAt) {
-                    order.preparationStartedAt = new Date();
-                }
-                if (preparationTime) {
-                    order.preparationTime = preparationTime;
-                }
-                order.orderStatus = "preparing";
-                break;
+            // case "preparing":
+            //     if (!order.preparationStartedAt) {
+            //         order.preparationStartedAt = new Date();
+            //     }
+            //     if (preparationTime) {
+            //         order.preparationTime = preparationTime;
+            //     }
+            //     order.orderStatus = "preparing";
+            //     break;
 
             case "ready":
-                if (order.orderStatus !== "preparing") {
+                if (order.orderStatus !== "accepted") {
                     return res.status(400).json({
                         success: false,
-                        message: "Order must be in 'preparing' state to be marked as 'ready'."
+                        message: "Order must be in accepted."
                     });
                 }
                 order.orderStatus = "ready";

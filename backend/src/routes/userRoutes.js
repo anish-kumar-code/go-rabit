@@ -30,6 +30,7 @@ const { getHomeDataGrocery } = require("../controllers/user/homeController/getHo
 const { getsubCategoryList } = require("../controllers/user/homeController/getsubCategoryList");
 const { getsubCategoryProductList } = require("../controllers/user/homeController/getsubCategoryProductList");
 const { getProductDetailOfGrocery } = require("../controllers/user/homeController/getProductDetailOfGrocery");
+const { getSpecialGroceryProduct } = require("../controllers/user/homeController/getSpecialGroceryProduct");
 const router = express.Router()
 
 // router.get("/test", (req,res)=>{
@@ -62,6 +63,8 @@ router.get('/product/productdetail/:productId', userAuthenticate, getProductDeta
 router.get('/product/productdetailgrocery/:productId', userAuthenticate, getProductDetailOfGrocery);
 router.get("/subCategoryList/:categoryId", userAuthenticate, getsubCategoryList);
 router.get("/getsubCategoryProductList/:subCategoryId", userAuthenticate, getsubCategoryProductList);
+
+router.get("/specialGrocery", userAuthenticate, getSpecialGroceryProduct);
 
 
 //------------------------------------------------

@@ -13,32 +13,30 @@ function DriverManagement() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editMode, setEditMode] = useState(false);
     const [selectedDriver, setSelectedDriver] = useState(null);
-const fetchDrivers = async () => {
-  setLoading(true);
-  try {
-    const response = await getAllDrivers(); // should return full API response
+    const fetchDrivers = async () => {
+        setLoading(true);
+        try {
+            const response = await getAllDrivers(); // should return full API response
 
-    console.log("Full driver API response:", response);
+            console.log("Full driver API response:", response);
 
-    // ✅ Set drivers from the `data` array
-    if (response?.status && Array.isArray(response.data)) {
-      setDrivers(response.data);
-    } else {
-      setDrivers([]); // fallback
-      message.warning("No drivers found.");
-    }
-  } catch (err) {
-    console.error("Error fetching drivers:", err);
-    message.error("Failed to load drivers.");
-  } finally {
-    setLoading(false);
-  }
-};
+            // ✅ Set drivers from the `data` array
+            if (response?.status && Array.isArray(response.data)) {
+                setDrivers(response.data);
+            } else {
+                setDrivers([]); // fallback
+                message.warning("No drivers found.");
+            }
+        } catch (err) {
+            console.error("Error fetching drivers:", err);
+            message.error("Failed to load drivers.");
+        } finally {
+            setLoading(false);
+        }
+    };
 
 
-    useEffect(() => {
-        fetchDrivers();
-    }, []);
+    useEffect(() => { fetchDrivers() }, []);
 
     const openModal = (driver = null) => {
         setSelectedDriver(driver);

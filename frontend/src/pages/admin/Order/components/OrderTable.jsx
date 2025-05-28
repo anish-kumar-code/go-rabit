@@ -1,27 +1,35 @@
-import { Button, Space, Table, Tag } from 'antd';
+import { Button, message, Space, Table, Tag } from 'antd';
 import { FaTrash } from 'react-icons/fa';
 import { IoMdEye } from 'react-icons/io';
 import { useNavigate } from 'react-router';
-import dataSource from '../data.json'; 
+import { getAllOrder } from '../../../../services/admin/apiOrder';
+import { useEffect, useState } from 'react';
+import { convertDate } from '../../../../utils/formatDate';
 
 const OrderTable = ({ searchText, onDelete }) => {
     const navigate = useNavigate();
+    const [orders, setOrders] = useState([])
+    const [loading, setLoading] = useState(false);
 
-    const transformedData = dataSource.map((item) => ({
-        id: item.booking_id,
-        booking_id: item.booking_id,
-        delivery_date: new Date(item.delivery_date).toLocaleDateString(),
-        delivery_time: item.delivery_time,
-        total_amount: item.payment.total,
-        order_status: item.status,
-        payment_status: item.payment.status,
-        payment_mode: item.payment.method,
-        createdAt: new Date(item.createdAt).toLocaleString(),
-        assignedTo: item.assignedTo || null,
-    }));
+
+    useEffect(() => { fetchOrderList() }, []);
+
+    const fetchOrderList = async () => {
+        setLoading(true)
+        try {
+            const res = await getAllOrder()
+            setOrders(res.orders)
+            // console.log(res.orders)
+        } catch (error) {
+            console.log(error)
+            // message.error("something went wrong")
+        } finally {
+            setLoading(false)
+        }
+    }
 
     const handleViewDetails = (record) => {
-        navigate(`/admin/order/${record.booking_id}`);
+        navigate(`/admin/order/${record._id}`);
     };
 
     const columns = [
@@ -33,27 +41,27 @@ const OrderTable = ({ searchText, onDelete }) => {
         },
         {
             title: 'Delivery Date',
-            dataIndex: 'delivery_date',
-            key: 'delivery_date',
+            dataIndex: 'deliveryDate',
+            key: 'deliveryDate',
             align: 'center',
         },
         {
             title: 'Delivery Time',
-            dataIndex: 'delivery_time',
-            key: 'delivery_time',
+            dataIndex: 'deliveryTime',
+            key: 'deliveryTime',
             align: 'center',
         },
         {
             title: 'Total Amount',
-            dataIndex: 'total_amount',
-            key: 'total_amount',
+            dataIndex: 'finalTotalPrice',
+            key: 'finalTotalPrice',
             align: 'center',
             render: (amount) => `₹${amount}`,
         },
         {
             title: 'Order Status',
-            dataIndex: 'order_status',
-            key: 'order_status',
+            dataIndex: 'orderStatus',
+            key: 'orderStatus',
             align: 'center',
             render: (status) => (
                 <Tag
@@ -71,8 +79,8 @@ const OrderTable = ({ searchText, onDelete }) => {
         },
         {
             title: 'Payment Status',
-            dataIndex: 'payment_status',
-            key: 'payment_status',
+            dataIndex: 'paymentStatus',
+            key: 'paymentStatus',
             align: 'center',
             render: (status) => (
                 <Tag
@@ -90,24 +98,18 @@ const OrderTable = ({ searchText, onDelete }) => {
         },
         {
             title: 'Payment Mode',
-            dataIndex: 'payment_mode',
-            key: 'payment_mode',
-            align: 'center',
-        },
-        {
-            title: 'Created At',
-            dataIndex: 'createdAt',
-            key: 'createdAt',
+            dataIndex: 'paymentMode',
+            key: 'paymentMode',
             align: 'center',
         },
         {
             title: 'Assigned To',
-            dataIndex: 'assignedTo',
-            key: 'assignedTo',
+            dataIndex: 'assignedDriver',
+            key: 'assignedDriver',
             align: 'center',
-            render: (assignedTo) =>
-                assignedTo ? (
-                    <Tag color="green">{assignedTo.name}</Tag>
+            render: (assignedDriver) =>
+                assignedDriver ? (
+                    <Tag color="green">{assignedDriver}</Tag>
                 ) : (
                     <Tag color="red">Not Assigned</Tag>
                 ),
@@ -123,12 +125,12 @@ const OrderTable = ({ searchText, onDelete }) => {
                         icon={<IoMdEye />}
                         onClick={() => handleViewDetails(record)}
                     />
-                    <Button
+                    {/* <Button
                         type="primary"
                         danger
                         icon={<FaTrash />}
                         onClick={() => onDelete(record)}
-                    />
+                    /> */}
                 </Space>
             ),
         },
@@ -136,14 +138,15 @@ const OrderTable = ({ searchText, onDelete }) => {
 
     return (
         <Table
-            dataSource={transformedData.filter((item) =>
+            dataSource={orders.filter((item) =>
                 item.booking_id.toLowerCase().includes(searchText.toLowerCase())
             )}
             columns={columns}
-            rowKey="id"
+            rowKey="_id"
             scroll={{ x: true }}
             bordered
             size="small"
+            loading={loading}
         />
     );
 };

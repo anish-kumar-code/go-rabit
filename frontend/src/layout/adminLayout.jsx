@@ -30,7 +30,7 @@
 // export default adminLayout;
 
 import React, { useEffect, useState } from 'react';
-import { Layout, theme, Breadcrumb } from 'antd';
+import { Layout, theme, Breadcrumb, message } from 'antd';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router';
 import AdminSidebar from '../components/AdminSidebar';
 import AdminHeader from '../components/AdminHeader';

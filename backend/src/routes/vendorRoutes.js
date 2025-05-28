@@ -224,7 +224,7 @@ router.get("/wallet/request", vendorAuthenticate, getWalletRequest)
 //------------------------------------------------
 router.get("/order/list", vendorAuthenticate, getAllOrder)
 router.get("/order/today", vendorAuthenticate, todayOrder)
-router.get("/order/status/:orderId", vendorAuthenticate, changeOrderStatus)
+router.post("/order/status/:orderId", vendorAuthenticate, changeOrderStatus)
 router.get("/order/:orderId", vendorAuthenticate, getOrder)
 
 

@@ -55,8 +55,8 @@
 /backend/config.env.*
 
 # Public folder (optional — depends if it's build or static)
-/backend/public
-/backend/public/
+# /backend/public
+# /backend/public/
 
 # Build output
 /backend/.out/

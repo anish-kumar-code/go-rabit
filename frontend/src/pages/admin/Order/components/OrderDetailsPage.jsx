@@ -17,6 +17,7 @@ const OrderDetailsPage = () => {
         onAfterPrint: () => console.log('Print successful!'),
     });
 
+
     return (
         <Row gutter={16} className="p-4">
             <Col xs={24} lg={12}>

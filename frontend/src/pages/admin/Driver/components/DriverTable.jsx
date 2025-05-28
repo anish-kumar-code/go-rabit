@@ -1,5 +1,5 @@
 import { Avatar, Button, Space, Switch, Table } from 'antd';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaUserTie } from 'react-icons/fa';
 import { updateDriverStatus } from '../../../../services/admin/apiDrivers'; // You should implement this if needed
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -7,25 +7,15 @@ const DriverTable = ({ searchText, data, onEdit, onDelete, loading }) => {
 
     const columns = [
         {
-            title: 'Image',
+            title: 'Avatar',
             key: 'avatar',
             align: "center",
-            render: (_, { image, name }) => {
-                const fixedImage = image?.replace("public\\", ""); // Windows path fix
-                const imageUrl = `${BASE_URL}/${fixedImage}`;
-                return (
-                    <Avatar
-                        size={60}
-                        src={image ? imageUrl : null}
-                        style={{
-                            backgroundColor: '#fff',
-                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
-                        }}
-                    >
-                        {name?.charAt(0).toUpperCase()}
-                    </Avatar>
-                );
-            }
+            render: (_, { image, name }) => (
+                <Avatar size={40} style={{ backgroundColor: '#f56a00' }}>
+                    {/* {image || '?'} */}
+                    {image ? <img src={`${BASE_URL}/${image}`} alt={name} /> : <FaUserTie />}
+                </Avatar>
+            )
         },
         {
             title: 'Name',

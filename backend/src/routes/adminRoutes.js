@@ -35,7 +35,7 @@ const { deleteVendor } = require("../controllers/admin/vendorController/deleteVe
 const { getWalletRequest } = require("../controllers/admin/walletController/getWalletRequest");
 const { changeStatusWalletRequest } = require("../controllers/admin/walletController/changeStatusWalletRequest");
 const { settleRequest } = require("../controllers/admin/walletController/settleRequest");
-const getAllOrder = require("../controllers/admin/orderController/getReadyOrder");
+const getAllOrder = require("../controllers/admin/orderController/getAllOrder");
 const { createBanner } = require("../controllers/admin/bannerController/createBanner");
 const { getAllBanners } = require("../controllers/admin/bannerController/getBanner");
 const { getAllUsers } = require("../controllers/admin/userController/getUser");
@@ -61,6 +61,8 @@ const { createCoupon } = require("../controllers/admin/couponController/createCo
 const { getAllCoupons } = require("../controllers/admin/couponController/getAllCoupon");
 const { updateCoupon } = require("../controllers/admin/couponController/updateCoupon");
 const { deleteCoupon } = require("../controllers/admin/couponController/deleteCoupon");
+const { getOrder } = require("../controllers/admin/orderController/getOrder");
+const { assignedDriver } = require("../controllers/admin/orderController/assignDriver");
 const router = express.Router()
 
 router.get("/test/admin", (req, res) => {
@@ -186,7 +188,9 @@ router.delete("/coupon/:id", adminAuthenticate, deleteCoupon);
 router.get("/order", adminAuthenticate, getAllOrder)
 router.patch("/order/status/:orderId", adminAuthenticate, orderComplete)
 // router.post("/order", userAuthenticate, createOrder)
-// router.get("/order/:orderId", userAuthenticate, getOrderDetail)
+router.get("/order/:orderId", adminAuthenticate, getOrder)
+
+router.patch("/order/assign/:orderId", adminAuthenticate, assignedDriver)
 
 
 //------------------------------------------------

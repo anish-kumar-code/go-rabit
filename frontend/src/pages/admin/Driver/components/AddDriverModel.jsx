@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Modal,
-  Form,
-  Input,
-  Select,
-  message,
-  Upload,
-  Button,
-} from 'antd';
+import { Modal, Form, Input, Select, message, Upload, Button } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { addDriver } from '../../../../services/admin/apiDrivers';
 
@@ -32,7 +24,7 @@ function AddDriverModal({ isModalOpen, handleOk, handleCancel }) {
 
       const reader = new FileReader();
       reader.onload = () => {
-        form.setFieldsValue({ image: reader.result }); // base64 string
+        form.setFieldsValue({ image: reader.result });
       };
       reader.readAsDataURL(file);
     } else {
@@ -41,6 +33,8 @@ function AddDriverModal({ isModalOpen, handleOk, handleCancel }) {
   };
 
   const handleSubmit = async (values) => {
+    // console.log(values);
+    // return
     const payload = {
       name: values.name,
       vehicleType: values.vehicleType,

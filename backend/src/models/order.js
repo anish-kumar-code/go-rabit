@@ -24,7 +24,7 @@ const OrderSchema = new Schema({
     vendorId: { type: Schema.Types.ObjectId, ref: 'Vendor', required: true },
     productData: { type: ProductDataSchema, required: true, },
     itemTotal: { type: Number, required: true },
-    couponId: { type: Schema.Types.ObjectId, ref: 'Coupon', default: "67ee7fa6e3b6a1a746ae4803" },
+    couponId: { type: Schema.Types.ObjectId, ref: 'Coupon', default: null },
     couponCode: { type: String, default: "" },
     couponAmount: { type: Number, default: 0 },
     afterCouponAmount: { type: Number, required: true },
@@ -43,7 +43,8 @@ const OrderSchema = new Schema({
     readyAt: { type: Date, default: null },
     paymentMode: { type: String, enum: ['cash', 'card', 'upi', 'wallet'], required: true },
     paymentStatus: { type: String, enum: ['pending', 'paid', 'failed'], default: 'pending' },
-    paymentId: { type: String, default: null }
+    paymentId: { type: String, default: null },
+    assignedDriver: { type: Schema.Types.ObjectId, ref: 'Driver', default: null },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Order', OrderSchema);

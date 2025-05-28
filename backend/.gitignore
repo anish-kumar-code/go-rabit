@@ -19,8 +19,8 @@ yarn-error.log*
 .env.*
 
 # Public folder
-public
-public/
+# public
+# public/
 
 # Build output
 # dist/
