@@ -37,7 +37,7 @@ const OrderSchema = new Schema({
     commissionRate: { type: Number, required: true },
     commissionAmount: { type: Number, required: true },
     finalTotalPrice: { type: Number, required: true },
-    orderStatus: { type: String, enum: ['pending', 'accepted', 'preparing', 'ready', 'shipped', 'out of delivery', 'delivered', 'cancelled'], default: 'pending' },
+    orderStatus: { type: String, enum: ['pending', 'accepted', 'preparing', 'ready', 'shipped', 'running', 'out of delivery', 'delivered', 'cancelled'], default: 'pending' },
     preparationTime: { type: Number, default: null },
     preparationStartedAt: { type: Date, default: null },
     readyAt: { type: Date, default: null },

@@ -53,6 +53,7 @@ import Driver from "./pages/admin/Driver/Driver"
 import CouponVendor from './pages/vendor/Coupon/CouponVenor'
 import ProductFlags from './pages/admin/ProductFlags/ProductFlags'
 import Explore from './pages/admin/Explore/Explore'
+import ExploreSection from './pages/admin/ExploreSection/ExploreSection'
 
 function App() {
   return (
@@ -84,6 +85,7 @@ function App() {
           <Route path="request/vendor" element={<PaymentRequest />} />
           <Route path="request/driver" element={<PaymentRequest />} />
           <Route path='explore' element={<Explore />} />
+          <Route path='explore-section' element={<ExploreSection />} />
           <Route path='user' element={<User />} />
           <Route path='settings' element={<Settings />} />
           <Route path='settings/profile' element={<Profile />} />

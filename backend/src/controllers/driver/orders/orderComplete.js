@@ -23,6 +23,12 @@ exports.orderComplete = catchAsync(async (req, res) => {
             return res.status(200).json({ status: true, message: "Order cancelled successfully" });
         }
 
+        if (status == "accepted") {
+            order.orderStatus = "running";
+            await order.save();
+            return res.status(200).json({ status: true, message: "Order accepted successfully" });
+        }
+
         // const driver = await Driver.findById(driverId);
         // if (!driver) return res.status(404).json({ status: false, message: "Driver not found" });
 

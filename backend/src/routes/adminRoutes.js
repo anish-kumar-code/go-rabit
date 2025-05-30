@@ -67,6 +67,8 @@ const { getAllProductFlag } = require("../controllers/admin/productFlag/getAllPr
 const { toggleProductFlag } = require("../controllers/admin/productFlag/toggleProductFlag");
 const { deleteProduct } = require("../controllers/admin/productController/deleteProduct");
 const { updateProduct } = require("../controllers/admin/productController/updateProduct");
+const { getAllProductExplore } = require("../controllers/admin/exploreController/getAllProduct");
+const { getExploreViaId } = require("../controllers/admin/exploreSectionController/getExploreViaId");
 const router = express.Router()
 
 router.get("/test/admin", (req, res) => {
@@ -149,7 +151,9 @@ router.delete("/explore/:id", deleteExplore);
 //------------------------------------------------
 router.post("/exploresection", createExploreSection);
 router.get("/exploresection", getAllSections);
+router.get("/exploresection/products", getAllProductExplore);
 router.get("/exploresection/:id", getSection);
+router.get("/explore/:exploreId/section", getExploreViaId);
 router.patch("/exploresection/:id", updateSection);
 router.delete("/exploresection/:id", deleteSection);
 

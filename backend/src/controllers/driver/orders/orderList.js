@@ -7,12 +7,25 @@ exports.orderList = catchAsync(async (req, res, next) => {
     try {
         const driverId = req.driver._id;
 
-        const orderListRaw = await order.find({assignedDriver: driverId}).populate("shopId", "name address image lat long").populate("addressId", "address1 address2 city pincode state").populate("userId", "name email mobileNo lat long")
+        const type = req.query.type || "all";
+
+        let filter = { assignedDriver: driverId };
+
+        if (type == "history") {
+            filter.orderStatus = "delivered";
+        } else if (type == "new") {
+            filter.orderStatus = "shipped";
+        } else if (type == "ongoing") {
+            filter.orderStatus = "running";
+        }
+
+
+        const orderListRaw = await order.find(filter).sort({ createdAt: -1 }).populate("shopId", "name address image lat long").populate("addressId", "address1 address2 city pincode state").populate("userId", "name email mobileNo lat long")
         if (!orderListRaw || orderListRaw.length === 0) {
             return next(new AppError("No orders found for this driver", 404));
         }
 
-        const orderList = orderListRaw.map((ord)=>{
+        const orderList = orderListRaw.map((ord) => {
             return {
                 _id: ord._id,
                 orderId: ord.orderId,
@@ -39,11 +52,12 @@ exports.orderList = catchAsync(async (req, res, next) => {
                 totalAmount: ord.finalTotalPrice,
                 createdAt: ord.createdAt
             };
-        }) 
+        })
 
         res.status(200).json({
             success: true,
             message: "Order list retrieved successfully",
+            count: orderList.length,
             orderList
         });
     } catch (error) {

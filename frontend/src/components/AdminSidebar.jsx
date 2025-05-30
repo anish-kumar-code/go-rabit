@@ -49,6 +49,7 @@ const AdminSidebar = ({ collapsed, settingData }) => {
         { key: 'coupon', icon: <RiCoupon3Line size={18} />, label: 'Coupon', onClick: () => navigate('/admin/coupon') },
         { key: 'driver', icon: <RiEBike2Fill size={18} />, label: 'Driver', onClick: () => navigate('/admin/driver') },
         { key: 'explore', icon: <RiEBike2Fill size={18} />, label: 'Explore', onClick: () => navigate('/admin/explore') },
+        { key: 'explore-section', icon: <RiEBike2Fill size={18} />, label: 'Explore Section', onClick: () => navigate('/admin/explore-section') },
         {
             key: 'request', icon: <GiTakeMyMoney size={18} />, label: 'Payment Request', children: [
                 { key: 'request-vendor', label: 'Vendor Request', onClick: () => navigate('/admin/request/vendor') },

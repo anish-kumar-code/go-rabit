@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 const createToken = require("../../../utils/createToken");
 
 exports.loginDriver = catchAsync(async (req, res, next) => {
-    const {mobileNo, password } = req.body;
+    const { mobileNo, password } = req.body;
 
     if (!mobileNo || !password) {
         return next(new AppError("Mobile No and Password are required.", 400));
@@ -14,9 +14,9 @@ exports.loginDriver = catchAsync(async (req, res, next) => {
 
     const driver = await Driver.findOne({ mobileNo });
 
-     if (!driver || !(await bcrypt.compare(password, driver.password))) {
-            return next(new AppError("Invalid mobile no or password.", 404));
-        }
+    if (!driver || !(await bcrypt.compare(password, driver.password))) {
+        return next(new AppError("Invalid mobile no or password.", 404));
+    }
 
     createToken(driver, 200, res);
 });
