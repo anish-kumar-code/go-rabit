@@ -70,8 +70,8 @@ export const createExploreSection = async (formData) => {
 
 export const getSectionsByExplore = async (id) => {
     try {
-        const response = await axiosInstance.post(`/api/admin/explore/${id}/section`, formData);
-        return response;
+        const response = await axiosInstance.get(`/api/admin/explore/${id}/section`);
+        return response.data;
     } catch (error) {
         message.error('Error fetching explore sections');
     }

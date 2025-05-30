@@ -5,9 +5,10 @@ const { Sider } = Layout
 import { useNavigate, useLocation } from 'react-router'
 
 import { LuLayoutDashboard, LuUsers } from "react-icons/lu"
+import { SiNextra } from "react-icons/si";
 import { TbCategory2 } from 'react-icons/tb'
 import { MdOutlineCategory } from 'react-icons/md'
-import { FaClipboardList, FaRegUser, FaUserClock } from 'react-icons/fa'
+import { FaClipboardList, FaRegUser, FaSitemap, FaUserClock } from 'react-icons/fa'
 import { IoFastFoodOutline, IoImagesOutline, IoSettingsOutline, IoStorefront } from 'react-icons/io5'
 import { GiTakeMyMoney } from "react-icons/gi";
 import { FaArrowRightToBracket } from 'react-icons/fa6'
@@ -48,8 +49,15 @@ const AdminSidebar = ({ collapsed, settingData }) => {
         { key: 'order', icon: <FaClipboardList size={18} />, label: 'Order', onClick: () => navigate('/admin/order') },
         { key: 'coupon', icon: <RiCoupon3Line size={18} />, label: 'Coupon', onClick: () => navigate('/admin/coupon') },
         { key: 'driver', icon: <RiEBike2Fill size={18} />, label: 'Driver', onClick: () => navigate('/admin/driver') },
-        { key: 'explore', icon: <RiEBike2Fill size={18} />, label: 'Explore', onClick: () => navigate('/admin/explore') },
-        { key: 'explore-section', icon: <RiEBike2Fill size={18} />, label: 'Explore Section', onClick: () => navigate('/admin/explore-section') },
+
+
+        {
+            key: 'explorea', icon: <SiNextra size={18} />, label: 'Explore', children: [
+                { key: 'explore', label: 'Explore', onClick: () => navigate('/admin/explore') },
+                { key: 'explore-section', label: 'Explore Section', onClick: () => navigate('/admin/explore-section') },
+            ]
+        },
+
         {
             key: 'request', icon: <GiTakeMyMoney size={18} />, label: 'Payment Request', children: [
                 { key: 'request-vendor', label: 'Vendor Request', onClick: () => navigate('/admin/request/vendor') },
@@ -58,26 +66,23 @@ const AdminSidebar = ({ collapsed, settingData }) => {
         },
         { key: 'user', icon: <FaRegUser size={18} />, label: 'User', onClick: () => navigate('/admin/user') },
         {
-            key: 'vendor-cms', icon: <FaUserClock size={18} />, label: 'Vendor CMS', children: [
-                { key: 'vendor-terms-and-conditions', label: 'Terms & Conditions', onClick: () => navigate('/admin/terms-and-conditions/vendor') },
-                { key: 'vendor-privacy-policy', label: 'Privacy Policy', onClick: () => navigate('/admin/privacy-policy/vendor') },
-                { key: 'vendor-refund-policy', label: 'Refund Policy', onClick: () => navigate('/admin/refund-policy/vendor') }
-            ]
-        },
-        {
-            key: 'user-cms', icon: <FaUserClock size={18} />, label: 'User CMS', children: [
-                { key: 'user-terms-and-conditions', label: 'Terms & Conditions', onClick: () => navigate('/admin/terms-and-conditions/user') },
-                { key: 'user-privacy-policy', label: 'Privacy Policy', onClick: () => navigate('/admin/privacy-policy/user') },
-                { key: 'user-refund-policy', label: 'Refund Policy', onClick: () => navigate('/admin/refund-policy/user') }
-            ]
-        },
-        {
             key: 'settings', icon: <IoSettingsOutline size={18} />, label: 'Settings', children: [
                 // { key: 'settings-profile', label: 'Profile', onClick: () => navigate('/admin/settings/profile') },
-                { key: 'settings-charges', label: 'Site', onClick: () => navigate('/admin/settings/charges') },
-                { key: 'settings-terms-and-conditions', label: 'Terms & Conditions', onClick: () => navigate('/admin/settings/terms-and-conditions') },
-                { key: 'settings-privacy-policy', label: 'Privacy Policy', onClick: () => navigate('/admin/settings/privacy-policy') },
-                { key: 'settings-refund-policy', label: 'Refund Policy', onClick: () => navigate('/admin/settings/refund-policy') }
+                { key: 'settings-charges', icon: <FaSitemap />, label: 'Site', onClick: () => navigate('/admin/settings/charges') },
+                {
+                    key: 'vendor-cms', icon: <FaUserClock size={18} />, label: 'Vendor CMS', children: [
+                        { key: 'vendor-terms-and-conditions', label: 'Terms & Conditions', onClick: () => navigate('/admin/terms-and-conditions/vendor') },
+                        { key: 'vendor-privacy-policy', label: 'Privacy Policy', onClick: () => navigate('/admin/privacy-policy/vendor') },
+                        { key: 'vendor-refund-policy', label: 'Refund Policy', onClick: () => navigate('/admin/refund-policy/vendor') }
+                    ]
+                },
+                {
+                    key: 'user-cms', icon: <FaUserClock size={18} />, label: 'User CMS', children: [
+                        { key: 'user-terms-and-conditions', label: 'Terms & Conditions', onClick: () => navigate('/admin/terms-and-conditions/user') },
+                        { key: 'user-privacy-policy', label: 'Privacy Policy', onClick: () => navigate('/admin/privacy-policy/user') },
+                        { key: 'user-refund-policy', label: 'Refund Policy', onClick: () => navigate('/admin/refund-policy/user') }
+                    ]
+                },
             ]
         },
         { type: 'divider' },

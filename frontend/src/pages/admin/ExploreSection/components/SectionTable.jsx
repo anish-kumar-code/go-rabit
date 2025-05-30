@@ -1,7 +1,7 @@
 import React from 'react';
 import { Avatar, Tooltip, Table } from 'antd';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+const BASE_URL = import.meta.env.VITE_BASE_URL || '';
 
 const SectionTable = ({ data = [], loading }) => {
     const columns = [
@@ -13,7 +13,7 @@ const SectionTable = ({ data = [], loading }) => {
         },
         {
             title: 'Explore Name',
-            dataIndex: ['exploreId', 'name'], // Nested key if populated
+            dataIndex: ['exploreId', 'name'],
             key: 'exploreName',
             align: 'center',
             render: (_, record) => record.exploreId?.name || '—',
@@ -32,7 +32,7 @@ const SectionTable = ({ data = [], loading }) => {
                             placement="top"
                         >
                             <Avatar
-                                src={product.image ? `${BASE_URL}/${product.image}` : ''}
+                                src={product.primary_image ? `${BASE_URL}/${product.primary_image}` : ''}
                                 shape="circle"
                                 alt={product.name}
                             >

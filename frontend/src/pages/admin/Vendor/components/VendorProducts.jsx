@@ -3,6 +3,7 @@ import { Table, Card, Button, Input, Breadcrumb, Switch, Space, Tooltip, Badge, 
 import { useNavigate, Link, useParams } from 'react-router';
 import { ArrowLeftOutlined, EyeOutlined } from '@ant-design/icons';
 import { getVendorShop } from '../../../../services/apiVendor';
+import { FaUserTie } from 'react-icons/fa';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL || '';
 
@@ -46,7 +47,6 @@ const VendorProducts = () => {
                 <>
                     <div>
                         <Avatar size={40}>
-                            {/* {image || '?'} */}
                             {shopImage ? <img src={`${BASE_URL}/${shopImage}`} alt={name} /> : <FaUserTie />}
                         </Avatar> &nbsp;
                         {name}

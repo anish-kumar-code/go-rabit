@@ -91,6 +91,11 @@ function ExploreSection() {
         }
     };
 
+    const handleCancel = () => {
+        setIsModalOpen(false); 
+        setSelectedExploreId(null); 
+    };
+
     return (
         <>
             <div className='lg:px-10 px-5 my-8 space-y-4'>
@@ -128,7 +133,7 @@ function ExploreSection() {
 
                 <AddSectionModal
                     isModalOpen={isModalOpen}
-                    onCancel={() => setIsModalOpen(false)}
+                    handleCancel={handleCancel}
                     onSubmit={handleCreateSection}
                     products={productList}
                 />
