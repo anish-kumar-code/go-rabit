@@ -32,10 +32,10 @@ exports.orderComplete = catchAsync(async (req, res) => {
         // return res.status(200).json({ commissionRate, gstRate, plateformFee, driver });
 
         // Calculate amounts
-        const commissionAmount = itemTotal * commissionRate / 100;
-        const gstAmount = commissionAmount * gstRate / 100;
-        const vendorAmount = itemTotal - commissionAmount - gstAmount + packingCharge;
-        const deliveryBoyAmount = deliveryCharge;
+        const commissionAmount = Math.ceil(itemTotal * commissionRate / 100);
+        const gstAmount = Math.ceil(commissionAmount * gstRate / 100);
+        const vendorAmount = Math.ceil(itemTotal - commissionAmount - gstAmount + packingCharge);
+        const deliveryBoyAmount = Math.ceil(deliveryCharge);
 
         // Update wallet transaction
         const walletTx = await WalletTransaction.create({
@@ -53,15 +53,15 @@ exports.orderComplete = catchAsync(async (req, res) => {
 
         // Update vendor wallet
         const vendor = await Vendor.findById(vendorId);
-        vendor.wallet_balance += vendorAmount;
+        vendor.wallet_balance += Math.ceil(vendorAmount);
         await vendor.save();
 
         const shop = await Shop.findById(shopId);
-        shop.wallet_balance += vendorAmount
+        shop.wallet_balance += Math.ceil(vendorAmount)
         await shop.save()
 
         const driver = await Driver.findById(driverId);
-        driver.wallet_balance += deliveryBoyAmount
+        driver.wallet_balance += Math.ceil(deliveryBoyAmount)
         await driver.save()
 
         // Record wallet history for vendor
