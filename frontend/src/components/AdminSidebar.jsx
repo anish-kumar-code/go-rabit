@@ -44,6 +44,7 @@ const AdminSidebar = ({ collapsed, settingData }) => {
         { key: 'driver', icon: <RiEBike2Fill size={18} />, label: 'Driver', onClick: () => navigate('/admin/driver') },
         { key: 'sub-category', icon: <MdOutlineCategory size={18} />, label: 'Sub Category', onClick: () => navigate('/admin/sub-category') },
         { key: 'product', icon: <IoFastFoodOutline size={18} />, label: 'Product', onClick: () => navigate('/admin/product') },
+        { key: 'product-flags', icon: <IoFastFoodOutline size={18} />, label: 'Product Flag', onClick: () => navigate('/admin/product-flags') },
         { key: 'vendor', icon: <LuUsers size={18} />, label: 'Vendor', onClick: () => navigate('/admin/vendor') },
         { key: 'shop', icon: <IoStorefront size={18} />, label: 'Shop', onClick: () => navigate('/admin/shop') },
         { key: 'order', icon: <FaClipboardList size={18} />, label: 'Order', onClick: () => navigate('/admin/order') },

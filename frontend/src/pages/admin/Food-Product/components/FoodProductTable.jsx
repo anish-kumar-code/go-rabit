@@ -52,19 +52,6 @@ function FoodProductTable({ searchText, data, onEdit, onDelete, loading }) {
             align: "center",
             render: (_, record) => (<>{record.type}</>)
         },
-        // {
-        //     title: 'Brand',
-        //     dataIndex: 'brand',
-        //     key: 'brand',
-        //     align: "center",
-        //     render: (_, record) => (<>{record.brandId.name}</>)
-        // },
-        {
-            title: 'SKU',
-            dataIndex: 'sku',
-            key: 'sku',
-            align: "center"
-        },
         {
             title: 'Price',
             dataIndex: 'original_price',
@@ -81,18 +68,18 @@ function FoodProductTable({ searchText, data, onEdit, onDelete, loading }) {
                 <Switch defaultChecked={record?.status === "active"} onChange={(checked) => updateProductStatus(record._id, checked)} />
             )
         },
-        // {
-        //     title: 'Action',
-        //     key: 'action',
-        //     align: "right",
-        //     render: (_, record) => (
-        //         <Space size="small">
-        //             <Tooltip title="Details"><Button type="primary" icon={<EyeOutlined />} onClick={() => navigate(`/products/${record.name}-${record._id}`)} /></Tooltip>
-        //             <Tooltip title="Edit"><Button type="primary" icon={<FaEdit />} onClick={() => onEdit(record)}></Button></Tooltip>
-        //             <Tooltip title="Delete"><Button type="primary" danger icon={<FaTrash />} onClick={() => onDelete(record)}></Button></Tooltip>
-        //         </Space>
-        //     )
-        // }
+        {
+            title: 'Action',
+            key: 'action',
+            align: "right",
+            render: (_, record) => (
+                <Space size="small">
+                    <Tooltip title="Details"><Button type="primary" icon={<EyeOutlined />} onClick={() => navigate(`/admin/products/${record.name}-${record._id}`)} /></Tooltip>
+                    <Tooltip title="Edit"><Button type="primary" icon={<FaEdit />} onClick={() => onEdit(record)}></Button></Tooltip>
+                    <Tooltip title="Delete"><Button type="primary" danger icon={<FaTrash />} onClick={() => onDelete(record)}></Button></Tooltip>
+                </Space>
+            )
+        }
     ];
 
     return (

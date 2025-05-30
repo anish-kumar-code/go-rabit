@@ -1,199 +1,11 @@
-// import React, { useState, useEffect } from 'react';
-// import { Modal, Form, Input, InputNumber, Select, Upload, Button, Radio } from 'antd';
-// import { UploadOutlined } from '@ant-design/icons';
-
-// const { Option } = Select;
-
-// // Mock data - same as Add modal
-// const categories = [{ id: 'cat1', name: 'Appetizers' }, { id: 'cat2', name: 'Main Course' }];
-// const subCategories = {
-//     cat1: [{ id: 'sub1', name: 'Soups' }, { id: 'sub2', name: 'Salads' }],
-//     cat2: [{ id: 'sub3', name: 'Chicken Dishes' }, { id: 'sub4', name: 'Vegetarian Dishes' }],
-// };
-// const vendors = [{ id: 'ven1', name: 'Restaurant A' }, { id: 'ven2', name: 'Restaurant B' }];
-
-
-// function EditFoodProductModal({ isModalOpen, handleOk, handleCancel, productData }) {
-//     const [form] = Form.useForm();
-//     const [selectedCategory, setSelectedCategory] = useState(null);
-//     const [fileList, setFileList] = useState([]);
-
-//     // Pre-fill form when productData is available and modal opens
-//     useEffect(() => {
-//         if (productData && isModalOpen) {
-//             form.setFieldsValue({
-//                 name: productData.name,
-//                 description: productData.description,
-//                 vendor: productData.vendor?.id, // Assuming vendor is an object with id
-//                 category: productData.category?.id, // Assuming category is an object with id
-//                 subCategory: productData.subCategory?.id, // Assuming subCategory is an object with id
-//                 price: productData.price,
-//                 offerPrice: productData.offerPrice,
-//                 stock: productData.stock,
-//                 dietaryPreference: productData.dietaryPreference,
-//             });
-//             setSelectedCategory(productData.category?.id);
-
-//             // Handle existing images - adapt based on how images are stored in productData
-//             const existingImages = productData.images?.map((img, index) => ({
-//                 uid: img.id || `-existing-${index}`, // Need a unique ID
-//                 name: img.name || `image-${index}.png`, // Need a file name
-//                 status: 'done',
-//                 url: img.url, // URL of the existing image
-//             })) || [];
-//             setFileList(existingImages);
-
-//         } else if (!isModalOpen) {
-//             form.resetFields(); // Reset form when modal closes
-//             setFileList([]);
-//             setSelectedCategory(null);
-//         }
-//     }, [productData, isModalOpen, form]);
-
-//     const onFinish = (values) => {
-//         const updatedProductData = {
-//             ...productData, // Keep existing ID and other fields
-//             ...values, // Override with new form values
-//             images: fileList // Include potentially updated image list
-//         };
-//         console.log('Updated product data: ', updatedProductData);
-//         // Here you would typically make an API call to update the product
-//         handleOk(); // Close the modal on success
-//     };
-
-//     const handleCategoryChange = (value) => {
-//         setSelectedCategory(value);
-//         form.setFieldsValue({ subCategory: undefined });
-//     };
-
-//     const normFile = (e) => {
-//         if (Array.isArray(e)) {
-//             return e;
-//         }
-//         setFileList(e?.fileList);
-//         return e?.fileList;
-//     };
-
-//     const handleRemove = file => {
-//         // If removing an existing file already uploaded (identified by having a URL)
-//         // you might need to make an API call here to delete it from the server.
-//         console.log("Removing file:", file);
-//         setFileList(prevFileList => prevFileList.filter(item => item.uid !== file.uid));
-//         return true; // Confirm removal from the list
-//     };
-
-//     return (
-//         <Modal
-//             title={`Edit Food Product: ${productData?.name || ''}`}
-//             open={isModalOpen}
-//             onOk={() => form.submit()} // Trigger form submission
-//             onCancel={handleCancel}
-//             okText="Save Changes"
-//             cancelText="Cancel"
-//             width={800}
-//         >
-//             <Form
-//                 form={form}
-//                 layout="vertical"
-//                 name="edit_food_product_form"
-//                 onFinish={onFinish}
-//             >
-//                 {/* Form items are largely the same as Add modal, but data is pre-filled */}
-//                 <Form.Item
-//                     name="name"
-//                     label="Product Name"
-//                     rules={[{ required: true, message: 'Please input the product name!' }]}
-//                 >
-//                     <Input placeholder="Enter product name" />
-//                 </Form.Item>
-
-//                 <Form.Item
-//                     name="description"
-//                     label="Description"
-//                     rules={[{ required: true, message: 'Please enter a description!' }]}
-//                 >
-//                     <Input.TextArea rows={4} placeholder="Product description" />
-//                 </Form.Item>
-
-//                 <Form.Item name="vendor" label="Vendor" rules={[{ required: true, message: 'Please select a vendor!' }]}>
-//                     <Select placeholder="Select a vendor">
-//                         {vendors.map(vendor => (
-//                             <Option key={vendor.id} value={vendor.id}>{vendor.name}</Option>
-//                         ))}
-//                     </Select>
-//                 </Form.Item>
-
-//                 <Form.Item name="category" label="Category" rules={[{ required: true, message: 'Please select a category!' }]}>
-//                     <Select placeholder="Select a category" onChange={handleCategoryChange}>
-//                         {categories.map(category => (
-//                             <Option key={category.id} value={category.id}>{category.name}</Option>
-//                         ))}
-//                     </Select>
-//                 </Form.Item>
-
-//                 <Form.Item name="subCategory" label="Sub-Category" rules={[{ required: true, message: 'Please select a sub-category!' }]}>
-//                     <Select placeholder="Select a sub-category" disabled={!selectedCategory}>
-//                         {selectedCategory && subCategories[selectedCategory]?.map(sub => (
-//                             <Option key={sub.id} value={sub.id}>{sub.name}</Option>
-//                         ))}
-//                     </Select>
-//                 </Form.Item>
-
-//                 <Form.Item name="price" label="Price (₹)" rules={[{ required: true, message: 'Please enter the price!' }]}>
-//                     <InputNumber min={0} style={{ width: '100%' }} formatter={value => `₹ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} parser={value => value.replace(/₹\s?|(,*)/g, '')} />
-//                 </Form.Item>
-
-//                 <Form.Item name="offerPrice" label="Offer Price (₹) (Optional)">
-//                     <InputNumber min={0} style={{ width: '100%' }} formatter={value => `₹ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} parser={value => value.replace(/₹\s?|(,*)/g, '')} />
-//                 </Form.Item>
-
-//                 <Form.Item name="stock" label="Stock Quantity" rules={[{ required: true, message: 'Please enter stock quantity!' }]}>
-//                     <InputNumber min={0} style={{ width: '100%' }} />
-//                 </Form.Item>
-
-//                 <Form.Item
-//                     name="dietaryPreference"
-//                     label="Dietary Preference"
-//                     rules={[{ required: true, message: 'Please select dietary preference!' }]}
-//                 >
-//                     <Radio.Group>
-//                         <Radio value="veg">Veg</Radio>
-//                         <Radio value="non-veg">Non-Veg</Radio>
-//                     </Radio.Group>
-//                 </Form.Item>
-
-//                 <Form.Item
-//                     name="images"
-//                     label="Product Images"
-//                     valuePropName="fileList"
-//                     getValueFromEvent={normFile}
-//                 // Not marking as required for edit, assuming images might already exist
-//                 >
-//                     <Upload
-//                         action="/upload.do" // Replace with your upload endpoint
-//                         listType="picture"
-//                         fileList={fileList}
-//                         onRemove={handleRemove}
-//                         beforeUpload={() => false} // Handle upload manually
-//                         multiple
-//                     >
-//                         <Button icon={<UploadOutlined />}>Upload New / Replace</Button>
-//                     </Upload>
-//                 </Form.Item>
-//             </Form>
-//         </Modal>
-//     );
-// }
-
-// export default EditFoodProductModal;
-
-
 import React, { useState, useEffect } from 'react';
 import {
     Modal, Form, Input, InputNumber, Select, Upload,
     Row, Col, Avatar, message
 } from 'antd';
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
+import { updateProduct } from '../../../../services/apiProduct';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const { Option } = Select;
 
@@ -203,58 +15,77 @@ function EditFoodProductModal({ isModalOpen, handleOk, handleCancel, productData
 
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [filteredSubCategories, setFilteredSubCategories] = useState([]);
+
     const [primaryImageList, setPrimaryImageList] = useState([]);
     const [galleryImageList, setGalleryImageList] = useState([]);
 
+    // Helper to convert server path to full URL
+    const getImageUrl = (path) => {
+        if (!path) return '';
+        return `${BASE_URL || ''}/${path.replace(/\\/g, '/')}`;
+    };
+
     useEffect(() => {
         if (productData && isModalOpen) {
+            const categoryId = productData.categoryId?._id || productData.categoryId;
+            const subCategoryId = productData.subCategoryId?._id || productData.subCategoryId;
+
             form.setFieldsValue({
                 name: productData.name,
-                sku: productData.sku,
-                mrp: productData.mrp,
-                sellingPrice: productData.sellingPrice,
-                discount: productData.discount || 0,
+                // sku: productData.sku,
+                mrp: Number(productData.mrp),
+                sellingPrice: Number(productData.sellingPrice),
+                discount: Number(productData.discount || 0),
                 unitOfMeasurement: productData.unitOfMeasurement,
                 sellingUnit: productData.sellingUnit,
-                serviceId: productData.serviceId,
+                serviceId: productData.serviceId?._id || productData.serviceId,
                 type: productData.type,
-                category: productData.category?._id,
-                subCategory: productData.subCategory?._id,
+                category: categoryId,
+                subCategory: subCategoryId,
                 shortDescription: productData.shortDescription,
                 longDescription: productData.longDescription,
             });
 
-            setSelectedCategory(productData.category?._id);
+            setSelectedCategory(categoryId);
 
-            // Preload primary image
+            const filteredSubs = subCategories.filter(
+                sub => (sub.cat_id === categoryId || sub.cat_id?._id === categoryId)
+            );
+            setFilteredSubCategories(filteredSubs);
+
+            // Setup primary image list:
             if (productData.primary_image) {
                 setPrimaryImageList([{
                     uid: 'primary-1',
                     name: 'Primary Image',
                     status: 'done',
-                    url: productData.primary_image,
+                    url: getImageUrl(productData.primary_image),
+                    originFileObj: null // no file object for existing image
                 }]);
+            } else {
+                setPrimaryImageList([]);
             }
 
-            // Preload gallery images
+            // Setup gallery image list:
             const gallery = productData.gallery_image || [];
             setGalleryImageList(gallery.map((img, i) => ({
                 uid: `gallery-${i}`,
-                name: `gallery-${i}.png`,
+                name: `gallery-${i}.jpg`,
                 status: 'done',
-                url: img,
+                url: getImageUrl(img),
+                originFileObj: null, // no file object for existing images
             })));
 
-            const subCats = subCategories.filter(sub => sub.cat_id?._id === productData.category?._id);
-            setFilteredSubCategories(subCats);
         } else {
             form.resetFields();
+            setSelectedCategory(null);
+            setFilteredSubCategories([]);
             setPrimaryImageList([]);
             setGalleryImageList([]);
-            setFilteredSubCategories([]);
         }
-    }, [productData, isModalOpen]);
+    }, [productData, isModalOpen, subCategories, form]);
 
+    // Update discount on price change
     const handlePriceChange = () => {
         const { mrp, sellingPrice } = form.getFieldsValue();
         if (mrp && sellingPrice) {
@@ -263,6 +94,7 @@ function EditFoodProductModal({ isModalOpen, handleOk, handleCancel, productData
         }
     };
 
+    // Controlled Upload handlers
     const getFileList = setter => e => {
         const files = Array.isArray(e) ? e : e?.fileList || [];
         setter(files);
@@ -274,17 +106,47 @@ function EditFoodProductModal({ isModalOpen, handleOk, handleCancel, productData
         return true;
     };
 
-    const onFinish = values => {
-        const updatedData = {
-            ...productData,
-            ...values,
-            primaryImageList,
-            galleryImageList
-        };
-        console.log("Updated product data: ", updatedData);
-        // Send API call here
-        message.success("Product updated successfully!");
-        handleOk();
+    const onFinish = async (values) => {
+        try {
+            const formData = new FormData();
+
+            formData.append("name", values.name);
+            // formData.append("sku", values.sku);
+            formData.append("mrp", values.mrp);
+            formData.append("sellingPrice", values.sellingPrice);
+            formData.append("discount", values.discount || 0);
+            formData.append("unitOfMeasurement", values.unitOfMeasurement);
+            formData.append("sellingUnit", values.sellingUnit);
+            formData.append("shortDescription", values.shortDescription);
+            formData.append("longDescription", values.longDescription);
+            formData.append("serviceId", values.serviceId);
+            formData.append("type", values.type);
+            formData.append("categoryId", values.category);
+            formData.append("subCategoryId", values.subCategory);
+
+            // Append primary image only if user uploaded a new file
+            if (primaryImageList.length > 0) {
+                const primary = primaryImageList[0];
+                if (primary.originFileObj) {
+                    formData.append("primary_image", primary.originFileObj);
+                }
+            }
+
+            // Append gallery images only if new files uploaded
+            for (const file of galleryImageList) {
+                if (file.originFileObj) {
+                    formData.append("gallery_image", file.originFileObj);
+                }
+            }
+
+            await updateProduct(productData._id, formData);
+
+            message.success("Product updated successfully!");
+            handleOk();
+        } catch (error) {
+            console.error("Update error:", error);
+            message.error("Failed to update product.");
+        }
     };
 
     return (
@@ -295,16 +157,20 @@ function EditFoodProductModal({ isModalOpen, handleOk, handleCancel, productData
             onCancel={handleCancel}
             okText="Save Changes"
             width={800}
+            destroyOnClose={true}
         >
-            <Form form={form} layout="vertical" onFinish={onFinish}>
+            <Form form={form} layout="vertical" onFinish={onFinish} className="space-y-4">
                 <Row gutter={16}>
-                    {[{ name: 'name', label: 'Product Name' }, { name: 'sku', label: 'SKU' }].map(field => (
-                        <Col span={12} key={field.name}>
-                            <Form.Item name={field.name} label={field.label} rules={[{ required: true }]}>
-                                <Input placeholder={`Enter ${field.label.toLowerCase()}`} />
-                            </Form.Item>
-                        </Col>
-                    ))}
+                    <Col span={12}>
+                        <Form.Item name="name" label="Product Name" rules={[{ required: true }]}>
+                            <Input placeholder="Enter product name" />
+                        </Form.Item>
+                    </Col>
+                    {/* <Col span={12}>
+                        <Form.Item name="sku" label="SKU" rules={[{ required: true }]}>
+                            <Input placeholder="Enter SKU" />
+                        </Form.Item>
+                    </Col> */}
                 </Row>
 
                 <Row gutter={16}>
@@ -328,12 +194,12 @@ function EditFoodProductModal({ isModalOpen, handleOk, handleCancel, productData
                 <Row gutter={16}>
                     <Col span={12}>
                         <Form.Item name="unitOfMeasurement" label="Unit of Measurement" rules={[{ required: true }]}>
-                            <Input placeholder="e.g., grams" />
+                            <Input placeholder="e.g., kg" />
                         </Form.Item>
                     </Col>
                     <Col span={12}>
                         <Form.Item name="sellingUnit" label="Selling Unit" rules={[{ required: true }]}>
-                            <Input placeholder="e.g., 1 pack" />
+                            <Input placeholder="e.g., 1" />
                         </Form.Item>
                     </Col>
                 </Row>
@@ -361,22 +227,28 @@ function EditFoodProductModal({ isModalOpen, handleOk, handleCancel, productData
                                 placeholder="Select category"
                                 onChange={value => {
                                     setSelectedCategory(value);
-                                    const subCats = subCategories.filter(sub => sub.cat_id?._id === value);
+                                    const subCats = subCategories.filter(sub =>
+                                        sub.cat_id === value || sub.cat_id?._id === value
+                                    );
                                     setFilteredSubCategories(subCats);
                                     form.setFieldsValue({ subCategory: undefined });
                                 }}
                             >
                                 {categories.map(cat => (
-                                    <Option key={cat._id} value={cat._id}>{cat.name}</Option>
+                                    <Option key={cat._id} value={cat._id}>
+                                        {cat.name}
+                                    </Option>
                                 ))}
                             </Select>
                         </Form.Item>
                     </Col>
                     <Col span={6}>
-                        <Form.Item name="subCategory" label="Sub-Category" rules={[{ required: true }]}>
-                            <Select placeholder="Select sub-category" disabled={!selectedCategory}>
+                        <Form.Item name="subCategory" label="Subcategory" rules={[{ required: true }]}>
+                            <Select placeholder="Select subcategory" disabled={!selectedCategory}>
                                 {filteredSubCategories.map(sub => (
-                                    <Option key={sub._id} value={sub._id}>{sub.name}</Option>
+                                    <Option key={sub._id} value={sub._id}>
+                                        {sub.name}
+                                    </Option>
                                 ))}
                             </Select>
                         </Form.Item>
@@ -384,40 +256,90 @@ function EditFoodProductModal({ isModalOpen, handleOk, handleCancel, productData
                 </Row>
 
                 <Form.Item name="shortDescription" label="Short Description" rules={[{ required: true }]}>
-                    <Input.TextArea rows={2} />
+                    <Input.TextArea rows={2} placeholder="Enter short description" />
                 </Form.Item>
 
                 <Form.Item name="longDescription" label="Long Description" rules={[{ required: true }]}>
-                    <Input.TextArea rows={4} />
+                    <Input.TextArea rows={4} placeholder="Enter detailed description" />
                 </Form.Item>
 
                 <Row gutter={16}>
                     <Col span={8}>
-                        <Form.Item name="primary_image" label="Primary Image" valuePropName="fileList" getValueFromEvent={getFileList(setPrimaryImageList)}>
+                        <Form.Item label="Primary Image">
                             <Upload
                                 listType="picture-card"
-                                beforeUpload={() => false}
                                 maxCount={1}
+                                beforeUpload={() => false} // prevent auto upload
                                 fileList={primaryImageList}
-                                onRemove={file => handleRemove(file, setPrimaryImageList)}
+                                onChange={({ fileList }) => {
+                                    // Limit to one file and generate preview if new file
+                                    const list = fileList.slice(-1).map(file => {
+                                        if (file.originFileObj) {
+                                            return {
+                                                ...file,
+                                                preview: URL.createObjectURL(file.originFileObj)
+                                            };
+                                        }
+                                        return file;
+                                    });
+                                    setPrimaryImageList(list);
+                                }}
+                                onRemove={(file) => {
+                                    setPrimaryImageList([]);
+                                }}
+                                showUploadList={false} // hide default list to use custom preview
                             >
-                                {primaryImageList.length >= 1 ? null : (
-                                    <div><PlusOutlined /><div style={{ marginTop: 8 }}>Upload</div></div>
+                                {primaryImageList.length === 0 ? (
+                                    <div>
+                                        <PlusOutlined />
+                                        <div style={{ marginTop: 8 }}>Upload</div>
+                                    </div>
+                                ) : (
+                                    <Avatar
+                                        src={primaryImageList[0].preview || primaryImageList[0].url}
+                                        size={128}
+                                        shape="square"
+                                        style={{ cursor: 'pointer' }}
+                                        alt="Primary"
+                                    />
                                 )}
                             </Upload>
                         </Form.Item>
                     </Col>
+
                     <Col span={16}>
-                        <Form.Item name="gallery_image" label="Gallery Images" valuePropName="fileList" getValueFromEvent={getFileList(setGalleryImageList)}>
+                        <Form.Item label="Gallery Images">
                             <Upload.Dragger
                                 listType="picture"
-                                beforeUpload={() => false}
                                 multiple
+                                beforeUpload={() => false}
                                 fileList={galleryImageList}
-                                onRemove={file => handleRemove(file, setGalleryImageList)}
+                                onChange={({ fileList }) => {
+                                    // Generate preview for new files
+                                    const list = fileList.map(file => {
+                                        if (file.originFileObj && !file.preview) {
+                                            return {
+                                                ...file,
+                                                preview: URL.createObjectURL(file.originFileObj),
+                                            };
+                                        }
+                                        return file;
+                                    });
+                                    setGalleryImageList(list);
+                                }}
+                                onRemove={(file) => {
+                                    setGalleryImageList(list =>
+                                        list.filter(item => item.uid !== file.uid)
+                                    );
+                                }}
                             >
-                                <p className="ant-upload-drag-icon"><UploadOutlined /></p>
-                                <p className="ant-upload-text">Click or drag to upload</p>
+                                <p className="ant-upload-drag-icon">
+                                    <UploadOutlined />
+                                </p>
+                                <p className="ant-upload-text">Click or drag files to this area to upload</p>
+                                <p className="ant-upload-hint">
+                                    Support for multiple files upload.
+                                </p>
                             </Upload.Dragger>
                         </Form.Item>
                     </Col>

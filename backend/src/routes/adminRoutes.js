@@ -63,6 +63,10 @@ const { updateCoupon } = require("../controllers/admin/couponController/updateCo
 const { deleteCoupon } = require("../controllers/admin/couponController/deleteCoupon");
 const { getOrder } = require("../controllers/admin/orderController/getOrder");
 const { assignedDriver } = require("../controllers/admin/orderController/assignDriver");
+const { getAllProductFlag } = require("../controllers/admin/productFlag/getAllProduct");
+const { toggleProductFlag } = require("../controllers/admin/productFlag/toggleProductFlag");
+const { deleteProduct } = require("../controllers/admin/productController/deleteProduct");
+const { updateProduct } = require("../controllers/admin/productController/updateProduct");
 const router = express.Router()
 
 router.get("/test/admin", (req, res) => {
@@ -103,7 +107,16 @@ router.post("/product/create", adminAuthenticate, fileUploader("product", [{ nam
 router.get("/product/list", adminAuthenticate, getAllProduct)
 router.get("/product/list/:id", adminAuthenticate, getProductViaService)
 router.get("/product/:id", adminAuthenticate, getProductDetail)
-router.patch("/product/status/:id", adminAuthenticate, updateProductStatus)
+router.patch("/product/:id", fileUploader("product", [{ name: "primary_image", maxCount: 1 }, { name: "gallery_image", maxCount: 10 }]), updateProduct);
+router.patch('/product/:id/toggle-status', updateProductStatus);
+router.delete("/product/:id", adminAuthenticate, deleteProduct);
+
+
+//------------------------------------------------
+// product flag
+//------------------------------------------------
+router.get("/product/flag/list", adminAuthenticate, getAllProductFlag)
+router.post("/product/flag/toggle", adminAuthenticate, toggleProductFlag)
 
 
 //------------------------------------------------

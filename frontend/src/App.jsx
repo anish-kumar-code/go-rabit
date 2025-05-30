@@ -51,6 +51,7 @@ import WalletHistory from './pages/vendor/wallet/WalletHistory'
 import Coupon from './pages/admin/Coupon/Coupon'
 import Driver from "./pages/admin/Driver/Driver"
 import CouponVendor from './pages/vendor/Coupon/CouponVenor'
+import ProductFlags from './pages/admin/ProductFlags/ProductFlags'
 
 function App() {
   return (
@@ -75,6 +76,7 @@ function App() {
           <Route path='vendor/:id' element={<VendorDetails />} />
           <Route path='vendor/shops/:id' element={<VendorProducts />} />
           <Route path='products/:produtSlug' element={<ProductDetails />} />
+          <Route path='product-flags' element={<ProductFlags />} />
           <Route path='shop' element={<Shop />} />
           <Route path='order' element={<Order />} />
           <Route path="order/:id" element={<OrderDetailsPage />} />

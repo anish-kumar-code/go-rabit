@@ -13,7 +13,6 @@ exports.createProduct = catchAsync(async (req, res, next) => {
     const requiredFields = [
         { field: name, name: "Product name" },
         { field: categoryId, name: "Category ID" },
-        { field: sku, name: "SKU" },
         { field: mrp, name: "MRP" },
         { field: sellingPrice, name: "Selling price" },
         { field: unitOfMeasurement, name: "Unit of measurement" },
@@ -28,8 +27,8 @@ exports.createProduct = catchAsync(async (req, res, next) => {
         if (error) return next(error);
     }
 
-    let skuProduct = await Product.findOne({ sku });
-    if (skuProduct) return next(new AppError("SKU is already exists. Plz enter different SKU No.", 400));
+    // let skuProduct = await Product.findOne({ sku });
+    // if (skuProduct) return next(new AppError("SKU is already exists. Plz enter different SKU No.", 400));
 
     let galleryimagePaths;
     if (req.files && req.files.gallery_image) {
