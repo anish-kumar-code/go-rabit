@@ -40,14 +40,15 @@ const AdminSidebar = ({ collapsed, settingData }) => {
         { key: 'dashboard', icon: <LuLayoutDashboard size={18} />, label: 'Dashboard', onClick: () => navigate('/admin') },
         { key: 'banner', icon: <IoImagesOutline size={18} />, label: 'Banner', onClick: () => navigate('/admin/banner') },
         { key: 'category', icon: <TbCategory2 size={18} />, label: 'Category', onClick: () => navigate('/admin/category') },
-         { key: 'coupon', icon: <RiCoupon3Line size={18} />, label: 'Coupon', onClick: () => navigate('/admin/coupon') },
-        { key: 'driver', icon: <RiEBike2Fill size={18} />, label: 'Driver', onClick: () => navigate('/admin/driver') },
         { key: 'sub-category', icon: <MdOutlineCategory size={18} />, label: 'Sub Category', onClick: () => navigate('/admin/sub-category') },
         { key: 'product', icon: <IoFastFoodOutline size={18} />, label: 'Product', onClick: () => navigate('/admin/product') },
         { key: 'product-flags', icon: <IoFastFoodOutline size={18} />, label: 'Product Flag', onClick: () => navigate('/admin/product-flags') },
         { key: 'vendor', icon: <LuUsers size={18} />, label: 'Vendor', onClick: () => navigate('/admin/vendor') },
         { key: 'shop', icon: <IoStorefront size={18} />, label: 'Shop', onClick: () => navigate('/admin/shop') },
         { key: 'order', icon: <FaClipboardList size={18} />, label: 'Order', onClick: () => navigate('/admin/order') },
+        { key: 'coupon', icon: <RiCoupon3Line size={18} />, label: 'Coupon', onClick: () => navigate('/admin/coupon') },
+        { key: 'driver', icon: <RiEBike2Fill size={18} />, label: 'Driver', onClick: () => navigate('/admin/driver') },
+        { key: 'explore', icon: <RiEBike2Fill size={18} />, label: 'Explore', onClick: () => navigate('/admin/explore') },
         {
             key: 'request', icon: <GiTakeMyMoney size={18} />, label: 'Payment Request', children: [
                 { key: 'request-vendor', label: 'Vendor Request', onClick: () => navigate('/admin/request/vendor') },

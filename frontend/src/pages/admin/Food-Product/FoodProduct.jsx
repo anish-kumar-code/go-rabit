@@ -136,7 +136,7 @@ const FoodProduct = () => {
                 }}
                 handleCancel={() => setIsModalOpen(false)}
                 data={{ categories, brand, vendor, transformedSubCategories, subCategories }}
-                serviceType={activeTab} 
+                serviceType={activeTab}
             />
 
             <EditFoodProductModel

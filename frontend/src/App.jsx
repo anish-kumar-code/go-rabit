@@ -52,6 +52,7 @@ import Coupon from './pages/admin/Coupon/Coupon'
 import Driver from "./pages/admin/Driver/Driver"
 import CouponVendor from './pages/vendor/Coupon/CouponVenor'
 import ProductFlags from './pages/admin/ProductFlags/ProductFlags'
+import Explore from './pages/admin/Explore/Explore'
 
 function App() {
   return (
@@ -82,6 +83,7 @@ function App() {
           <Route path="order/:id" element={<OrderDetailsPage />} />
           <Route path="request/vendor" element={<PaymentRequest />} />
           <Route path="request/driver" element={<PaymentRequest />} />
+          <Route path='explore' element={<Explore />} />
           <Route path='user' element={<User />} />
           <Route path='settings' element={<Settings />} />
           <Route path='settings/profile' element={<Profile />} />
