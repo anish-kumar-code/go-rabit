@@ -54,6 +54,7 @@ import CouponVendor from './pages/vendor/Coupon/CouponVenor'
 import ProductFlags from './pages/admin/ProductFlags/ProductFlags'
 import Explore from './pages/admin/Explore/Explore'
 import ExploreSection from './pages/admin/ExploreSection/ExploreSection'
+import Store199 from './pages/admin/Store199/Store199'
 
 function App() {
   return (
@@ -79,6 +80,7 @@ function App() {
           <Route path='vendor/shops/:id' element={<VendorProducts />} />
           <Route path='products/:produtSlug' element={<ProductDetails />} />
           <Route path='product-flags' element={<ProductFlags />} />
+          <Route path='store199' element={<Store199 />} />
           <Route path='shop' element={<Shop />} />
           <Route path='order' element={<Order />} />
           <Route path="order/:id" element={<OrderDetailsPage />} />

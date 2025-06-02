@@ -20,7 +20,7 @@ exports.orderList = catchAsync(async (req, res, next) => {
         }
 
 
-        const orderListRaw = await order.find(filter).sort({ createdAt: -1 }).populate("shopId", "name address image lat long").populate("addressId", "address1 address2 city pincode state").populate("userId", "name email mobileNo lat long")
+        const orderListRaw = await order.find(filter).sort({ createdAt: -1 }).populate("shopId", "name address image lat long").populate("addressId", "address1 address2 city pincode state").populate("userId", "name email mobileNo lat long").populate("productData.product_id")
         if (!orderListRaw || orderListRaw.length === 0) {
             return next(new AppError("No orders found for this driver", 404));
         }
@@ -37,6 +37,7 @@ exports.orderList = catchAsync(async (req, res, next) => {
                     long: ord.shopId.long
                 },
                 delivery: {
+                    image: ord.userId.profileImage || "",
                     name: ord.userId.name,
                     email: ord.userId.email,
                     mobileNo: ord.userId.mobileNo,
@@ -48,7 +49,14 @@ exports.orderList = catchAsync(async (req, res, next) => {
                     pincode: ord.addressId.pincode,
                     state: ord.addressId.state
                 },
+                products: {
+                    name: ord.productData.product_id.name,
+                    price: ord.productData.price,
+                    quantity: ord.productData.quantity,
+                    finialPrice: ord.productData.finalPrice,
+                },
                 status: ord.orderStatus,
+                deliveryCharge: ord.deliveryCharge,
                 totalAmount: ord.finalTotalPrice,
                 createdAt: ord.createdAt
             };

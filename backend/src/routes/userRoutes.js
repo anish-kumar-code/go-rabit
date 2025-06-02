@@ -32,6 +32,7 @@ const { getsubCategoryProductList } = require("../controllers/user/homeControlle
 const { getProductDetailOfGrocery } = require("../controllers/user/homeController/getProductDetailOfGrocery");
 const { getSpecialGroceryProduct } = require("../controllers/user/homeController/getSpecialGroceryProduct");
 const { deleteCart } = require("../controllers/user/cartController/deleteCart");
+const { getAllProductOfExploreSection } = require("../controllers/user/exploreController/getAllProductOfExploreSection");
 const router = express.Router()
 
 // router.get("/test", (req,res)=>{
@@ -78,6 +79,7 @@ router.get("/banner/list", userAuthenticate, getAllBanners);
 // explore
 //------------------------------------------------
 router.get("/explore/:exploreId", userAuthenticate, getExplore);
+router.get("/exploreSection/:exploreSectionId", userAuthenticate, getAllProductOfExploreSection);
 
 
 

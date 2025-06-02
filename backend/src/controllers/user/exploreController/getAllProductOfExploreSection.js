@@ -16,12 +16,10 @@ const formatProduct = (prod) => ({
 });
 
 // Get Single
-exports.getExplore = catchAsync(async (req, res) => {
-    const exploreId = req.params.exploreId
-    const explore = await Explore.findById(exploreId).select("name bannerImg couponCode");
-    if (!explore) throw new AppError("Explore not found", 404);
+exports.getAllProductOfExploreSection = catchAsync(async (req, res) => {
+    const exploreSectionId = req.params.exploreSectionId
 
-    const exploreSectionsRaw = await exploreSection.find({ exploreId: exploreId }).select("name products").populate({ path: "products" });
+    const exploreSectionsRaw = await exploreSection.find({ _id: exploreSectionId }).select("name products").populate({ path: "products" });
     if (!exploreSectionsRaw || exploreSectionsRaw.length === 0) {
         return res.status(404).json({
             status: false,
@@ -29,17 +27,16 @@ exports.getExplore = catchAsync(async (req, res) => {
         });
     }
 
-    const exploreSections = exploreSectionsRaw.map((section) => {
+    const exploreSectionsProducts = exploreSectionsRaw.map((section) => {
         return {
             _id: section._id,
             name: section.name,
-            products: section.products.slice(0,5).map(product => formatProduct(product))
+            products: section.products.map(product => formatProduct(product))
         }
     });
 
     return res.status(200).json({
         status: true,
-        explore,
-        exploreSections
+        exploreSectionsProducts
     });
 });

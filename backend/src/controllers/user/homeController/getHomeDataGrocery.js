@@ -28,7 +28,7 @@ exports.getHomeDataGrocery = catchAsync(async (req, res) => {
     const [banners, categories, explore, featuredRaw, seasonalRaw, vegRaw, fruitRaw] = await Promise.all([
         banner.find({ serviceId }).select("image").sort({ createdAt: -1 }),
         Category.find({ cat_id: null, serviceId }).select("name image").limit(8).sort({ createdAt: -1 }),
-        Explore.find().select("name icon"),
+        Explore.find({serviceId}).select("name icon"),
         VendorProduct.find({ ...queryCommon, isFeatured: true }).limit(10).populate("shopId", "name lat long"),
         VendorProduct.find({ ...queryCommon, isSeasonal: true }).limit(10).populate("shopId", "name lat long"),
         VendorProduct.find({ ...queryCommon, isVegetableOfTheDay: true }).limit(10).populate("shopId", "name lat long"),

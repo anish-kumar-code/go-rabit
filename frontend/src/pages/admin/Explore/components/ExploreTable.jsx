@@ -30,6 +30,13 @@ const ExploreTable = ({ searchText = '', data = [], onEdit, onDelete, loading = 
             align: 'center',
         },
         {
+            title: 'Service',
+            dataIndex: 'serviceId.name',
+            key: 'serviceId',
+            align: 'center',
+            render: (_, record)=>`${record.serviceId.name}`
+        },
+        {
             title: 'Action',
             key: 'action',
             align: 'right',

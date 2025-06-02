@@ -30,7 +30,7 @@ exports.getHomeData = catchAsync(async (req, res) => {
     const [banners, categories, explore, recommendedRaw, featuredRaw] = await Promise.all([
         banner.find({ serviceId }).select("image").sort({ createdAt: -1 }),
         Category.find({ cat_id: null, serviceId }).select("name image").limit(8).sort({ createdAt: -1 }),
-        Explore.find().select("name icon"),
+        Explore.find({serviceId}).select("name icon"),
         VendorProduct.find({ ...commonQuery, isRecommended: true }).limit(10).populate("shopId", "name lat long"),
         VendorProduct.find({ ...commonQuery, isFeatured: true }).limit(10).populate("shopId", "name lat long"),
     ]);

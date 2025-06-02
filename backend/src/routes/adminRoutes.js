@@ -69,6 +69,11 @@ const { deleteProduct } = require("../controllers/admin/productController/delete
 const { updateProduct } = require("../controllers/admin/productController/updateProduct");
 const { getAllProductExplore } = require("../controllers/admin/exploreController/getAllProduct");
 const { getExploreViaId } = require("../controllers/admin/exploreSectionController/getExploreViaId");
+const { createStore199Product } = require("../controllers/admin/store199Controller/createStore199Product");
+const { getAllProductFor199Assign } = require("../controllers/admin/store199Controller/getAllProductFor199Assign");
+const { getAllProductOfStore199 } = require("../controllers/admin/store199Controller/getAllProductOfStore199");
+const { deleteStore199Product } = require("../controllers/admin/store199Controller/deleteStore199Product");
+const { createBulkStore199Product } = require("../controllers/admin/store199Controller/createBulkStore199Product");
 const router = express.Router()
 
 router.get("/test/admin", (req, res) => {
@@ -156,6 +161,18 @@ router.get("/exploresection/:id", getSection);
 router.get("/explore/:exploreId/section", getExploreViaId);
 router.patch("/exploresection/:id", updateSection);
 router.delete("/exploresection/:id", deleteSection);
+
+//------------------------------------------------
+// store199 product
+//------------------------------------------------
+router.post("/store199/product", adminAuthenticate, createStore199Product)
+router.get("/store199/product", adminAuthenticate, getAllProductOfStore199)
+router.delete("/store199/product/:id", adminAuthenticate, deleteStore199Product)
+router.get("/store199/product/all", adminAuthenticate, getAllProductFor199Assign)
+router.post("/store199/product/bulk", adminAuthenticate, createBulkStore199Product)
+// router.get("/copy/product/:id", vendorAuthenticate, getCopyProductDetail)
+// router.patch("/copy/product/status/:id", vendorAuthenticate, updateCopyProductStatus)
+// router.patch("/copy/product/update/:id", vendorAuthenticate, updateCopyProduct)
 
 
 //------------------------------------------------
