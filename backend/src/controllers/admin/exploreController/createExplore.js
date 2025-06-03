@@ -4,7 +4,7 @@ const catchAsync = require("../../../utils/catchAsync");
 
 // Create Explore
 exports.createExplore = catchAsync(async (req, res) => {
-    let { name, couponCode } = req.body;
+    let { name, couponCode, serviceId } = req.body;
 
     if (!name || !name.trim()) throw new AppError("name is required", 400);
 
@@ -24,6 +24,7 @@ exports.createExplore = catchAsync(async (req, res) => {
         icon: iconPath,
         bannerImg: bannerPath,
         couponCode,
+        serviceId
     });
 
     await explore.save();

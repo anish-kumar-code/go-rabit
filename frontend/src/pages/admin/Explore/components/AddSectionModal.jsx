@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Form, Input, Select, message } from 'antd';
 import { createExploreSection, getAllExplore, getAllExploreProduct } from '../../../../services/admin/apiExplore';
 
-const AddSectionModal = ({ isModalOpen, handleCancel, onSuccess }) => {
+const AddSectionModal = ({ isModalOpen, handleCancel, onSuccess, exploreId }) => {
     const [form] = Form.useForm();
     const [explores, setExplores] = useState([]);
     const [products, setProducts] = useState([]);
@@ -29,7 +29,7 @@ const AddSectionModal = ({ isModalOpen, handleCancel, onSuccess }) => {
         try {
             const payload = {
                 name: values.name,
-                exploreId: values.exploreId,
+                exploreId: exploreId,
                 products: values.products,
             };
             const res = await createExploreSection(payload);
@@ -63,20 +63,6 @@ const AddSectionModal = ({ isModalOpen, handleCancel, onSuccess }) => {
                     rules={[{ required: true, message: 'Please enter section name' }]}
                 >
                     <Input placeholder="e.g. Recommended Products" />
-                </Form.Item>
-
-                <Form.Item
-                    name="exploreId"
-                    label="Select Explore"
-                    rules={[{ required: true, message: 'Please select an explore item' }]}
-                >
-                    <Select placeholder="Choose an explore item">
-                        {explores.map((exp) => (
-                            <Select.Option key={exp._id} value={exp._id}>
-                                {exp.name}
-                            </Select.Option>
-                        ))}
-                    </Select>
                 </Form.Item>
 
                 <Form.Item

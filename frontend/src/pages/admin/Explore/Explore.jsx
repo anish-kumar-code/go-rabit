@@ -84,6 +84,10 @@ function Explore() {
         }
     };
 
+    const onView = (record) => {
+        console.log(record)
+    }
+
     return (
         <>
             <div className='lg:px-10 px-5 my-8 md:flex items-center gap-4 justify-between'>
@@ -101,6 +105,7 @@ function Explore() {
                 searchText={searchText}
                 data={explore}
                 onEdit={openModal}
+                onView={onView}
                 onDelete={handleDelete}
             />
 

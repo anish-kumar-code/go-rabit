@@ -5,10 +5,6 @@ const ProductDataSchema = new Schema({
     product_id: { type: Schema.Types.ObjectId, ref: 'VendorProduct', required: true },
     price: { type: Number, required: true },
     quantity: { type: Number, required: true },
-    // toppingsArray: {
-    //     type: [String], // or ObjectId if topping is a separate model
-    //     default: []
-    // },
     toppings: [
         {
             toppingId: { type: Schema.Types.ObjectId, ref: "Toppins", required: true, },

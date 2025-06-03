@@ -55,6 +55,7 @@ import ProductFlags from './pages/admin/ProductFlags/ProductFlags'
 import Explore from './pages/admin/Explore/Explore'
 import ExploreSection from './pages/admin/ExploreSection/ExploreSection'
 import Store199 from './pages/admin/Store199/Store199'
+import ExploreSectionTable from './pages/admin/Explore/components/ExploreSectionTable'
 
 function App() {
   return (
@@ -87,6 +88,7 @@ function App() {
           <Route path="request/vendor" element={<PaymentRequest />} />
           <Route path="request/driver" element={<PaymentRequest />} />
           <Route path='explore' element={<Explore />} />
+          <Route path='explore/:exploreId' element={<ExploreSectionTable />} />
           <Route path='explore-section' element={<ExploreSection />} />
           <Route path='user' element={<User />} />
           <Route path='settings' element={<Settings />} />

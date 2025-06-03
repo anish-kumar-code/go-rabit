@@ -57,6 +57,7 @@ const { changeOrderStatus } = require("../controllers/vendor/orderController/cha
 const { getAllCoupons } = require("../controllers/vendor/couponController/getAllCoupon");
 const { updateCoupon } = require("../controllers/vendor/couponController/updateCoupon");
 const { deleteCoupon } = require("../controllers/vendor/couponController/deleteCoupon");
+const { statusNightCafe } = require("../controllers/vendor/shopController/statusNightCafe");
 
 // router.get("/test", test);
 
@@ -111,6 +112,7 @@ router.patch("/shop/update/:id", vendorAuthenticate,
 router.get("/shop/list", vendorAuthenticate, vendorShopList)
 router.post("/shop/close/:id", vendorAuthenticate, closeShop);
 router.post("/shop/status/:id", vendorAuthenticate, statusShop);
+router.post("/shop/nightCafe/:id", vendorAuthenticate, statusNightCafe);
 
 
 //------------------------------------------------

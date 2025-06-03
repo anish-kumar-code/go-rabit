@@ -92,9 +92,15 @@ function ExploreSection() {
     };
 
     const handleCancel = () => {
-        setIsModalOpen(false); 
-        setSelectedExploreId(null); 
+        setIsModalOpen(false);
+        setSelectedExploreId(null);
     };
+
+    const onSuccess = () => {
+        setIsModalOpen(false);
+        setSelectedExploreId(null);
+        fetchExploreList()
+    }
 
     return (
         <>
@@ -136,6 +142,7 @@ function ExploreSection() {
                     handleCancel={handleCancel}
                     onSubmit={handleCreateSection}
                     products={productList}
+                    onSuccess={onSuccess}
                 />
             </div>
         </>

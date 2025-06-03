@@ -1,17 +1,21 @@
 import { Avatar, Button, Space, Table } from 'antd';
 import { FaEdit, FaTrash, FaUserTie } from 'react-icons/fa';
 import { useMemo } from 'react';
+import { EyeOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-const ExploreTable = ({ searchText = '', data = [], onEdit, onDelete, loading = false }) => {
+const ExploreTable = ({ searchText = '', data = [], onEdit, onDelete, onView, loading = false }) => {
+
+    const navigate = useNavigate()
 
     const columns = useMemo(() => [
         {
             title: 'Avatar',
             key: 'avatar',
             align: 'center',
-            render: (_, { icon, name }) => (
+            render: (_, { icon }) => (
                 <Avatar size={40} src={icon ? `${BASE_URL}/${icon}` : undefined}>
                     {!icon && <FaUserTie />}
                 </Avatar>
@@ -34,7 +38,7 @@ const ExploreTable = ({ searchText = '', data = [], onEdit, onDelete, loading = 
             dataIndex: 'serviceId.name',
             key: 'serviceId',
             align: 'center',
-            render: (_, record)=>`${record.serviceId.name}`
+            render: (_, record) => `${record.serviceId.name}`
         },
         {
             title: 'Action',
@@ -42,12 +46,9 @@ const ExploreTable = ({ searchText = '', data = [], onEdit, onDelete, loading = 
             align: 'right',
             render: (_, record) => (
                 <Space size="small">
-                    <Button type="primary" icon={<FaEdit />} onClick={() => onEdit(record)}>
-                        Edit
-                    </Button>
-                    <Button type="primary" danger icon={<FaTrash />} onClick={() => onDelete(record)}>
-                        Delete
-                    </Button>
+                    <Button type="primary" icon={<EyeOutlined />} onClick={() => navigate(`/admin/explore/${record._id}`)}></Button>
+                    <Button type="primary" icon={<FaEdit />} onClick={() => onEdit(record)}></Button>
+                    <Button type="primary" danger icon={<FaTrash />} onClick={() => onDelete(record)}></Button>
                 </Space>
             ),
         },

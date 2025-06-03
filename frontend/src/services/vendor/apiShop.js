@@ -45,3 +45,14 @@ export const shopStatus = async (id, status) => {
         message.error('Something went wrong');
     }
 }
+
+export const shopNightCafe = async (id, status) => {
+    // var status = status ? 'active' : 'inactive';
+    try {
+        const response = await axiosInstance.post(`/api/vendor/shop/nightCafe/${id}`, { status });
+        message.success('Shop status change');
+        return response;
+    } catch (error) {
+        message.error('Something went wrong');
+    }
+}

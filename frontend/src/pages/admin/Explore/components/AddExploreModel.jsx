@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Modal, Form, Input, message, Upload, Button } from 'antd';
+import { Modal, Form, Input, message, Upload, Button, Select } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { addExplore } from '../../../../services/admin/apiExplore';
 
@@ -23,6 +23,7 @@ function AddExploreModal({ isModalOpen, handleOk, handleCancel, fetchExplore }) 
     const formData = new FormData();
     formData.append('name', values.name);
     formData.append('couponCode', values.couponCode);
+    formData.append('serviceId', values.serviceId);
     formData.append('icon', iconFileList[0].originFileObj);
     formData.append('banner', bannerFileList[0].originFileObj);
 
@@ -71,6 +72,12 @@ function AddExploreModal({ isModalOpen, handleOk, handleCancel, fetchExplore }) 
           rules={[{ required: true, message: 'Please enter coupon code' }]}
         >
           <Input placeholder="e.g. SAVE50" />
+        </Form.Item>
+        <Form.Item name="serviceId" label="Service Type" rules={[{ required: true }]}>
+          <Select placeholder="Select service">
+            <Option value="67ecc79120a93fc0b92a8b19">Food</Option>
+            <Option value="67ecc79a20a93fc0b92a8b1b">Grocery</Option>
+          </Select>
         </Form.Item>
 
         <Form.Item label="Icon" required>

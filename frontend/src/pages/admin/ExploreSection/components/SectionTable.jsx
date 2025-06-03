@@ -4,6 +4,7 @@ import { Avatar, Tooltip, Table } from 'antd';
 const BASE_URL = import.meta.env.VITE_BASE_URL || '';
 
 const SectionTable = ({ data = [], loading }) => {
+
     const columns = [
         {
             title: 'Section Name',

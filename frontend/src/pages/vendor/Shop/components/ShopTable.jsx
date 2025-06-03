@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table, Space, Button, Card, Switch, Tooltip, Badge, Tag } from 'antd';
-import { shopClose, shopStatus } from '../../../../services/vendor/apiShop';
+import { shopClose, shopNightCafe, shopStatus } from '../../../../services/vendor/apiShop';
 import { IoMdEye } from 'react-icons/io';
 import { useNavigate } from 'react-router';
 import { FaEdit, FaPlus } from 'react-icons/fa';
@@ -63,14 +63,23 @@ function ShopTable({ shops, handleEdit, loading }) {
             )
         },
         {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
+            title: 'Night Cafe',
+            dataIndex: 'isNightCafe',
+            key: 'isNightCafe',
             align: "center",
             render: (_, record) => (
-                <Switch defaultChecked={record.status} onChange={(checked) => shopStatus(record._id, checked)} />
+                <Switch defaultChecked={record.isNightCafe} onChange={(checked) => shopNightCafe(record._id, checked)} />
             )
         },
+        // {
+        //     title: 'Status',
+        //     dataIndex: 'status',
+        //     key: 'status',
+        //     align: "center",
+        //     render: (_, record) => (
+        //         <Switch defaultChecked={record.status} onChange={(checked) => shopStatus(record._id, checked)} />
+        //     )
+        // },
         {
             title: 'Action',
             key: 'action',
