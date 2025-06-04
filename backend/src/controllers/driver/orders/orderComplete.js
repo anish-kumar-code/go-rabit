@@ -106,5 +106,5 @@ exports.orderComplete = catchAsync(async (req, res) => {
     } catch (error) {
         console.error("Order Complete Error:", error);
         return res.status(500).json({ success: false, message: "Server error while order complete.", error: error.message });
-    }
+    } 
 });
