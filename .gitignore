@@ -59,7 +59,8 @@
 # /backend/public/
 
 # firbase code
-/backend/src/firebase
+/backend/src/firebase/
+/backend/src/firebase/*
 
 # Build output
 /backend/.out/
