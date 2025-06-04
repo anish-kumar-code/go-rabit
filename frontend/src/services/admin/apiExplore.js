@@ -77,6 +77,15 @@ export const getSectionsByExplore = async (id) => {
     }
 }
 
+export const deleteProductFromExploreSection = async (data) => {
+    try {
+        const response = await axiosInstance.post(`/api/admin/exploresection/product`, data);
+        return response.data;
+    } catch (error) {
+        message.error('Error fetching explore sections');
+    }
+}
+
 export const deleteSection = async () => {
     console.log("working")
 }

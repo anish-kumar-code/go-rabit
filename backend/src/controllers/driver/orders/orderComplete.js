@@ -15,22 +15,24 @@ exports.orderComplete = catchAsync(async (req, res) => {
         const status = req.body.status;
 
         const order = await Order.findById(orderId);
+        const driver = await Driver.findById(driverId);
         if (!order) return res.status(404).json({ status: false, message: "Order not found" });
 
         if (status == "cancelled") {
             order.orderStatus = "cancelled";
+            driver.currentOrderId = null; // Clear current order for driver
+            await driver.save();
             await order.save();
             return res.status(200).json({ status: true, message: "Order cancelled successfully" });
         }
 
         if (status == "accepted") {
             order.orderStatus = "running";
+            driver.currentOrderId = order._id; // Set current order for driver
+            await driver.save();
             await order.save();
             return res.status(200).json({ status: true, message: "Order accepted successfully" });
         }
-
-        // const driver = await Driver.findById(driverId);
-        // if (!driver) return res.status(404).json({ status: false, message: "Driver not found" });
 
         const { itemTotal, couponAmount, afterCouponAmount, packingCharge, deliveryCharge, shopId, vendorId } = order;
         const { commission: commissionRate, gst: gstRate, finialPlateformFee: plateformFee } = await Setting.findById("680f1081aeb857eee4d456ab");
@@ -66,8 +68,9 @@ exports.orderComplete = catchAsync(async (req, res) => {
         shop.wallet_balance += Math.ceil(vendorAmount)
         await shop.save()
 
-        const driver = await Driver.findById(driverId);
+        // const driver = await Driver.findById(driverId);
         driver.wallet_balance += Math.ceil(deliveryBoyAmount)
+        driver.currentOrderId = null; 
         await driver.save()
 
         // Record wallet history for vendor

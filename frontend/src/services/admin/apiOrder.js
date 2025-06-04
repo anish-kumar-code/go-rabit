@@ -12,7 +12,7 @@ export const getAllOrder = async () => {
     }
 }
 
-export const getOrderDetails = async(id)=>{
+export const getOrderDetails = async (id) => {
     try {
         const response = await axiosInstance.get(`/api/admin/order/${id}`);
         // console.log(response)
@@ -23,14 +23,25 @@ export const getOrderDetails = async(id)=>{
     }
 }
 
-export const assignDriver = async(id, driverId)=>{
+export const getAllDrivers = async (id) => {
     try {
-        const response = await axiosInstance.patch(`/api/admin/order/assign/${id}`, {driverId});
+        const response = await axiosInstance.get(`/api/admin/order/${id}/driverlist`)
+        // console.log(response.data.data)
+        return response.data;
+    } catch (error) {
+        console.log(error)
+        message.error('Error fetching category list');
+    }
+}
+
+export const assignDriver = async (id, driverId) => {
+    try {
+        const response = await axiosInstance.patch(`/api/admin/order/assign/${id}`, { driverId });
         // console.log(response)
         return response.data;
     } catch (error) {
         // console.log(error)
-        message.error('Error assigning order');
+        message.error(error.response.data.message || 'Error assigning order');
     }
 }
 

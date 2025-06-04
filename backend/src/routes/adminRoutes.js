@@ -74,6 +74,8 @@ const { getAllProductFor199Assign } = require("../controllers/admin/store199Cont
 const { getAllProductOfStore199 } = require("../controllers/admin/store199Controller/getAllProductOfStore199");
 const { deleteStore199Product } = require("../controllers/admin/store199Controller/deleteStore199Product");
 const { createBulkStore199Product } = require("../controllers/admin/store199Controller/createBulkStore199Product");
+const { deleteProductFromExploreSection } = require("../controllers/admin/exploreSectionController/deleteProductFromExploreSection");
+const { getAllDriverForThisOrder } = require("../controllers/admin/orderController/getAllDriverForThisOrder");
 const router = express.Router()
 
 router.get("/test/admin", (req, res) => {
@@ -161,6 +163,7 @@ router.get("/exploresection/:id", getSection);
 router.get("/explore/:exploreId/section", getExploreViaId);
 router.patch("/exploresection/:id", updateSection);
 router.delete("/exploresection/:id", deleteSection);
+router.post("/exploresection/product", deleteProductFromExploreSection);
 
 //------------------------------------------------
 // store199 product
@@ -223,6 +226,7 @@ router.get("/order", adminAuthenticate, getAllOrder)
 router.patch("/order/status/:orderId", adminAuthenticate, orderComplete)
 // router.post("/order", userAuthenticate, createOrder)
 router.get("/order/:orderId", adminAuthenticate, getOrder)
+router.get("/order/:orderId/driverlist", adminAuthenticate, getAllDriverForThisOrder)
 
 router.patch("/order/assign/:orderId", adminAuthenticate, assignedDriver)
 

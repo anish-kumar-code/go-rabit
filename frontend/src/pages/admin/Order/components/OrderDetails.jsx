@@ -2,16 +2,10 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Select, Button, message, Card, Typography, Spin, Table, Row, Col } from 'antd';
 import { assignDriver, getOrderDetails } from '../../../../services/admin/apiOrder';
-import { getAllDrivers } from '../../../../services/admin/apiDrivers';
+import { getAllDrivers } from '../../../../services/admin/apiOrder';
 
 const { Option } = Select;
 const { Title, Text } = Typography;
-
-const deliveryBoys = [
-  { id: '1', name: 'Abhishek' },
-  { id: '2', name: 'Rohan' },
-  { id: '3', name: 'Vikram' },
-];
 
 const OrderDetails = () => {
   const { id } = useParams();

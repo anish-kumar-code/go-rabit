@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 exports.registerDriver = catchAsync(async (req, res, next) => {
     const {
         name, email, mobileNo, password, address, licenseNumber,
-        vehicleType, vehicleModel, registrationNumber, insuranceNumber
+        vehicleType, vehicleModel, registrationNumber, insuranceNumber, deviceId, deviceToken
     } = req.body;
 
     const emailExists = await Driver.findOne({ email });
@@ -39,7 +39,9 @@ exports.registerDriver = catchAsync(async (req, res, next) => {
         image,
         vehicleRcImage,
         insuranceImage,
-        licenseImage
+        licenseImage,
+        deviceId,
+        deviceToken
     });
 
     res.status(201).json({

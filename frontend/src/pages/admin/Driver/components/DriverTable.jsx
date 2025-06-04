@@ -43,9 +43,9 @@ const DriverTable = ({ searchText, data, onEdit, onDelete, loading }) => {
         },
         {
             title: 'License No.',
-            key: 'vehicleLicense',
+            key: 'licenseNumner',
             align: "center",
-            render: (_, record) => record?.vehicle?.licenseNumber || '-'
+            render: (_, record) => record?.licenseNumber || '-'
         },
         {
             title: 'Status',

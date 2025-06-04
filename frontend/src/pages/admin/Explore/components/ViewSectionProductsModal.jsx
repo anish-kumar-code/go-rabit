@@ -36,7 +36,7 @@ const ViewSectionProductsModal = ({
                             <Popconfirm
                                 key="delete"
                                 title="Delete this product?"
-                                onConfirm={() => onDeleteProduct(item._id)}
+                                onConfirm={() => onDeleteProduct(section._id, item._id)}
                                 okText="Yes"
                                 cancelText="No"
                             >

@@ -50,14 +50,15 @@ const AdminSidebar = ({ collapsed, settingData }) => {
         { key: 'order', icon: <FaClipboardList size={18} />, label: 'Order', onClick: () => navigate('/admin/order') },
         { key: 'coupon', icon: <RiCoupon3Line size={18} />, label: 'Coupon', onClick: () => navigate('/admin/coupon') },
         { key: 'driver', icon: <RiEBike2Fill size={18} />, label: 'Driver', onClick: () => navigate('/admin/driver') },
+        { key: 'explore', icon: <SiNextra size={18} />, label: 'Explore', onClick: () => navigate('/admin/explore') },
 
 
-        {
-            key: 'explorea', icon: <SiNextra size={18} />, label: 'Explore', children: [
-                { key: 'explore', label: 'Explore', onClick: () => navigate('/admin/explore') },
-                { key: 'explore-section', label: 'Explore Section', onClick: () => navigate('/admin/explore-section') },
-            ]
-        },
+        // {
+        //     key: 'explorea', icon: <SiNextra size={18} />, label: 'Explore', children: [
+        //         { key: 'explore', label: 'Explore', onClick: () => navigate('/admin/explore') },
+        //         { key: 'explore-section', label: 'Explore Section', onClick: () => navigate('/admin/explore-section') },
+        //     ]
+        // },
 
         {
             key: 'request', icon: <GiTakeMyMoney size={18} />, label: 'Payment Request', children: [

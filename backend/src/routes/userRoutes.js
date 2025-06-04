@@ -35,6 +35,9 @@ const { deleteCart } = require("../controllers/user/cartController/deleteCart");
 const { getAllProductOfExploreSection } = require("../controllers/user/exploreController/getAllProductOfExploreSection");
 const { getNightCafe } = require("../controllers/user/nightCafeController/getNightCafe");
 const { getStore199 } = require("../controllers/user/store199/getStore199");
+const { getNightCafeShopOfCategory } = require("../controllers/user/nightCafeController/getNightCafeShopOfCategory");
+const { getShopListInNightCafe } = require("../controllers/user/nightCafeController/getShopListInNightCafe");
+const sendPushNotification = require("../utils/sendPushNotification");
 const router = express.Router()
 
 // router.get("/test", (req,res)=>{
@@ -99,6 +102,8 @@ router.get("/store199", userAuthenticate, getStore199);
 // night cafe
 //------------------------------------------------
 router.get("/nightCafe", userAuthenticate, getNightCafe);
+router.get('/nightCafe/allshops', userAuthenticate, getShopListInNightCafe);
+router.get('/nightCafe/:categoryId/shop', userAuthenticate, getNightCafeShopOfCategory);
 
 
 //------------------------------------------------
@@ -129,6 +134,25 @@ router.get("/order/:orderId", userAuthenticate, getOrderDetail)
 // cms
 //------------------------------------------------
 router.get("/cms", userAuthenticate, getCms);
+
+
+//------------------------------------------------
+// notification test
+//------------------------------------------------
+router.post("/notification/send", async (req, res) => {
+    const { deviceToken, title, body } = req.body;
+
+    if (!deviceToken || !title || !body) {
+        return res.status(400).json({ success: false, message: "Missing fields" });
+    }
+
+    try {
+        const response = await sendPushNotification({ deviceToken, title, body });
+        res.status(200).json({ success: true, message: "Notification sent", response });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Failed to send notification", error: error.message });
+    }
+});
 
 
 module.exports = router;

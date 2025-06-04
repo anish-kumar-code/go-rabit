@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { Avatar, Tooltip, Table, message, Input, Button, Space } from 'antd';
 import { useParams } from 'react-router';
-import { getSectionsByExplore } from '../../../../services/admin/apiExplore';
+import { deleteProductFromExploreSection, getSectionsByExplore } from '../../../../services/admin/apiExplore';
 import { FaPlus } from 'react-icons/fa';
 import AddSectionModal from './AddSectionModal';
 import { EyeOutlined } from '@ant-design/icons';
@@ -38,7 +38,7 @@ const ExploreSectionTable = () => {
 
     const handleModalSuccess = () => {
         setIsModalOpen(false);
-        fetchSections(exploreId); // Refresh table
+        fetchSections(exploreId);
     };
 
     const openViewModal = (section) => {
@@ -51,14 +51,29 @@ const ExploreSectionTable = () => {
         setIsViewModalOpen(false);
     };
 
-    const handleDeleteProduct = async (productId) => {
+    const handleDeleteProduct = async (exploreSectionId, productId) => {
+        const data = { exploreSectionId, productId }
         // Implement API logic to remove product from section
-        message.success("Product removed (mock)");
-        // After deleting, refetch the section or update it in state
+        try {
+            await deleteProductFromExploreSection(data);
+            message.success("Product removed successfully");
+            setSelectedSection((prevSection) => ({
+                ...prevSection,
+                products: prevSection.products.filter(
+                    (product) => product._id !== productId
+                ),
+            }));
+            fetchSections(exploreId);
+        } catch (error) {
+            console.log(error)
+            message.error("Something went wrong");
+        }
     };
 
     const handleAddProduct = () => {
-        message.info("Add product modal (not implemented yet)");
+        navigate(`/exploresection/${section._id}/add-products`, {
+            state: { section }
+        });
     };
 
     const columns = useMemo(() => [

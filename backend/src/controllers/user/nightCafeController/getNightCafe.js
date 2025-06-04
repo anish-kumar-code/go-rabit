@@ -11,7 +11,7 @@ exports.getNightCafe = catchAsync(async (req, res) => {
         promoText: "Hunger Never Sleeps, Neither Do We!",
     };
 
-    const cafeList = await Shop.find({ isNightCafe: true, isClose: false, status: "active" });
+    const cafeList = await Shop.find({ isNightCafe: true, isClose: false, status: "active" }).sort({ createdAt: -1 }).limit(5);
     const categoryList = await Category.find({ serviceId: "67ecc79120a93fc0b92a8b19" }).select("name image").sort({ createdAt: -1 });
     const productList = await VendorProduct.find({
         serviceId: "67ecc79120a93fc0b92a8b19",
@@ -22,7 +22,7 @@ exports.getNightCafe = catchAsync(async (req, res) => {
         ]
     })
         .populate("shopId", "name shopImage")
-        .sort({ createdAt: -1 });
+        .sort({ createdAt: -1 }).limit(20);
 
     const cafes = cafeList.map(cafe => ({
         _id: cafe._id,

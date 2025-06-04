@@ -28,6 +28,11 @@ const driverSchema = new Schema({
     commission: { type: Number, default: 0 },
     wallet_balance: { type: Number, default: 0 },
     isBlocked: { type: Boolean, default: false },
+    // for firebase cloud messaging
+    deviceId: { type: String, required: true },
+    deviceToken: { type: String, required: true },
+    // current order assigned to driver
+    currentOrderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Order', default: null }
 }, {
     timestamps: true
 });
