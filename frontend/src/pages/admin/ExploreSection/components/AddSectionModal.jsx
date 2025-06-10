@@ -37,7 +37,7 @@ const AddSectionModal = ({ isModalOpen, handleCancel, onSuccess }) => {
             form.resetFields();
             onSuccess();
         } catch (err) {
-            console.log(err)
+            // console.log(err)
             message.error('Failed to create section');
         } finally {
             setLoading(false);

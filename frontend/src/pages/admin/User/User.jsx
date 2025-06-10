@@ -35,7 +35,7 @@ function User() {
             okType: 'danger',
             cancelText: 'Cancel',
             onOk: () => {
-                console.log('Deleting category:', user);
+                // console.log('Deleting category:', user);
             }
         });
     };

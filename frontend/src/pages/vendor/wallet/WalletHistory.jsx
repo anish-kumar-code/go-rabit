@@ -31,7 +31,7 @@ const WalletHistory = () => {
             const historyRes = await getWalletHistory();
             setWalletHistoryData(historyRes.data);
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             message.error("Failed to fetch wallet data");
         } finally {
             setLoading(false);

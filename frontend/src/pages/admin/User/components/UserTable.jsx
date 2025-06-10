@@ -8,7 +8,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 const UserTable = ({ searchText, onDelete, data }) => {
     const navigate = useNavigate();
 
-    console.log(data)
+    // console.log(data)
 
 
     const handleViewDetails = (record) => {
@@ -73,7 +73,7 @@ const UserTable = ({ searchText, onDelete, data }) => {
     ];
 
     const onChange = checked => {
-        console.log(`switch to ${checked}`);
+        // console.log(`switch to ${checked}`);
     };
 
     return <Table

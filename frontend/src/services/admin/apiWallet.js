@@ -6,7 +6,7 @@ export const getWalletRequest = async () => {
         const response = await axiosInstance.get("/api/admin/wallet/request");
         return response.data;
     } catch (error) {
-        console.log(error.message)
+        // console.log(error.message)
         message.error('Something went wrong');
     }
 }
@@ -18,7 +18,7 @@ export const changeWalletRequestStatus = async (data) => {
         const response = await axiosInstance.post(`/api/admin/wallet/request/status/${id}`, {status});
         return response.data;
     } catch (error) {
-        console.log(error.message)
+        // console.log(error.message)
         message.error('Something went wrong');
     }
 }
@@ -30,7 +30,7 @@ export const settleWalletRequest = async (record) => {
         const response = await axiosInstance.post(`/api/admin/wallet/request/settle/${id}`, {amount});
         return response.data;
     } catch (error) {
-        console.log(error.message)
+        // console.log(error.message)
         message.error('Something went wrong');
     }
 }

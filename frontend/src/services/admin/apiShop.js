@@ -11,7 +11,7 @@ export const getShop = async () => {
 }
 
 export const deleteShop = async(shopId)=>{
-    console.log(shopId)
+    // console.log(shopId)
     try {
         const response = await axiosInstance.delete(`/api/admin/shop/delete/${shopId}`);
         return response.data.data;

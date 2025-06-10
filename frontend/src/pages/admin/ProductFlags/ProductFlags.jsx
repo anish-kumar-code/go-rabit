@@ -37,7 +37,7 @@ const ProductFlags = () => {
 
     // Handle toggle switch (currently refetches data only)
     const handleToggle = async (productId, field) => {
-        console.log(`Toggling ${field} for productId:`, productId);
+        // console.log(`Toggling ${field} for productId:`, productId);
     
         try {
             await toggleProductFlag(productId, field); 

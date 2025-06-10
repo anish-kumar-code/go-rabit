@@ -7,7 +7,7 @@ export const getAllBanner = async () => {
         // console.log(response.data.data)
         return response.data;
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         message.error('Error fetching banner list');
     }
 }

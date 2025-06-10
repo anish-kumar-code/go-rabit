@@ -6,7 +6,6 @@ exports.getSettings = catchAsync(async (req, res) => {
     try {
 
         const type = req.query.type;
-        console.log(type);
         const settings = await Setting.find();
         return res.status(200).json({
             status: true,

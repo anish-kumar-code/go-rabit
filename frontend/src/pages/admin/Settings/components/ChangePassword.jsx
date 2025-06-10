@@ -11,7 +11,7 @@ function ChangePassword() {
         setLoading(true);
         try {
             // TODO: Implement password change logic here
-            console.log('Password change values:', values);
+            // console.log('Password change values:', values);
             message.success('Password changed successfully!');
             form.resetFields();
         } catch (error) {

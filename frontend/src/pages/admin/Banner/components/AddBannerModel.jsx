@@ -68,7 +68,7 @@ const AddBannerModel = ({ isModalOpen, handleOk, handleCancel }) => {
     );
 
     const onFinish = async (values) => {
-        console.log(values)
+        // console.log(values)
         if (!imageUrl) {
             return message.error("Please upload a banner image.");
         }

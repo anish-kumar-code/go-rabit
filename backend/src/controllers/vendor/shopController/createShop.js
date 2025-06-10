@@ -24,7 +24,12 @@ exports.createShop = catchAsync(async (req, res, next) => {
     if (galleryImage.length === 0) return next(new AppError("Gallery images are required.", 404));
     if (menu.length === 0) return next(new AppError("Gallery images are required.", 404));
 
-    const newShop = await Shop.create({ name, serviceId, vendorId, shopType, shopImage, address, pincode, lat, long, description, phone, rating, deliveryCharge, packingCharge, menu, galleryImage });
+    const location = {
+        type: 'Point',
+        coordinates: [parseFloat(long), parseFloat(lat)]
+    };
+
+    const newShop = await Shop.create({ name, serviceId, vendorId, shopType, shopImage, address, pincode, lat, long, description, phone, rating, deliveryCharge, packingCharge, menu, location, galleryImage });
 
     return res.status(201).json({
         success: true,

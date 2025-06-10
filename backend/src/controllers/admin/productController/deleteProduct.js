@@ -9,7 +9,6 @@ const deleteImageFile = (relativePath) => {
         const fullPath = path.join(__dirname, "../../../../", relativePath);
         if (fs.existsSync(fullPath)) {
             fs.unlinkSync(fullPath);
-            console.log("Deleted:", fullPath);
         }
     } catch (err) {
         console.error("Error deleting file:", err);

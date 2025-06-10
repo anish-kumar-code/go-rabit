@@ -6,7 +6,7 @@ import { useParams } from 'react-router';
 const ShopWalletHistory = () => {
 
     const { shopId } = useParams();
-    console.log(shopId)
+    // console.log(shopId)
 
     const [shopDetails, setShopDetails] = useState({});
     const [vendorDetails, setVendorDetails] = useState({});

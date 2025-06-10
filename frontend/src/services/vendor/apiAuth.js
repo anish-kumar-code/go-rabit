@@ -27,7 +27,7 @@ export const updateProfileInfo = async(data)=>{
         const res = await axiosInstance.patch("/api/vendor/update/profile", data);
         return res.data;
     } catch (error) {
-        console.log(error.message)
+        // console.log(error.message)
         message.error("Something went wrong")
     }
 }
@@ -42,7 +42,7 @@ export const updateAccountInfo = async(formData)=>{
         });
         return res.data;
     } catch (error) {
-        console.log(error.message)
+        // console.log(error.message)
         message.error("Something went wrong")
     }
 }
@@ -57,7 +57,7 @@ export const updateDocumentInfo = async(formData)=>{
         });
         return res.data;
     } catch (error) {
-        console.log(error.message)
+        // console.log(error.message)
         message.error("Something went wrong")
     }
 }

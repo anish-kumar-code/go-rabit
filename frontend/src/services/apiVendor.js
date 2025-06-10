@@ -60,7 +60,7 @@ export const vendorApprove = async (id, status) => {
 }
 
 export const deleteVendor = async(vendorId)=>{
-    console.log(vendorId)
+    // console.log(vendorId)
     try {
         const response = await axiosInstance.delete(`/api/admin/vendor/delete/${vendorId}`);
         return response.data.data;

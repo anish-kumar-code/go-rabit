@@ -90,9 +90,6 @@ exports.updateProduct = catchAsync(async (req, res, next) => {
     const product = await Product.findById(id);
     if (!product) return next(new AppError("Product not found.", 404));
 
-    // Log incoming body for debugging
-    console.log("Request body:", req.body);
-
     const {
         name,
         categoryId,

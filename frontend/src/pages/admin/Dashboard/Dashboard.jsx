@@ -50,7 +50,7 @@ function Dashboard() {
     const fetchDashboard = async () => {
         try {
             const res = await getDashboard();
-            console.log(res)
+            // console.log(res)
             setData(res)
         } catch (error) {
             message.error('Error fetching dashboard data');

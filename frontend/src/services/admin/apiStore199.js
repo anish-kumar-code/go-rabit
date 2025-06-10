@@ -6,7 +6,7 @@ export const getAllProductOfStore199 = async () => {
         const response = await axiosInstance.get(`/api/admin/store199/product`);
         return response.data;
     } catch (error) {
-        console.log(error)
+        // console.log(error)
     }
 }
 
@@ -15,7 +15,7 @@ export const getAllProductOfStore199ForAssign = async () => {
         const response = await axiosInstance.get(`/api/admin/store199/product/all`);
         return response.data;
     } catch (error) {
-        console.log(error)
+        // console.log(error)
     }
 }
 

@@ -52,9 +52,6 @@ exports.getSpecialGroceryProduct = catchAsync(async (req, res) => {
 
     const query = { ...queryCommon, ...queryFilters };
 
-    console.log("-----------------------------------")
-    console.log(query)
-
     const productsRaw = await VendorProduct.find(query).populate("shopId", "name lat long")
 
 

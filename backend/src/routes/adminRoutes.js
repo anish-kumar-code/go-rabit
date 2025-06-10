@@ -76,6 +76,7 @@ const { deleteStore199Product } = require("../controllers/admin/store199Controll
 const { createBulkStore199Product } = require("../controllers/admin/store199Controller/createBulkStore199Product");
 const { deleteProductFromExploreSection } = require("../controllers/admin/exploreSectionController/deleteProductFromExploreSection");
 const { getAllDriverForThisOrder } = require("../controllers/admin/orderController/getAllDriverForThisOrder");
+const { toggleBlockStatus } = require("../controllers/admin/driverController/toggleBlockStatus");
 const router = express.Router()
 
 router.get("/test/admin", (req, res) => {
@@ -201,6 +202,7 @@ router.delete("/shop/delete/:shopId", adminAuthenticate, deleteShop)
 //------------------------------------------------
 router.post("/driver/create", adminAuthenticate, fileUploader("driver", [{ name: "image", maxCount: 1 }]), createDriver);
 router.get('/driver/list', adminAuthenticate, getDriver)
+router.patch("/driver/block/:driverId", adminAuthenticate, toggleBlockStatus);
 
 
 //------------------------------------------------

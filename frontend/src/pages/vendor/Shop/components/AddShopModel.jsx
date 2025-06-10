@@ -8,7 +8,7 @@ const { TextArea } = Input;
 
 const normFile = e => {
     // Antd upload event normalization
-    console.log('Upload event:', e);
+    // console.log('Upload event:', e);
     if (Array.isArray(e)) {
         return e;
     }
@@ -37,9 +37,9 @@ function AddShopModel({ isModalOpen, handleOk, handleCancel }) {
             }
 
             // debug
-            for (let pair of formData.entries()) {
-                console.log(pair[0] + ':', pair[1]);
-            }
+            // for (let pair of formData.entries()) {
+            //     console.log(pair[0] + ':', pair[1]);
+            // }
 
             setUploading(true);
             await addShop(formData);

@@ -23,8 +23,13 @@ const shopSchema = new mongoose.Schema({
     isNightCafe: { type: Boolean, default: false },
     wallet_balance: { type: Number, default: 0 },
     status: { type: String, enum: ['active', 'inactive'], default: 'active' },
+    location: {
+        type: { type: String, enum: ['Point'], default: 'Point' },
+        coordinates: { type: [Number], }
+    },
     createdAt: { type: Date, default: Date.now }
 })
 
+shopSchema.index({ location: '2dsphere' });
 const Shop = mongoose.model("Shop", shopSchema)
 module.exports = Shop;

@@ -9,7 +9,9 @@ const { driverAuthenticate } = require("../controllers/driver/auth/driverAuth");
 const { orderList } = require("../controllers/driver/orders/orderList");
 const { orderDetails } = require("../controllers/driver/orders/orderDetails");
 const { getProfile } = require("../controllers/driver/auth/getProfile");
-const { orderComplete } = require("../controllers/driver/orders/orderComplete");
+const { orderStatusChange } = require("../controllers/driver/orders/orderStatusChange");
+const { toggleBlockStatus } = require("../controllers/driver/auth/toggleBlockStatus");
+const updateDriverLocation = require("../controllers/driver/auth/updateLocation");
 
 
 //------------------------------------------------
@@ -41,6 +43,8 @@ router.get("/profile", driverAuthenticate, getProfile)
 
 // Activate/Deactivate Driver
 router.patch("/status/:driverId", toggleStatus);
+// router.patch("/block/status/:driverId", toggleBlockStatus);
+router.patch('/update-location/:driverId', updateDriverLocation);
 
 
 //------------------------------------------------
@@ -48,7 +52,7 @@ router.patch("/status/:driverId", toggleStatus);
 //------------------------------------------------
 router.get("/orders", driverAuthenticate, orderList)
 router.get("/order/:orderId", driverAuthenticate, orderDetails)
-router.patch("/order/:orderId", driverAuthenticate, orderComplete)
+router.patch("/order/:orderId", driverAuthenticate, orderStatusChange)
 
 
 

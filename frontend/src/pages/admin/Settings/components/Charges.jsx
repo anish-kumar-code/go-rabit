@@ -74,9 +74,9 @@ function Charges() {
             formData.append("image", values.image.file);
         }
 
-        formData.forEach((e,v)=>{
-            console.log(e,v)
-        })
+        // formData.forEach((e,v)=>{
+        //     console.log(e,v)
+        // })
 
         try {
             const res = await updateSettings(settingData._id, formData);

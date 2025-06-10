@@ -23,7 +23,7 @@ function Vendor() {
     }
 
     const handleDelete = (record) => {
-        console.log(record)
+        // console.log(record)
         Modal.confirm({
             title: 'Delete Vendor',
             content: `Are you sure you want to delete "${record.name}"?`,

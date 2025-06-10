@@ -15,6 +15,10 @@ const updateLatLong = async (req, res) => {
         }
         user.lat = lat;
         user.long = long;
+        user.location = {
+            type: 'Point',
+            coordinates: [parseFloat(long), parseFloat(lat)]
+        };
         await user.save();
 
         return res.status(200).json({

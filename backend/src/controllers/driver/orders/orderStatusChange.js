@@ -7,7 +7,7 @@ const WalletHistory = require("../../../models/walletHistory");
 const WalletTransaction = require("../../../models/walletTransaction");
 const catchAsync = require("../../../utils/catchAsync");
 
-exports.orderComplete = catchAsync(async (req, res) => {
+exports.orderStatusChange = catchAsync(async (req, res) => {
     try {
 
         const driverId = req.driver._id;
@@ -20,6 +20,7 @@ exports.orderComplete = catchAsync(async (req, res) => {
 
         if (status == "cancelled") {
             order.orderStatus = "cancelled";
+            order.assignedDriver = null; // Clear assigned driver
             driver.currentOrderId = null; // Clear current order for driver
             await driver.save();
             await order.save();
@@ -70,7 +71,7 @@ exports.orderComplete = catchAsync(async (req, res) => {
 
         // const driver = await Driver.findById(driverId);
         driver.wallet_balance += Math.ceil(deliveryBoyAmount)
-        driver.currentOrderId = null; 
+        driver.currentOrderId = null;
         await driver.save()
 
         // Record wallet history for vendor
@@ -106,5 +107,5 @@ exports.orderComplete = catchAsync(async (req, res) => {
     } catch (error) {
         console.error("Order Complete Error:", error);
         return res.status(500).json({ success: false, message: "Server error while order complete.", error: error.message });
-    } 
+    }
 });

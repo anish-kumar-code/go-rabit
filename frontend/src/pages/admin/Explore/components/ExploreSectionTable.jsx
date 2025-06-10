@@ -65,7 +65,7 @@ const ExploreSectionTable = () => {
             }));
             fetchSections(exploreId);
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             message.error("Something went wrong");
         }
     };

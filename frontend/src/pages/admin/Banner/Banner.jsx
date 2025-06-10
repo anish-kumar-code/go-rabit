@@ -67,7 +67,7 @@ function MainBanner() {
             cancelText: 'No, Cancel',
             onOk() {
                 // Here you would typically make an API call to delete the banner
-                console.log('Deleting banner:', banner);
+                // console.log('Deleting banner:', banner);
             },
         });
     };

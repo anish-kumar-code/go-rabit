@@ -1,4 +1,4 @@
-import { Avatar, Button, Space, Switch, Table } from 'antd';
+import { Avatar, Button, Space, Switch, Table, Tag } from 'antd';
 import { FaEdit, FaTrash, FaUserTie } from 'react-icons/fa';
 import { updateDriverStatus } from '../../../../services/admin/apiDrivers'; // You should implement this if needed
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -51,27 +51,38 @@ const DriverTable = ({ searchText, data, onEdit, onDelete, loading }) => {
             title: 'Status',
             dataIndex: 'status',
             key: 'status',
+            align: 'center',
+            render: (status) => (
+                <Tag color={status === 'active' ? 'green' : 'red'}>
+                    {status?.toUpperCase()}
+                </Tag>
+            ),
+        },
+        {
+            title: 'Block',
+            dataIndex: 'isBlocked',
+            key: 'isBlocked',
             align: "center",
             render: (_, record) => (
                 <Switch
-                    defaultChecked={record?.status === "active"}
+                    defaultChecked={record?.isBlocked}
                     onChange={(checked) =>
-                        updateDriverStatus(record._id, checked ? "active" : "inactive")
+                        updateDriverStatus(record._id, checked)
                     }
                 />
             )
         },
-        {
-            title: 'Action',
-            key: 'action',
-            align: "right",
-            render: (_, record) => (
-                <Space size="small">
-                    <Button type="primary" icon={<FaEdit />} onClick={() => onEdit(record)}>Edit</Button>
-                    <Button type="primary" danger icon={<FaTrash />} onClick={() => onDelete(record)}>Delete</Button>
-                </Space>
-            )
-        }
+        // {
+        //     title: 'Action',
+        //     key: 'action',
+        //     align: "right",
+        //     render: (_, record) => (
+        //         <Space size="small">
+        //             <Button type="primary" icon={<FaEdit />} onClick={() => onEdit(record)}>Edit</Button>
+        //             <Button type="primary" danger icon={<FaTrash />} onClick={() => onDelete(record)}>Delete</Button>
+        //         </Space>
+        //     )
+        // }
     ];
 
     const filteredData = data.filter((item) =>

@@ -6,7 +6,6 @@ exports.getCms = catchAsync(async (req, res) => {
 
     try {
         const type = req.query.type;
-        console.log(type);
         const cmsData = await cms.findOne({ type });
         return res.status(200).json({
             status: true,

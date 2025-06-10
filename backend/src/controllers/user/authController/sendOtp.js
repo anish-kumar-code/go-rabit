@@ -46,9 +46,6 @@ const sendOtp = async (req, res) => {
             await user.save();
         }
 
-        // In a production environment, you would send the OTP via SMS here
-        console.log(`OTP for ${mobileNo}: ${otp}`);
-
         return res.status(200).json({
             success: true,
             message: 'OTP sent successfully',

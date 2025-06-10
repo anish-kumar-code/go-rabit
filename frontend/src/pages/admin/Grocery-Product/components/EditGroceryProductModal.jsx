@@ -68,7 +68,7 @@ function EditGroceryProductModal({ isModalOpen, handleOk, handleCancel, productD
             images: fileList // Handle image updates (new uploads vs existing)
             // Add logic here to differentiate between new files in fileList and existing ones
         };
-        console.log('Updated grocery product data: ', updatedProductData);
+        // console.log('Updated grocery product data: ', updatedProductData);
         // API call to update the grocery product would go here
         handleOk();
     };
@@ -87,7 +87,7 @@ function EditGroceryProductModal({ isModalOpen, handleOk, handleCancel, productD
     };
 
     const handleRemove = file => {
-        console.log("Removing file:", file);
+        // console.log("Removing file:", file);
         // Add API call logic here if removing an already uploaded file (e.g., check if file.url exists)
         setFileList(prevFileList => prevFileList.filter(item => item.uid !== file.uid));
         return true;

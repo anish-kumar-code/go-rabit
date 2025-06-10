@@ -39,6 +39,12 @@ exports.updateShop = catchAsync(async (req, res, next) => {
     if (rating) shop.rating = rating;
     if (deliveryCharge || deliveryCharge === 0) shop.deliveryCharge = deliveryCharge;
     if (packingCharge || packingCharge === 0) shop.packingCharge = packingCharge;
+    if (lat && long) {
+        shop.location = {
+            type: 'Point',
+            coordinates: [parseFloat(long), parseFloat(lat)]
+        };
+    }
 
     await shop.save();
 

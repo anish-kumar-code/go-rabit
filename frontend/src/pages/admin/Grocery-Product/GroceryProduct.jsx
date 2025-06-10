@@ -47,7 +47,7 @@ function GroceryProduct() {
             okType: 'danger',
             cancelText: 'No, Cancel',
             onOk() {
-                console.log('Deleting grocery product:', product);
+                // console.log('Deleting grocery product:', product);
             },
         });
     };

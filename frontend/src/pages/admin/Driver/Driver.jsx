@@ -18,7 +18,7 @@ function DriverManagement() {
         try {
             const response = await getAllDrivers(); // should return full API response
 
-            console.log("Full driver API response:", response);
+            // console.log("Full driver API response:", response);
 
             // ✅ Set drivers from the `data` array
             if (response?.status && Array.isArray(response.data)) {
@@ -58,13 +58,14 @@ function DriverManagement() {
             okType: 'danger',
             cancelText: 'No, Cancel',
             onOk: async () => {
-                try {
-                    await deleteDriver(driver._id);
-                    message.success("Driver deleted successfully!");
-                    fetchDrivers();
-                } catch {
-                    message.error("Failed to delete driver.");
-                }
+                // try {
+                //     await deleteDriver(driver._id);
+                //     message.success("Driver deleted successfully!");
+                //     fetchDrivers();
+                // } catch {
+                //     message.error("Failed to delete driver.");
+                // }
+                    message.error("Currently not working");
             }
         });
     };
@@ -78,14 +79,14 @@ function DriverManagement() {
                     style={{ maxWidth: 300, borderRadius: '6px' }}
                     size="large"
                 />
-                <Button
+                {/* <Button
                     type="primary"
                     icon={<FaPlus />}
                     size="large"
                     onClick={() => openModal()}
                 >
                     Add Driver
-                </Button>
+                </Button> */}
             </div>
 
             <DriverTable

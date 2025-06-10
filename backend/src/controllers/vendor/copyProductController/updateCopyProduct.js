@@ -8,17 +8,8 @@ exports.updateCopyProduct = catchAsync(async (req, res, next) => {
     const { id } = req.params;
     let { name, categoryId, subCategoryId, brandId, mrp, sellingPrice, discount, unitOfMeasurement, sellingUnit, shortDescription, longDescription, vendorSellingPrice } = req.body;
 
-    console.log("This is body")
-    console.log(req.body)
-
     const product = await VendorProduct.findById(id);
     if (!product) return next(new AppError("Product not found", 404));
-    console.log("This is product")
-    console.log("This is product")
-    console.log("This is product")
-    console.log("This is product")
-    console.log("This is product") 
-    console.log(product)
 
     // Update other fields.
     product.name = name || product.name;

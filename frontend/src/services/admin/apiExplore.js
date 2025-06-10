@@ -7,7 +7,7 @@ export const getAllExplore = async () => {
         // console.log(response.data.data)
         return response.data;
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         message.error('Error fetching explore list');
     }
 }
@@ -54,8 +54,8 @@ export const getAllExploreProduct = async (type) => {
         // console.log(response)
         return response.data;
     } catch (error) {
-        console.log(error)
-        // message.error('Error fetching order');
+        // console.log(error)
+        message.error('Error fetching order');
     }
 }
 

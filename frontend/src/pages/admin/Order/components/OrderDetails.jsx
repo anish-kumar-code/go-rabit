@@ -29,7 +29,7 @@ const OrderDetails = () => {
   const fetchDriverList = async () => {
     try {
       const res = await getAllDrivers();
-      console.log(res.data);
+      // console.log(res.data);
       setDeliveryBoy(res.data);
     } catch (error) {
       console.log(error);
@@ -53,7 +53,7 @@ const OrderDetails = () => {
     setLoadingAssign(true)
     try {
       const res = await assignDriver(id, driverId)
-      console.log(res)
+      // console.log(res)
     } catch (error) {
       console.log(error)
     } finally {

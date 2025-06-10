@@ -38,6 +38,8 @@ const { getStore199 } = require("../controllers/user/store199/getStore199");
 const { getNightCafeShopOfCategory } = require("../controllers/user/nightCafeController/getNightCafeShopOfCategory");
 const { getShopListInNightCafe } = require("../controllers/user/nightCafeController/getShopListInNightCafe");
 const sendPushNotification = require("../utils/sendPushNotification");
+const getOrderStatus = require("../controllers/user/orderController/orderStatus");
+const { getCoupons } = require("../controllers/user/coupon/getCoupon");
 const router = express.Router()
 
 // router.get("/test", (req,res)=>{
@@ -128,12 +130,18 @@ router.post("/address", userAuthenticate, createAddeess)
 router.get("/order", userAuthenticate, getAllOrder)
 router.post("/order", userAuthenticate, createOrder)
 router.get("/order/:orderId", userAuthenticate, getOrderDetail)
+router.get("/order/:orderId/status", userAuthenticate, getOrderStatus)
 
 
 //------------------------------------------------
 // cms
 //------------------------------------------------
 router.get("/cms", userAuthenticate, getCms);
+
+//------------------------------------------------
+// coupon
+//------------------------------------------------
+router.get("/coupon", userAuthenticate, getCoupons);
 
 
 //------------------------------------------------

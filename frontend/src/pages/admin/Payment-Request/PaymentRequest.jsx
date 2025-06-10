@@ -27,7 +27,7 @@ function PaymentRequest() {
       const res = await changeWalletRequestStatus({ record, status });
       fetchWalletRequest()
       message.success(res.message)
-      console.log(res)
+      // console.log(res)
     } catch (error) {
       message.error("Something went wrong in wallet request");
     }
@@ -38,7 +38,7 @@ function PaymentRequest() {
       const res = await settleWalletRequest(record);
       fetchWalletRequest()
       message.success(res.message)
-      console.log(res)
+      // console.log(res)
     } catch (error) {
       message.error("Something went wrong in wallet request");
     }

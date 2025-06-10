@@ -106,7 +106,7 @@ const Profile = () => {
       // console.log(res)
       message.success(res.message);
     } catch (error) {
-      console.log(error.message)
+      // console.log(error.message)
       message.error('Failed to update bank details');
     } finally {
       setUpdateLoading(false)
@@ -130,7 +130,7 @@ const Profile = () => {
         formData.append("foodImage", values.foodImage[0].originFileObj);
       }
       const res = await updateDocumentInfo(formData);
-      console.log(res)
+      // console.log(res)
       message.success(res.message);
     } catch (error) {
       message.error('Failed to update document');

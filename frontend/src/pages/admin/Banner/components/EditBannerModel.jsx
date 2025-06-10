@@ -50,13 +50,13 @@ const EditBannerModel = ({ isModalOpen, handleOk, handleCancel, bannerData }) =>
     }, [bannerData, form]);
 
     const onFinish = (values) => {
-        console.log('Success:', values);
+        // console.log('Success:', values);
         // Here you would typically make an API call to update the banner
         handleOk();
     };
 
     const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
+        // console.log('Failed:', errorInfo);
     };
 
     return (

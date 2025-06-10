@@ -32,10 +32,23 @@ const driverSchema = new Schema({
     deviceId: { type: String, required: true },
     deviceToken: { type: String, required: true },
     // current order assigned to driver
-    currentOrderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Order', default: null }
+    currentOrderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Order', default: null },
+    // Add inside driverSchema (anywhere before closing the schema)
+    location: {
+        type: {
+            type: String,
+            enum: ['Point'],
+            default: 'Point'
+        },
+        coordinates: {
+            type: [Number], // [longitude, latitude]
+            default: [0, 0]
+        }
+    },
 }, {
     timestamps: true
 });
 
+driverSchema.index({ location: '2dsphere' });
 const Driver = mongoose.model('Driver', driverSchema);
 module.exports = Driver;

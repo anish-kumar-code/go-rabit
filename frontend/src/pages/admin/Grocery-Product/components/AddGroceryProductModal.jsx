@@ -20,7 +20,7 @@ function AddGroceryProductModal({ isModalOpen, handleOk, handleCancel }) {
     const [fileList, setFileList] = useState([]);
 
     const onFinish = (values) => {
-        console.log('Received values of form: ', { ...values, images: fileList });
+        // console.log('Received values of form: ', { ...values, images: fileList });
         // API call to add the grocery product would go here
         form.resetFields();
         setFileList([]);
@@ -33,7 +33,7 @@ function AddGroceryProductModal({ isModalOpen, handleOk, handleCancel }) {
     };
 
     const normFile = (e) => {
-        console.log('Upload event:', e);
+        // console.log('Upload event:', e);
         if (Array.isArray(e)) {
             return e;
         }

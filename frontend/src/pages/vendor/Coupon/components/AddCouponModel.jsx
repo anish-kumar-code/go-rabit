@@ -24,7 +24,7 @@ function AddCouponModal({ isModalOpen, handleOk, handleCancel }) {
       expiryDate: values.expiryDate?.toISOString(),
     };
 
-    console.log("Submitting coupon:", payload);
+    // console.log("Submitting coupon:", payload);
 
     try {
       setLoading(true);

@@ -85,7 +85,7 @@ function Explore() {
     };
 
     const onView = (record) => {
-        console.log(record)
+        // console.log(record)
     }
 
     return (

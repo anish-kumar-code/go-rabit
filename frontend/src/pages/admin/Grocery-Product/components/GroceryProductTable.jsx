@@ -82,7 +82,7 @@ function GroceryProductTable({ searchText, onEdit, onDelete }) { // Renamed comp
 
     // Added record parameter to potentially update status via API later
     const onChange = (checked, record) => {
-        console.log(`switch to ${checked} for product:`, record);
+        // console.log(`switch to ${checked} for product:`, record);
         // Add API call here to update status if needed
     };
 

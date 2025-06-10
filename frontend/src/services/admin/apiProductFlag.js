@@ -18,7 +18,7 @@ export const toggleProductFlag = async (productId, field) => {
         // console.log(response)
         return response.data;
     } catch (error) {
-        console.log(error)
-        // message.error('Error fetching order');
+        // console.log(error)
+        message.error('Error fetching order');
     }
 }
