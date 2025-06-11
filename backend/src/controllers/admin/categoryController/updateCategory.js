@@ -11,9 +11,9 @@ exports.updateCategory = catchAsync(async (req, res) => {
     let imageNew = category.image;
     if (req.files && req.files.image && req.files.image.length > 0) {
         // Delete the old primary image if available.
-        if (category.image) {
-            await deleteOldFiles(category.image);
-        }
+        // if (category.image) {
+        //     // await deleteOldFiles(category.image);
+        // }
         imageNew = `${req.files.image[0].destination}/${req.files.image[0].filename}`;
     }
 

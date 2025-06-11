@@ -13,7 +13,13 @@ const createOrder = async (req, res) => {
             couponId = null,
             couponCode = "",
             couponAmount = 0,
+            deliveryCharge,
+            finalTotalPrice,
+            paymentMode,
+            razorpayOrderId = null
         } = req.body;
+
+        console.log('Request body:', req.body);
 
         const userId = req.user._id;
 
@@ -33,16 +39,19 @@ const createOrder = async (req, res) => {
         const shopId = productDetails.shopId._id;
         const vendorId = productDetails.vendorId._id;
         const packingCharge = productDetails.shopId.packingCharge || 0;
-        const deliveryCharge = 10; // Can be dynamic
+        // const deliveryCharge = 10; // Can be dynamic
 
         // Commission calculation
         const commissionRate = productDetails.commissionRate || 0;
         const commissionAmount = (prod.price * prod.quantity * commissionRate) / 100;
 
         // Totals
-        const prodTotal = prod.finalPrice;
-        const afterCouponAmount = prodTotal - couponAmount;
-        const finalTotalPrice = afterCouponAmount + deliveryCharge + packingCharge;
+        const prodTotal = Math.round(prod.finalPrice);
+        const afterCouponAmount = Math.round(prodTotal - couponAmount);
+        // const finalTotalPrice = Math.round(afterCouponAmount + packingCharge);
+        // const finalTotalPrice = Math.round(afterCouponAmount + deliveryCharge + packingCharge);
+        // const finalTotalPrice = prod.finalPrice || Math.round(afterCouponAmount + deliveryCharge + packingCharge);
+        // console.log('Final Total Price:', prod.finalPrice);
 
         // Build and save order document
         const order = new Order({
@@ -61,15 +70,16 @@ const createOrder = async (req, res) => {
             vendorId,
             deliveryDate,
             deliveryTime,
-            deliveryCharge,
+            deliveryCharge: Math.round(deliveryCharge),
             packingCharge,
             commissionRate,
             commissionAmount,
             finalTotalPrice,
             orderStatus: 'pending',
-            paymentMode: 'cash',
-            paymentStatus: 'paid',
-            paymentId: 'PAY123456',
+            paymentMode,
+            paymentStatus: paymentMode === 'online' ? 'paid' : 'pending',
+            paymentId: paymentMode === 'online' ? razorpayOrderId : null,
+            razorpayOrderId: paymentMode === 'online' ? razorpayOrderId : null,
         });
 
         await order.save();

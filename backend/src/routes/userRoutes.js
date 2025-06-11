@@ -40,6 +40,11 @@ const { getShopListInNightCafe } = require("../controllers/user/nightCafeControl
 const sendPushNotification = require("../utils/sendPushNotification");
 const getOrderStatus = require("../controllers/user/orderController/orderStatus");
 const { getCoupons } = require("../controllers/user/coupon/getCoupon");
+const getInvoicePdf = require("../controllers/user/orderController/invoice");
+const createRazorpayOrder = require("../controllers/user/paymentController/createRazorpayOrder");
+const verifyRazorpayWebhook = require("../controllers/user/paymentController/razorpayWebhook");
+const { showDeletePage } = require("../controllers/user/authController/showDeletePage");
+const { deleteUser } = require("../controllers/user/authController/deleteUser");
 const router = express.Router()
 
 // router.get("/test", (req,res)=>{
@@ -133,6 +138,13 @@ router.get("/order/:orderId", userAuthenticate, getOrderDetail)
 router.get("/order/:orderId/status", userAuthenticate, getOrderStatus)
 
 
+
+//------------------------------------------------
+// payment
+//------------------------------------------------
+router.post("/create-razorpay-order", createRazorpayOrder);
+router.post("/razorpay-webhook", express.raw({ type: 'application/json' }), verifyRazorpayWebhook);
+
 //------------------------------------------------
 // cms
 //------------------------------------------------
@@ -142,6 +154,17 @@ router.get("/cms", userAuthenticate, getCms);
 // coupon
 //------------------------------------------------
 router.get("/coupon", userAuthenticate, getCoupons);
+
+//------------------------------------------------
+// invoice
+//------------------------------------------------
+router.get('/invoice/:orderId', getInvoicePdf);
+
+//------------------------------------------------
+// delete user
+//------------------------------------------------
+router.get("/delete-user/:id", showDeletePage);
+router.post("/delete-user/:id", deleteUser);
 
 
 //------------------------------------------------

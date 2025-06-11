@@ -6,7 +6,7 @@ exports.deleteCategory = catchAsync(async(req,res)=>{
     let id = req.params.id
 
     const category = await Category.findById(id);
-    await deleteOldFiles(category.image)
+    // await deleteOldFiles(category.image)
     await Category.findByIdAndDelete(id)
 
 

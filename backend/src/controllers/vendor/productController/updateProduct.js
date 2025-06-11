@@ -36,9 +36,9 @@ exports.updateProduct = catchAsync(async (req, res, next) => {
     let primaryImage = product.primary_image;
     if (req.files && req.files.primary_image && req.files.primary_image.length > 0) {
         // Delete the old primary image if available.
-        if (product.primary_image) {
-            await deleteOldFiles(product.primary_image);
-        }
+        // if (product.primary_image) {
+        //     await deleteOldFiles(product.primary_image);
+        // }
         primaryImage = `${req.files.primary_image[0].destination}/${req.files.primary_image[0].filename}`;
     }
 
@@ -46,9 +46,9 @@ exports.updateProduct = catchAsync(async (req, res, next) => {
     let galleryImages = product.gallery_image;
     if (req.files && req.files.gallery_image && req.files.gallery_image.length > 0) {
         // Delete all old gallery images.
-        if (Array.isArray(product.gallery_image) && product.gallery_image.length > 0) {
-            await Promise.all(product.gallery_image.map((imgPath) => deleteOldFiles(imgPath)));
-        }
+        // if (Array.isArray(product.gallery_image) && product.gallery_image.length > 0) {
+        //     await Promise.all(product.gallery_image.map((imgPath) => deleteOldFiles(imgPath)));
+        // }
         galleryImages = req.files.gallery_image.map(
             (file) => `${file.destination}/${file.filename}`
         );

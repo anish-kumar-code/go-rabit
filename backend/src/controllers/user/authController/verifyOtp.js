@@ -1,3 +1,4 @@
+const Setting = require("../../../models/settings");
 const User = require("../../../models/user");
 const createToken = require("../../../utils/createToken");
 
@@ -22,15 +23,16 @@ exports.verifyOtp = async (req, res) => {
         user.isVerified = true;
         user.lastLogin = new Date();
 
-        // Optionally save device info
-        // if (deviceInfo) user.deviceInfo = deviceInfo;
-
         user.otp = undefined;
+        // user.googleMapApiKey = "AIzaSyAsQryHkf5N7-bx_ZBMJ-X7yFMa9WTqwt0"
+
+        const setting = await Setting.findById("680f1081aeb857eee4d456ab");
+        const apiKey = setting?.googleMapApiKey || "working";
 
         await user.save();
 
         // Generate and send token with user info
-        return createToken(user, 200, res);
+        return createToken(user, 200, res, true, { googleMapApiKey: apiKey });
 
     } catch (error) {
         console.error('Error in verifyOtp controller:', error);

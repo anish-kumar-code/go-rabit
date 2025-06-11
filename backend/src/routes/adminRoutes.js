@@ -77,6 +77,7 @@ const { createBulkStore199Product } = require("../controllers/admin/store199Cont
 const { deleteProductFromExploreSection } = require("../controllers/admin/exploreSectionController/deleteProductFromExploreSection");
 const { getAllDriverForThisOrder } = require("../controllers/admin/orderController/getAllDriverForThisOrder");
 const { toggleBlockStatus } = require("../controllers/admin/driverController/toggleBlockStatus");
+const { assignProductToExploreSection } = require("../controllers/admin/exploreSectionController/assignProductToExploreSection");
 const router = express.Router()
 
 router.get("/test/admin", (req, res) => {
@@ -165,6 +166,7 @@ router.get("/explore/:exploreId/section", getExploreViaId);
 router.patch("/exploresection/:id", updateSection);
 router.delete("/exploresection/:id", deleteSection);
 router.post("/exploresection/product", deleteProductFromExploreSection);
+router.post("/exploresection/assign/product", assignProductToExploreSection);
 
 //------------------------------------------------
 // store199 product

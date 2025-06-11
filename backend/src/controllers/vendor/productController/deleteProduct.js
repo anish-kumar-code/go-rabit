@@ -13,10 +13,10 @@ exports.deleteProduct = catchAsync(async (req, res, next) => {
     }
 
     try {
-        if (product.images) {
-            // await deleteOldFiles(product.images);
-            await Promise.all(product.images.map(file => deleteOldFiles(file)));
-        }
+        // if (product.images) {
+        //     await deleteOldFiles(product.images);
+        //     await Promise.all(product.images.map(file => deleteOldFiles(file)));
+        // }
 
         await Product.findByIdAndDelete(id);
 

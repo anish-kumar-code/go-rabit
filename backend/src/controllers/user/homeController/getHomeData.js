@@ -1,29 +1,48 @@
 const banner = require("../../../models/banner");
 const Category = require("../../../models/category");
 const Explore = require("../../../models/explore");
+const Setting = require("../../../models/settings");
 const User = require("../../../models/user");
 const VendorProduct = require("../../../models/vendorProduct");
 const { calculateOffer } = require("../../../utils/calculateOffer");
 const catchAsync = require("../../../utils/catchAsync");
+const getDistanceAndTime = require("../../../utils/getDistanceAndTime");
 
 
-const formatProduct = (prod) => ({
-    _id: prod._id,
-    shopName: prod.shopId?.name || "",
-    primary_image: prod.primary_image,
-    shortDescription: prod.shortDescription,
-    price: prod.vendorSellingPrice,
-    mrp: prod.mrp,
-    offer: calculateOffer(prod.mrp, prod.vendorSellingPrice),
-    distance: "3",
-    time: "5"
-});
+const formatProduct = async (prod, userCoords, apiKey) => {
+    const shopCoords = {
+        lat: parseFloat(prod.shopId?.lat || 0),
+        long: parseFloat(prod.shopId?.long || 0),
+    };
+
+    const { distance, time } = await getDistanceAndTime(userCoords, shopCoords, apiKey);
+
+    return {
+        _id: prod._id,
+        shopName: prod.shopId?.name || "",
+        primary_image: prod.primary_image,
+        shortDescription: prod.shortDescription,
+        price: prod.vendorSellingPrice,
+        mrp: prod.mrp,
+        offer: calculateOffer(prod.mrp, prod.vendorSellingPrice),
+        distance,
+        time
+    };
+};
 
 exports.getHomeData = catchAsync(async (req, res) => {
+
     const serviceId = req.query.serviceId || "67ecc79120a93fc0b92a8b19";
     if (!serviceId) return res.status(400).json({ success: false, message: "Service ID is required" });
 
+    const setting = await Setting.findById("680f1081aeb857eee4d456ab");
+    const apiKey = setting?.googleMapApiKey || "working"; 
+
     const user = await User.findById(req.user._id);
+     const userCoords = {
+        lat: parseFloat(user.lat || 0),
+        long: parseFloat(user.long || 0),
+    };
     const typeFilter = user.userType === "veg" ? { type: "veg" } : {};
     const commonQuery = { status: "active", serviceId, ...typeFilter };
 
@@ -35,6 +54,14 @@ exports.getHomeData = catchAsync(async (req, res) => {
         VendorProduct.find({ ...commonQuery, isFeatured: true }).limit(10).populate("shopId", "name lat long"),
     ]);
 
+    const recommendedProducts = await Promise.all(
+        recommendedRaw.map(p => formatProduct(p, userCoords, apiKey))
+    );
+
+    const featuredProducts = await Promise.all(
+        featuredRaw.map(p => formatProduct(p, userCoords, apiKey))
+    );
+
     res.status(200).json({
         success: true,
         message: "Home data fetched successfully",
@@ -42,8 +69,8 @@ exports.getHomeData = catchAsync(async (req, res) => {
             banners,
             categories,
             explore,
-            recommendedProducts: recommendedRaw.map(formatProduct),
-            featuredProducts: featuredRaw.map(formatProduct),
+            recommendedProducts,
+            featuredProducts,
         },
     });
 });

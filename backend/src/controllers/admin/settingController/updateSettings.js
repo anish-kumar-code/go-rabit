@@ -5,7 +5,11 @@ const catchAsync = require("../../../utils/catchAsync");
 exports.updateSettings = catchAsync(async (req, res, next) => {
     try {
 
-        let { brandName, commission, gst, onboardingFee, plateformFee,finialPlateformFee, email, mobile, address, agreement, termAndConditions, privacyPolicy, refundPolicy } = req.body
+        let { brandName, commission, gst, onboardingFee, plateformFee,finialPlateformFee, email, mobile, address, googleMapApiKey, razorpayKeyId, razorpayKeySecret, 
+            agreement, termAndConditions, privacyPolicy, refundPolicy } = req.body
+
+            console.log("req.body", razorpayKeyId, razorpayKeySecret, googleMapApiKey);
+
         const { id } = req.params;
 
         const setting = await Setting.findOne({ _id: id });
@@ -30,6 +34,9 @@ exports.updateSettings = catchAsync(async (req, res, next) => {
         setting.email = email || setting.email
         setting.mobile = mobile || setting.mobile
         setting.address = address || setting.address
+        setting.googleMapApiKey = googleMapApiKey || setting.googleMapApiKey
+        setting.razorpayKeyId = razorpayKeyId || setting.razorpayKeyId
+        setting.razorpayKeySecret = razorpayKeySecret || setting.razorpayKeySecret
         setting.agreement = agreement || setting.agreement
         setting.termAndConditions = termAndConditions || setting.termAndConditions
         setting.privacyPolicy = privacyPolicy || setting.privacyPolicy

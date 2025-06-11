@@ -6,6 +6,7 @@ import { FaPlus } from 'react-icons/fa';
 import AddSectionModal from './AddSectionModal';
 import { EyeOutlined } from '@ant-design/icons';
 import ViewSectionProductsModal from './ViewSectionProductsModal';
+import AssignProductsToExploreSectionModal from './AssignProductsToExploreSectionModal';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL || '';
 
@@ -15,6 +16,7 @@ const ExploreSectionTable = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedSection, setSelectedSection] = useState(null);
     const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+    const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
     const { exploreId } = useParams();
 
     const fetchSections = async (id) => {
@@ -71,9 +73,15 @@ const ExploreSectionTable = () => {
     };
 
     const handleAddProduct = () => {
-        navigate(`/exploresection/${section._id}/add-products`, {
-            state: { section }
-        });
+        setIsAssignModalOpen(true);
+    };
+
+    const handleAssignSuccess = () => {
+        setIsAssignModalOpen(false);
+        fetchSections(exploreId);
+        if (selectedSection) {
+            setSelectedSection(prev => ({ ...prev, products: [] })); // force refresh
+        }
     };
 
     const columns = useMemo(() => [
@@ -166,6 +174,13 @@ const ExploreSectionTable = () => {
                 section={selectedSection}
                 onDeleteProduct={handleDeleteProduct}
                 onAddProduct={handleAddProduct}
+            />
+
+            <AssignProductsToExploreSectionModal
+                open={isAssignModalOpen}
+                onClose={() => setIsAssignModalOpen(false)}
+                sectionId={selectedSection?._id}
+                onSuccess={handleAssignSuccess}
             />
 
         </>

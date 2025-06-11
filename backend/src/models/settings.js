@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const razorpay = require("../utils/razorpayInstance");
 
 const settingSchema = mongoose.Schema({
     // type: { type: String, default: "" },
@@ -12,6 +13,9 @@ const settingSchema = mongoose.Schema({
     email: { type: String, default: "" },
     mobile: { type: String, default: "" },
     address: { type: String, default: "" },
+    googleMapApiKey: { type: String, default: "" },
+    razorpayKeyId: { type: String, default: "" },
+    razorpayKeySecret: { type: String, default: "" },
     agreement: { type: String, default: "" },
     termAndConditions: { type: String, default: "" },
     privacyPolicy: { type: String, default: "" },

@@ -14,7 +14,7 @@ const updateProfile = async (req, res) => {
         // Handle image upload if provided
         if (req.files && req.files.image && req.files.image.length > 0) {
             // if (user.profileImage) {
-            //     await deleteOldFiles(user.profileImage); // delete old image
+            //     // await deleteOldFiles(user.profileImage); // delete old image
             // }
 
             user.profileImage = `${req.files.image[0].destination}/${req.files.image[0].filename}`;

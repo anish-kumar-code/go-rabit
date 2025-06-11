@@ -17,11 +17,18 @@ exports.getProductDetail = catchAsync(async (req, res, next) => {
 
         const productId = req.params.productId;
 
-        const product = await VendorProduct.findById({ _id: productId });
+        const product = await VendorProduct.findById({ _id: productId }).populate("shopId");
         const toppins = await Toppins.find({ status: 'active' })
 
+        if (!product) {
+            return res.status(404).json({
+                success: false,
+                message: 'No products found'
+            });
+        }
+
         const vendorId = product.vendorId;
-        const vendor = await Vendor.findById({_id: vendorId});
+        const vendor = await Vendor.findById({ _id: vendorId });
         const vendorName = vendor.name;
         if (!product) {
             return res.status(404).json({
@@ -39,7 +46,18 @@ exports.getProductDetail = catchAsync(async (req, res, next) => {
             price: product.vendorSellingPrice,
             offer: calculateOffer(product.mrp, product.vendorSellingPrice),
             longDescription: product.longDescription,
+            shopAddress: product.shopId.address,
+            shopPincode: product.shopId.pincode,
+            packingCharge: product.shopId.packingCharge,
         }
+
+        // const shopData = {
+        //     _id: product.shopId._id,
+        //     name: product.shopId.name,
+        //     address:`${product.shopId.address}, ${product.shopId.pincode}`,
+        //     lat: product.shopId.lat,
+        //     long: product.shopId.long,
+        // }
 
 
         return res.status(200).json({

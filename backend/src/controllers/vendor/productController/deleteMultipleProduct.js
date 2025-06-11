@@ -18,13 +18,13 @@ exports.deleteMultipleProducts = catchAsync(async (req, res, next) => {
 
     try {
         for (const product of products) {
-            if (product.primary_image) {
-                await deleteOldFiles(product.primary_image);
-            }
+            // if (product.primary_image) {
+            //     await deleteOldFiles(product.primary_image);
+            // }
 
-            if (Array.isArray(product.gallery_image)) {
-                await Promise.all(product.gallery_image.map(file => deleteOldFiles(file)));
-            }
+            // if (Array.isArray(product.gallery_image)) {
+            //     await Promise.all(product.gallery_image.map(file => deleteOldFiles(file)));
+            // }
 
             await Product.findByIdAndDelete(product._id);
         }

@@ -1,18 +1,19 @@
+const cms = require("../../../models/cms");
 const Setting = require("../../../models/settings");
 const catchAsync = require("../../../utils/catchAsync");
 
 exports.getCms = catchAsync(async (req, res) => {
 
-    let privacyPolicy = "This is the privacy policy content.";
-    let aboutUs = "This is the about us content.";
-    let termsAndConditions = "This is the terms and conditions content.";
-    let returnPolicy = "This is the return policy content.";
+    try {
+        const type = "user";
+        const cmsData = await cms.findOne({ type });
+        return res.status(200).json({
+            status: true,
+            message: "CMS Data found",
+            cmsData
+        });
+    } catch (error) {
+        return res.status(500).json({ status: false, message: "Something went wrong", error: error.message });
+    }
 
-    data = {privacyPolicy, aboutUs, termsAndConditions, returnPolicy};
-
-    return res.status(200).json({
-        success: true,
-        message: "cms fetched successfully.",
-        data: data,
-    });
-});
+})

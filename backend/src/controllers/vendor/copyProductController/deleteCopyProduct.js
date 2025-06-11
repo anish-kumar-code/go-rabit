@@ -2,7 +2,6 @@ const Product = require("../../../models/product");
 const VendorProduct = require("../../../models/vendorProduct");
 const AppError = require("../../../utils/AppError");
 const catchAsync = require("../../../utils/catchAsync");
-const deleteOldFiles = require("../../../utils/deleteOldFiles");
 
 exports.deleteCopyProduct = catchAsync(async (req, res, next) => {
     const id = req.params.id;

@@ -63,6 +63,9 @@ function Charges() {
         formData.append("email", values.email);
         formData.append("mobile", values.mobile);
         formData.append("address", values.address);
+        formData.append("googleMapApiKey", values.googleMapApiKey);
+        formData.append("razorpayKeyId", values.razorpayKeyId);
+        formData.append("razorpayKeySecret", values.razorpayKeySecret);
 
         // console.log("This is file original object")
         // console.log(values.image.fileList[1].originFileObj)
@@ -116,6 +119,9 @@ function Charges() {
                         address: settingData.address,
                         plateformFee: settingData.plateformFee,
                         finialPlateformFee: settingData.finialPlateformFee,
+                        googleMapApiKey: settingData.googleMapApiKey,
+                        razorpayKeyId: settingData.razorpayKeyId,
+                        razorpayKeySecret: settingData.razorpayKeySecret,
                     }}
                     className="max-w-2xl"
                 >
@@ -273,6 +279,33 @@ function Charges() {
                             </Form.Item>
                         </Col>
                     </Row>
+
+                    {/* google map api key setting */}
+                    <Form.Item
+                        label="Google Map Api"
+                        name="googleMapApiKey"
+                        rules={[{ required: true, message: 'Please enter google map api key' }]}
+                    >
+                        <Input placeholder="Enter google map api" size='large' />
+                    </Form.Item>
+
+                    {/* razorpay api key setting */}
+                    <Form.Item
+                        label="Razorpay Api Id"
+                        name="razorpayKeyId"
+                        rules={[{ required: true, message: 'Please enter razorpay key id' }]}
+                    >
+                        <Input placeholder="Enter razorpay key id" size='large' disabled/>
+                    </Form.Item>
+
+                    {/* razorpay api key setting */}
+                    <Form.Item
+                        label="Razorpay Api Secret"
+                        name="razorpayKeySecret"
+                        rules={[{ required: true, message: 'Please enter razorpay key secret' }]}
+                    >
+                        <Input placeholder="Enter razorpay key secret" size='large' disabled/>
+                    </Form.Item>
 
                     {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <Form.Item

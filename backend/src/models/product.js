@@ -14,7 +14,7 @@ const ProductSchema = new mongoose.Schema({
     brandId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Brand',
-        default: "67f619471646a8ac19162996"
+        default: null
     },
     sku: {type: String, default: ""},
     primary_image: {

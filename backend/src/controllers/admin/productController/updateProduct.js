@@ -1,77 +1,3 @@
-// const Product = require("../../../models/product");
-// const AppError = require("../../../utils/AppError");
-// const catchAsync = require("../../../utils/catchAsync");
-
-// exports.updateProduct = catchAsync(async (req, res, next) => {
-//     const { id } = req.params;
-
-//     const product = await Product.findById(id);
-//     if (!product) return next(new AppError("Product not found.", 404));
-
-//     console.log(req.body)
-
-//     const {
-//         name, categoryId, subCategoryId, sku, mrp, sellingPrice,
-//         discount, unitOfMeasurement, sellingUnit, shortDescription,
-//         longDescription, serviceId, type
-//     } = req.body;
-
-//     // Optional: Validate required fields
-//     const requiredFields = [
-//         { field: name, name: "Product name" },
-//         { field: categoryId, name: "Category ID" },
-//         { field: mrp, name: "MRP" },
-//         { field: sellingPrice, name: "Selling Price" },
-//         { field: unitOfMeasurement, name: "Unit of Measurement" },
-//         { field: sellingUnit, name: "Selling Unit" },
-//         { field: shortDescription, name: "Short Description" },
-//         { field: longDescription, name: "Long Description" },
-//         { field: serviceId, name: "Service Type" },
-//     ];
-
-//     for (const { field, name } of requiredFields) {
-//         const error = validateRequiredField(field, name);
-//         if (error) return next(error);
-//     }
-
-//     let galleryimagePaths = product.gallery_image;
-//     if (req.files && Array.isArray(req.files.gallery_image)) {
-//         galleryimagePaths = req.files.gallery_image.map((file) =>
-//             `${file.destination}/${file.filename}`
-//         );
-//     }
-
-//     let primaryImage = product.primary_image;
-//     if (req.files && req.files.primary_image) {
-//         primaryImage = `${req.files.primary_image[0].destination}/${req.files.primary_image[0].filename}`;
-//     }
-
-//     product.name = name;
-//     product.categoryId = categoryId;
-//     product.subCategoryId = subCategoryId;
-//     product.sku = sku;
-//     product.mrp = mrp;
-//     product.sellingPrice = sellingPrice;
-//     product.discount = discount || "";
-//     product.unitOfMeasurement = unitOfMeasurement;
-//     product.sellingUnit = sellingUnit;
-//     product.shortDescription = shortDescription;
-//     product.longDescription = longDescription;
-//     product.serviceId = serviceId;
-//     product.type = type;
-//     product.primary_image = primaryImage;
-//     product.gallery_image = galleryimagePaths;
-
-//     await product.save();
-
-//     res.status(200).json({
-//         status: true,
-//         message: "Product updated successfully.",
-//         data: { product },
-//     });
-// });
-
-
 const Product = require("../../../models/product");
 const AppError = require("../../../utils/AppError");
 const catchAsync = require("../../../utils/catchAsync");
@@ -94,7 +20,6 @@ exports.updateProduct = catchAsync(async (req, res, next) => {
         name,
         categoryId,
         subCategoryId,
-        sku,
         mrp,
         sellingPrice,
         discount,
@@ -147,7 +72,6 @@ exports.updateProduct = catchAsync(async (req, res, next) => {
     product.name = name;
     product.categoryId = categoryId;
     product.subCategoryId = subCategoryId;
-    product.sku = sku;
     product.mrp = mrp;
     product.sellingPrice = sellingPrice;
     product.discount = discount || "";

@@ -3,7 +3,6 @@ const store199Product = require("../../../models/store199Product");
 const VendorProduct = require("../../../models/vendorProduct");
 const AppError = require("../../../utils/AppError");
 const catchAsync = require("../../../utils/catchAsync");
-const deleteOldFiles = require("../../../utils/deleteOldFiles");
 
 exports.deleteStore199Product = catchAsync(async (req, res, next) => {
     const id = req.params.id;

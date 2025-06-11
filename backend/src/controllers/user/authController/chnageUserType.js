@@ -1,5 +1,4 @@
 const User = require("../../../models/user");
-const deleteOldFiles = require("../../../utils/deleteOldFiles");
 
 exports.changeUserType = async (req, res) => {
     try {

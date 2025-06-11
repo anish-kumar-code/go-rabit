@@ -37,7 +37,7 @@ const VendorProductSchema = new mongoose.Schema({
     },
     sku: {
         type: String,
-        required: true,
+        default: ""
     },
     type: {
         type: String,

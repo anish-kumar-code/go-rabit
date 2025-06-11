@@ -15,10 +15,14 @@ exports.getProductDetailOfGrocery = catchAsync(async (req, res, next) => {
 
         const productId = req.params.productId;
 
-        const product = await VendorProduct.findById(productId);
+        const product = await VendorProduct.findById(productId).populate("shopId");
 
-        // console.log(product);
-        // return;
+        if (!product) {
+            return res.status(404).json({
+                success: false,
+                message: 'No products found'
+            });
+        }
         const categoryId = product.categoryId;
 
         const productList = await VendorProduct.find({ categoryId }).limit(10)
@@ -43,6 +47,8 @@ exports.getProductDetailOfGrocery = catchAsync(async (req, res, next) => {
             price: product.vendorSellingPrice,
             offer: calculateOffer(product.mrp, product.vendorSellingPrice),
             longDescription: product.longDescription,
+            shopAddress: product.shopId.address,
+            shopPincode: product.shopId.pincode,
         }
 
 

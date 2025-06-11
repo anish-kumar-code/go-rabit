@@ -37,10 +37,11 @@ const OrderSchema = new Schema({
     preparationTime: { type: Number, default: null },
     preparationStartedAt: { type: Date, default: null },
     readyAt: { type: Date, default: null },
-    paymentMode: { type: String, enum: ['cash', 'card', 'upi', 'wallet'], required: true },
+    paymentMode: { type: String, enum: ['cash', 'card', 'upi', 'wallet', 'cod', 'online'], required: true },
     paymentStatus: { type: String, enum: ['pending', 'paid', 'failed'], default: 'pending' },
     paymentId: { type: String, default: null },
     assignedDriver: { type: Schema.Types.ObjectId, ref: 'Driver', default: null },
+    razorpayOrderId: { type: String, default: null },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Order', OrderSchema);
