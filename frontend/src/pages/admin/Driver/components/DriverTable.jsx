@@ -1,4 +1,4 @@
-import { Avatar, Button, Space, Switch, Table, Tag } from 'antd';
+import { Avatar, Button, Space, Switch, Table, Tag, Tooltip } from 'antd';
 import { FaEdit, FaTrash, FaUserTie } from 'react-icons/fa';
 import { updateDriverStatus } from '../../../../services/admin/apiDrivers'; // You should implement this if needed
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -70,6 +70,44 @@ const DriverTable = ({ searchText, data, onEdit, onDelete, loading }) => {
                         updateDriverStatus(record._id, checked)
                     }
                 />
+            )
+        },
+        {
+            title: 'Wallet',
+            dataIndex: 'wallet',
+            key: 'wallet',
+            align: 'center',
+            render: (_, record) => (
+                <Space>
+                    <Tag>₹{record.wallet_balance || 0}</Tag>
+                    <Tooltip title="Settle Amount">
+                        <Button
+                            type="default"
+                            // onClick={() => openSettleModal(record)}
+                        >
+                            Settle
+                        </Button>
+                    </Tooltip>
+                </Space>
+            )
+        },
+        {
+            title: 'Cash',
+            dataIndex: 'cashCollection',
+            key: 'cashCollection',
+            align: 'center',
+            render: (_, record) => (
+                <Space>
+                    <Tag>₹{record.cashCollection || 0}</Tag>
+                    <Tooltip title="Settle Amount">
+                        <Button
+                            type="default"
+                            // onClick={() => openSettleModal(record)}
+                        >
+                            Settle
+                        </Button>
+                    </Tooltip>
+                </Space>
             )
         },
         // {

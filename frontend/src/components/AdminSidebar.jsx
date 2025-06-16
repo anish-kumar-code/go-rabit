@@ -44,7 +44,7 @@ const AdminSidebar = ({ collapsed, settingData }) => {
         { key: 'sub-category', icon: <MdOutlineCategory size={18} />, label: 'Sub Category', onClick: () => navigate('/admin/sub-category') },
         { key: 'product', icon: <IoFastFoodOutline size={18} />, label: 'Product', onClick: () => navigate('/admin/product') },
         { key: 'product-flags', icon: <IoFastFoodOutline size={18} />, label: 'Product Flag', onClick: () => navigate('/admin/product-flags') },
-        { key: 'store199', icon: <IoFastFoodOutline size={18} />, label: 'Store 199', onClick: () => navigate('/admin/store199') },
+        // { key: 'store199', icon: <IoFastFoodOutline size={18} />, label: 'Store 199', onClick: () => navigate('/admin/store199') },
         { key: 'vendor', icon: <LuUsers size={18} />, label: 'Vendor', onClick: () => navigate('/admin/vendor') },
         { key: 'shop', icon: <IoStorefront size={18} />, label: 'Shop', onClick: () => navigate('/admin/shop') },
         { key: 'order', icon: <FaClipboardList size={18} />, label: 'Order', onClick: () => navigate('/admin/order') },
@@ -75,14 +75,16 @@ const AdminSidebar = ({ collapsed, settingData }) => {
                     key: 'vendor-cms', icon: <FaUserClock size={18} />, label: 'Vendor CMS', children: [
                         { key: 'vendor-terms-and-conditions', label: 'Terms & Conditions', onClick: () => navigate('/admin/terms-and-conditions/vendor') },
                         { key: 'vendor-privacy-policy', label: 'Privacy Policy', onClick: () => navigate('/admin/privacy-policy/vendor') },
-                        { key: 'vendor-refund-policy', label: 'Refund Policy', onClick: () => navigate('/admin/refund-policy/vendor') }
+                        { key: 'vendor-refund-policy', label: 'Refund Policy', onClick: () => navigate('/admin/refund-policy/vendor') },
+                        { key: 'vendor-about-us', label: 'About Us', onClick: () => navigate('/admin/about-us/vendor') }
                     ]
                 },
                 {
                     key: 'user-cms', icon: <FaUserClock size={18} />, label: 'User CMS', children: [
                         { key: 'user-terms-and-conditions', label: 'Terms & Conditions', onClick: () => navigate('/admin/terms-and-conditions/user') },
                         { key: 'user-privacy-policy', label: 'Privacy Policy', onClick: () => navigate('/admin/privacy-policy/user') },
-                        { key: 'user-refund-policy', label: 'Refund Policy', onClick: () => navigate('/admin/refund-policy/user') }
+                        { key: 'user-refund-policy', label: 'Refund Policy', onClick: () => navigate('/admin/refund-policy/user') },
+                        { key: 'user-about-us', label: 'About Us', onClick: () => navigate('/admin/about-us/user') }
                     ]
                 },
             ]

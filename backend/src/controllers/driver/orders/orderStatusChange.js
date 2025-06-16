@@ -46,6 +46,10 @@ exports.orderStatusChange = catchAsync(async (req, res) => {
         const vendorAmount = Math.ceil(itemTotal - commissionAmount - gstAmount + packingCharge);
         const deliveryBoyAmount = Math.ceil(deliveryCharge);
 
+        if(order.paymentMode === "cod") {
+            driver.cashCollection += order.finalTotalPrice;
+        }
+
         // Update wallet transaction
         const walletTx = await WalletTransaction.create({
             shopId,

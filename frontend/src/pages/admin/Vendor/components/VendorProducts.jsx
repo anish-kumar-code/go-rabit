@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Card, Button, Input, Breadcrumb, Switch, Space, Tooltip, Badge, Avatar } from 'antd';
+import { Table, Card, Button, Input, Breadcrumb, Switch, Space, Tooltip, Badge, Avatar, Tag } from 'antd';
 import { useNavigate, Link, useParams } from 'react-router';
 import { ArrowLeftOutlined, EyeOutlined } from '@ant-design/icons';
 import { getVendorShop } from '../../../../services/apiVendor';
@@ -71,6 +71,17 @@ const VendorProducts = () => {
             dataIndex: 'products',
             key: 'products',
             render: (_, record) => (<Tooltip title="All Products" className='hover:cursor-pointer'><Badge count={record.productCount} showZero color="#52c41a" overflowCount={999} /></Tooltip>)
+        },
+        {
+            title: 'Wallet',
+            dataIndex: 'wallet',
+            key: 'wallet',
+            align: 'center',
+            render: (_, record) => (
+                <Space>
+                    <Tag>₹{record.wallet_balance || 0}</Tag>
+                </Space>
+            )
         },
     ];
 

@@ -5,7 +5,7 @@ const catchAsync = require("../../../utils/catchAsync");
 exports.updateCms = catchAsync(async (req, res, next) => {
     try {
 
-        let { agreement, termAndConditions, privacyPolicy, refundPolicy } = req.body
+        let { agreement, termAndConditions, privacyPolicy, refundPolicy, aboutUs } = req.body
         const { id } = req.params;
 
         const newcms = await cms.findOne({ _id: id });
@@ -15,6 +15,7 @@ exports.updateCms = catchAsync(async (req, res, next) => {
         newcms.termAndConditions = termAndConditions || newcms.termAndConditions
         newcms.privacyPolicy = privacyPolicy || newcms.privacyPolicy
         newcms.refundPolicy = refundPolicy || newcms.refundPolicy
+        newcms.aboutUs = aboutUs || newcms.aboutUs
         await newcms.save()
 
         return res.status(201).json({

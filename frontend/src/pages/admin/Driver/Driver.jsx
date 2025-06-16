@@ -16,15 +16,11 @@ function DriverManagement() {
     const fetchDrivers = async () => {
         setLoading(true);
         try {
-            const response = await getAllDrivers(); // should return full API response
-
-            // console.log("Full driver API response:", response);
-
-            // ✅ Set drivers from the `data` array
+            const response = await getAllDrivers();
             if (response?.status && Array.isArray(response.data)) {
                 setDrivers(response.data);
             } else {
-                setDrivers([]); // fallback
+                setDrivers([]);
                 message.warning("No drivers found.");
             }
         } catch (err) {
@@ -65,7 +61,7 @@ function DriverManagement() {
                 // } catch {
                 //     message.error("Failed to delete driver.");
                 // }
-                    message.error("Currently not working");
+                message.error("Currently not working");
             }
         });
     };

@@ -58,6 +58,7 @@ exports.orderList = catchAsync(async (req, res, next) => {
                 status: ord.orderStatus,
                 deliveryCharge: ord.deliveryCharge,
                 totalAmount: ord.finalTotalPrice,
+                paymentMode: ord.paymentMode,
                 createdAt: ord.createdAt
             };
         })

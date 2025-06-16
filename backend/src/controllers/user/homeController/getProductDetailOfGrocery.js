@@ -42,6 +42,8 @@ exports.getProductDetailOfGrocery = catchAsync(async (req, res, next) => {
             _id: product._id,
             name: product.name,
             vendorName,
+            vendorId: product.vendorId,
+            shopId: product.shopId._id,
             primaryImage: product.primary_image,
             mrp: product.mrp,
             price: product.vendorSellingPrice,

@@ -2,18 +2,21 @@ import { Input, message, Modal } from 'antd'
 import React, { useEffect, useState } from 'react'
 import PaymentRequestTable from './component/PaymentRequestTable';
 import { changeWalletRequestStatus, getWalletRequest, settleWalletRequest } from '../../../services/admin/apiWallet';
+import { useParams } from 'react-router';
 
 function PaymentRequest() {
   const [searchText, setSearchText] = useState('');
   const [dataSource, setDataSource] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => { fetchWalletRequest() }, [])
+  const { type } = useParams();
 
-  const fetchWalletRequest = async () => {
+  useEffect(() => { fetchWalletRequest(type) }, [type])
+
+  const fetchWalletRequest = async (type) => {
     setLoading(true);
     try {
-      const res = await getWalletRequest();
+      const res = await getWalletRequest(type);
       setDataSource(res.wallet_request);
     } catch (error) {
       message.error("Something went wrong in wallet request");
@@ -25,7 +28,7 @@ function PaymentRequest() {
   const changeStatus = async (record, status) => {
     try {
       const res = await changeWalletRequestStatus({ record, status });
-      fetchWalletRequest()
+      fetchWalletRequest(type)
       message.success(res.message)
       // console.log(res)
     } catch (error) {
@@ -33,10 +36,11 @@ function PaymentRequest() {
     }
   }
 
-  const settleRequest = async (record) => {
+  const settleRequest = async (record, type) => {
+    console.log(type)
     try {
-      const res = await settleWalletRequest(record);
-      fetchWalletRequest()
+      const res = await settleWalletRequest(record, type);
+      fetchWalletRequest(type)
       message.success(res.message)
       // console.log(res)
     } catch (error) {
@@ -47,7 +51,7 @@ function PaymentRequest() {
   const confirmAndChangeStatus = (record, status) => {
     Modal.confirm({
       title: `Mark request as ${status}?`,
-      content: `Are you sure you want to mark the request for ${record.vendorId.name} as "${status}"?`,
+      content: `Do you really want to settle ₹ ${record.amount_requested} for ${record.vendorId?.name || record.driverId?.name}?`,
       okText: 'Yes',
       cancelText: 'No',
       onOk: () => changeStatus(record, status),
@@ -57,11 +61,11 @@ function PaymentRequest() {
   const confirmAndSettle = (record) => {
     Modal.confirm({
       title: 'Settle Wallet Request',
-      content: `Do you really want to settle ₹ ${record.amount_requested} for ${record.vendorId.name}?`,
+      content: `Do you really want to settle ₹ ${record.amount_requested} for ${record.vendorId?.name || record.driverId?.name}?`,
       okText: 'Settle',
       okType: 'primary',
       cancelText: 'Cancel',
-      onOk: () => settleRequest(record),
+      onOk: () => settleRequest(record, type),
     })
   }
 

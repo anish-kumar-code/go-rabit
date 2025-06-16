@@ -7,10 +7,7 @@ import { convertDate } from '../../../../utils/formatDate';
 
 const statusColors = { approved: 'green', pending: 'orange', rejected: 'red' };
 
-export default function PaymentRequestTable({
-    data, searchText, loading,
-    changeStatus, onSettle,
-}) {
+export default function PaymentRequestTable({ data, searchText, loading, changeStatus, onSettle, }) {
     const nav = useNavigate();
     const [view, setView] = useState(null);
     const close = () => setView(null);
@@ -24,7 +21,8 @@ export default function PaymentRequestTable({
             render: text => (
                 <div className="max-w-xs truncate">
                     <Tooltip title={text || "-"}>{text || "-"}</Tooltip>
-                </div>)
+                </div>
+            )
         },
         {
             title: 'Status',
@@ -46,22 +44,31 @@ export default function PaymentRequestTable({
             )
         },
         {
-            title: 'Vendor',
-            dataIndex: 'vendorId',
-            key: 'ven',
+            title: 'User',
+            key: 'user',
             align: 'center',
-            render: v => (
-                <Button type="link" className="p-0" onClick={() => nav(`/admin/vendor/${v._id}`)}>
-                    {v.name}
-                </Button>
-            )
+            render: r => {
+                const isVendor = !!r.vendorId;
+                const user = r.vendorId || r.driverId;
+                return (
+                    <Button
+                        type="link"
+                        className="p-0"
+                        onClick={() => nav(`/admin/${isVendor ? 'vendor' : 'driver'}/${user._id}`)}
+                    >
+                        {user.name}
+                    </Button>
+                );
+            }
         },
         {
             title: 'Balance',
-            dataIndex: 'vendorId',
             key: 'bal',
             align: 'center',
-            render: v => `₹ ${v.wallet_balance}`
+            render: r => {
+                const user = r.vendorId || r.driverId;
+                return `₹ ${user.wallet_balance}`;
+            }
         },
         {
             title: 'Action',
@@ -87,6 +94,7 @@ export default function PaymentRequestTable({
         },
     ], [nav, changeStatus, onSettle, loading]);
 
+
     return (
         <>
             <Table
@@ -101,27 +109,30 @@ export default function PaymentRequestTable({
 
             <Modal
                 title="Request Details"
-                visible={!!view}
+                open={!!view}
                 footer={<Button onClick={close}>Close</Button>}
                 onCancel={close}
             >
                 {view && (
                     <div className="space-y-2">
                         {[
-                            ['Vendor', view.vendorId.name],
+                            ['Name', view.vendorId?.name || view.driverId?.name],
                             ['Amount', `₹ ${view.amount_requested}`],
+                            // ['Driver',  view.driverId?.name || '—'],
+                            ['Balance', `₹ ${view.vendorId?.wallet_balance || view.driverId?.wallet_balance || 0}`],
                             ['Date', convertDate(view.request_date)],
                             ['Message', view.message || '—'],
                             ['Status', <Tag color={statusColors[view.status]}>{view.status.toUpperCase()}</Tag>],
                             ['Settled', view.admin_settled ? `Yes on ${convertDate(view.updatedAt)}` : 'No']
-                        ].map(([label, val]) => (
-                            <p key={label}>
+                        ].map(([label, val], index) => (
+                            <p key={label + '-' + index}>
                                 <strong>{label}:</strong> {val}
                             </p>
                         ))}
                     </div>
                 )}
             </Modal>
+
         </>
     );
 }

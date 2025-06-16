@@ -19,6 +19,8 @@ const formatProduct = async (prod, userCoords, apiKey) => {
 
     return {
         _id: prod._id,
+        shopId: prod.shopId?._id,
+        vendorId: prod.vendorId,
         shopName: prod.shopId?.name || "",
         primary_image: prod.primary_image,
         shortDescription: prod.shortDescription,
@@ -36,19 +38,19 @@ exports.getHomeData = catchAsync(async (req, res) => {
     if (!serviceId) return res.status(400).json({ success: false, message: "Service ID is required" });
 
     const setting = await Setting.findById("680f1081aeb857eee4d456ab");
-    const apiKey = setting?.googleMapApiKey || "working"; 
+    const apiKey = setting?.googleMapApiKey || "working";
 
     const user = await User.findById(req.user._id);
-     const userCoords = {
+    const userCoords = {
         lat: parseFloat(user.lat || 0),
         long: parseFloat(user.long || 0),
     };
-    const typeFilter = user.userType === "veg" ? { type: "veg" } : {};
+    const typeFilter = user.userType == "veg" ? { type: "veg" } : {};
     const commonQuery = { status: "active", serviceId, ...typeFilter };
 
     const [banners, categories, explore, recommendedRaw, featuredRaw] = await Promise.all([
         banner.find({ serviceId }).select("image").sort({ createdAt: -1 }),
-        Category.find({ cat_id: null, serviceId }).select("name image").limit(8).sort({ createdAt: -1 }),
+        Category.find({ cat_id: null, serviceId, ...typeFilter }).select("name image").limit(8).sort({ createdAt: -1 }),
         Explore.find({ serviceId }).select("name icon"),
         VendorProduct.find({ ...commonQuery, isRecommended: true }).limit(10).populate("shopId", "name lat long"),
         VendorProduct.find({ ...commonQuery, isFeatured: true }).limit(10).populate("shopId", "name lat long"),

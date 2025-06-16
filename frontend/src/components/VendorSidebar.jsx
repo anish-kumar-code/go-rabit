@@ -84,13 +84,13 @@ function VendorSidebar({ collapsed, settingData }) {
         {
             type: 'divider',
         },
-          { key: 'coupon', icon: <RiCoupon3Line size={18} />, label: 'Coupon', onClick: () => navigate('/vendor/coupon') },
-        {
-            key: 'settings',
-            icon: <IoSettingsOutline style={{ fontSize: "18px" }} />,
-            label: 'Settings',
-            onClick: () => navigate('/vendor/settings'),
-        },
+        { key: 'coupon', icon: <RiCoupon3Line size={18} />, label: 'Coupon', onClick: () => navigate('/vendor/coupon') },
+        // {
+        //     key: 'settings',
+        //     icon: <IoSettingsOutline style={{ fontSize: "18px" }} />,
+        //     label: 'Settings',
+        //     onClick: () => navigate('/vendor/settings'),
+        // },
         {
             key: 'logout',
             icon: <MdLogout style={{ fontSize: "18px" }} />,

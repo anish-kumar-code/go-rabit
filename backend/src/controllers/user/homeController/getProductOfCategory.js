@@ -21,6 +21,8 @@ exports.getProductOfCategory = catchAsync(async (req, res, next) => {
         const products = productsRaw.map((prod) => ({
             _id: prod._id,
             name: prod.name,
+            vendorId: prod.vendorId,
+            shopId: prod.shopId._id,
             primary_image: prod.primary_image,
             price: prod.vendorSellingPrice,
             mrp: prod.mrp,

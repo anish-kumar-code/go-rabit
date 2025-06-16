@@ -32,7 +32,7 @@ exports.verifyOtp = async (req, res) => {
         await user.save();
 
         // Generate and send token with user info
-        return createToken(user, 200, res, true, { googleMapApiKey: apiKey });
+        return createToken(user, 200, res, true, { googleMapApiKey: apiKey, newUser: user.isNewUser });
 
     } catch (error) {
         console.error('Error in verifyOtp controller:', error);

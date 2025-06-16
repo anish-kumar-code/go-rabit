@@ -45,6 +45,12 @@ const createRazorpayOrder = require("../controllers/user/paymentController/creat
 const verifyRazorpayWebhook = require("../controllers/user/paymentController/razorpayWebhook");
 const { showDeletePage } = require("../controllers/user/authController/showDeletePage");
 const { deleteUser } = require("../controllers/user/authController/deleteUser");
+const { getShopList } = require("../controllers/user/homeController/getShopList");
+const { createNewCart } = require("../controllers/user/newCartController/createNewCart");
+const { getNewCart } = require("../controllers/user/newCartController/getNewCart");
+const { updateCartItemQuantity } = require("../controllers/user/newCartController/updateCartItemQuantity");
+const { removeFromNewCart } = require("../controllers/user/newCartController/removeFromNewCart");
+const { clearNewCart } = require("../controllers/user/newCartController/clearNewCart");
 const router = express.Router()
 
 // router.get("/test", (req,res)=>{
@@ -66,6 +72,7 @@ router.post('/profile/type', userAuthenticate, changeUserType);
 // Home Food Page
 //------------------------------------------------
 router.get('/home', userAuthenticate, getHomeData)
+router.get('/shop/list', userAuthenticate, getShopList)
 router.get('/homegrocery', userAuthenticate, getHomeDataGrocery)
 router.get('/category/list', userAuthenticate, getAllCategory);
 router.get('/product/list/recommended', userAuthenticate, getAllRecommendedProduct);
@@ -119,6 +126,16 @@ router.get('/nightCafe/:categoryId/shop', userAuthenticate, getNightCafeShopOfCa
 router.post("/cart", userAuthenticate, createCart)
 router.get("/cart", userAuthenticate, getCart)
 router.delete("/cart/:cartItemId", userAuthenticate, deleteCart)
+
+//------------------------------------------------
+// new cart
+//------------------------------------------------
+router.post("/newcart", userAuthenticate, createNewCart)
+router.get("/newcart", userAuthenticate, getNewCart)
+router.post("/newcart/quantity", userAuthenticate, updateCartItemQuantity)
+router.post("/newcart/remove", userAuthenticate, removeFromNewCart)
+router.get("/newcart/clear", userAuthenticate, clearNewCart)
+// router.delete("/cart/:cartItemId", userAuthenticate, deleteCart)
 
 
 //------------------------------------------------

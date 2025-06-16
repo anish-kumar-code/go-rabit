@@ -27,6 +27,7 @@
         // --- commission and wallet details ---
         commission: { type: Number, default: 0 },
         wallet_balance: { type: Number, default: 0 },
+        cashCollection: { type: Number, default: 0 },
         isBlocked: { type: Boolean, default: false },
         // for firebase cloud messaging
         deviceId: { type: String, required: true },

@@ -78,6 +78,8 @@ const { deleteProductFromExploreSection } = require("../controllers/admin/explor
 const { getAllDriverForThisOrder } = require("../controllers/admin/orderController/getAllDriverForThisOrder");
 const { toggleBlockStatus } = require("../controllers/admin/driverController/toggleBlockStatus");
 const { assignProductToExploreSection } = require("../controllers/admin/exploreSectionController/assignProductToExploreSection");
+const { settleVendorWallet } = require("../controllers/admin/walletController/settleVendorWallet");
+const { settleDriverWallet } = require("../controllers/admin/walletController/settleDriverWallert");
 const router = express.Router()
 
 router.get("/test/admin", (req, res) => {
@@ -255,6 +257,9 @@ router.patch("/order/assign/:orderId", adminAuthenticate, assignedDriver)
 router.get("/wallet/request", adminAuthenticate, getWalletRequest)
 router.post("/wallet/request/status/:requestId", adminAuthenticate, changeStatusWalletRequest)
 router.post("/wallet/request/settle/:requestId", adminAuthenticate, settleRequest);
+
+router.post("/vendor/:vendorId/wallet/settle", adminAuthenticate, settleVendorWallet);
+router.post("/driver/:driverId/wallet/settle", adminAuthenticate, settleDriverWallet);
 
 
 //------------------------------------------------

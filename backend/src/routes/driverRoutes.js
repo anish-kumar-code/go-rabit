@@ -12,6 +12,9 @@ const { getProfile } = require("../controllers/driver/auth/getProfile");
 const { orderStatusChange } = require("../controllers/driver/orders/orderStatusChange");
 const { toggleBlockStatus } = require("../controllers/driver/auth/toggleBlockStatus");
 const updateDriverLocation = require("../controllers/driver/auth/updateLocation");
+const { getDriverWallet } = require("../controllers/driver/wallet/getDriverWallet");
+const { createWalletRequest } = require("../controllers/driver/wallet/createWalletRequest");
+const { getWalletRequest } = require("../controllers/driver/wallet/getWalletRequest");
 
 
 //------------------------------------------------
@@ -53,6 +56,13 @@ router.patch('/update-location/:driverId', updateDriverLocation);
 router.get("/orders", driverAuthenticate, orderList)
 router.get("/order/:orderId", driverAuthenticate, orderDetails)
 router.patch("/order/:orderId", driverAuthenticate, orderStatusChange)
+
+//------------------------------------------------
+// wallet
+//------------------------------------------------
+router.get("/wallet", driverAuthenticate, getDriverWallet)
+router.post("/wallet/request", driverAuthenticate, createWalletRequest)
+router.get("/wallet/request", driverAuthenticate, getWalletRequest)
 
 
 

@@ -1,72 +1,78 @@
-import { Breadcrumb, Button, Form, message, Spin } from 'antd'
-import TextArea from 'antd/es/input/TextArea'
-import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router';
-import { getAllSettings, updateSettings } from '../../../../services/apiSettings';
+import React, { useEffect, useState } from 'react';
+import { Button, Form, message, Spin } from 'antd';
+import { useParams } from 'react-router';
 import { getAllCms, updateCms } from '../../../../services/admin/apiCms';
 
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 function TermConditions() {
-    const [termConditions, setTermConditions] = useState("")
-    const [data, setdata] = useState("")
+    const [data, setData] = useState('');
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(true);
     const [updateLoading, setUpdateLoading] = useState(false);
+    const [editorData, setEditorData] = useState('');
+    const { type } = useParams();
 
-    const { type } = useParams()
-    
     const fetchCms = async () => {
         try {
-            const data = await getAllCms(type);
-            setTermConditions(data.cmsData.termAndConditions)
-            setdata(data.cmsData)
+            const res = await getAllCms(type);
+            setData(res.cmsData);
+            setEditorData(res.cmsData.termAndConditions || '');
         } catch (error) {
-            message.error("Failed to load cms Data");
+            message.error('Failed to load CMS Data');
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
-    }
+    };
 
-    useEffect(() => { fetchCms() }, [])
+    useEffect(() => {
+        fetchCms();
+    }, []);
 
     const onFinish = async () => {
-        setUpdateLoading(true)
-        const fromData = {
-            termAndConditions: termConditions
-        }
-
+        setUpdateLoading(true);
         try {
-            const res = await updateCms(data._id, fromData)
-            // console.log(res.cmsData)
-            message.success('Term and condition updated');
-        } catch (error) {
-            message.error('Error updating term and conditions');
+            await updateCms(data._id, { termAndConditions: editorData });
+            message.success('Terms and Conditions updated');
+        } catch {
+            message.error('Error updating Terms and Conditions');
         } finally {
-            setUpdateLoading(false)
+            setUpdateLoading(false);
         }
     };
 
     if (loading) return <Spin size="large" fullscreen />;
 
     return (
-        <>
-            <div className="p-6">
-                <h2 className="text-2xl font-bold mb-6">Term & Conditions</h2>
-                <Form
-                    form={form}
-                    layout="vertical"
-                    onFinish={onFinish}
-                >
-                    <TextArea autoSize={{ minRows: 20 }} placeholder="Enter Term and Conditions here ..." value={termConditions} onChange={(e) => setTermConditions(e.target.value)} required />
+        <div className="p-6">
+            <h2 className="text-2xl font-bold mb-6">Terms & Conditions</h2>
+            <Form form={form} layout="vertical" onFinish={onFinish}>
+                <Form.Item label="Content" required>
+                    <CKEditor
+                        editor={ClassicEditor}
+                        data={editorData}
+                        onChange={(event, editor) => {
+                            const data = editor.getData();
+                            setEditorData(data);
+                        }}
+                    />
+                </Form.Item>
 
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit" size="large" className='mt-4' loading={updateLoading}>
-                            Save Changes
-                        </Button>
-                    </Form.Item>
-                </Form>
-            </div>
-        </>
-    )
+                <Form.Item>
+                    <Button
+                        type="primary"
+                        htmlType="submit"
+                        size="large"
+                        className="mt-4"
+                        loading={updateLoading}
+                    >
+                        Save Changes
+                    </Button>
+                </Form.Item>
+            </Form>
+        </div>
+    );
 }
 
-export default TermConditions
+export default TermConditions;

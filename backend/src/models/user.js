@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
     lat: { type: String, default: '' },
     long: { type: String, default: '' },
     deviceInfo: { deviceId: String, deviceModel: String, osVersion: String },
+    isNewUser: { type: Boolean, default: true },
     // ✅ New GeoJSON location field
     location: {
         type: { type: String, enum: ['Point'], default: 'Point' },

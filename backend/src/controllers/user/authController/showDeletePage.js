@@ -1,8 +1,8 @@
+
 const User = require("../../../models/user");
 
 exports.showDeletePage = async (req, res) => {
     try {
-        console.log(user)
         const user = await User.findById(req.params.id);
         if (!user) return res.send("User not found");
 
@@ -64,6 +64,59 @@ exports.showDeletePage = async (req, res) => {
         </html>
         `);
     } catch (error) {
+        console.log(error)
         res.status(500).send("Server error");
     }
 };
+
+
+// const User = require("../../../models/user");
+
+// exports.deleteUser = async (req, res) => {
+//     try {
+//         const user = await User.findByIdAndDelete(req.params.id);
+//         if (!user) return res.send("User not found");
+
+//         res.send(`
+//       <!DOCTYPE html>
+//       <html>
+//       <head>
+//           <title>Deleted</title>
+//           <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//           <style>
+//               body {
+//                   margin: 0;
+//                   padding: 0;
+//                   font-family: Arial, sans-serif;
+//                   display: flex;
+//                   justify-content: center;
+//                   align-items: center;
+//                   height: 100vh;
+//                   background-color: #f9f9f9;
+//               }
+//               .container {
+//                   background: white;
+//                   padding: 20px;
+//                   border-radius: 10px;
+//                   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+//                   max-width: 90%;
+//                   text-align: center;
+//               }
+//               h2 {
+//                   color: green;
+//               }
+//           </style>
+//       </head>
+//       <body>
+//           <div class="container">
+//               <h2>User deleted successfully ✅</h2>
+//           </div>
+//       </body>
+//       </html>
+//     `);
+//     } catch (error) {
+//         res.status(500).send("Server error");
+//     }
+// };
+
+

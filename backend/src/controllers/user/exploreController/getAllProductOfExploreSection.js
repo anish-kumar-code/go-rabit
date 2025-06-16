@@ -5,6 +5,8 @@ const catchAsync = require("../../../utils/catchAsync");
 
 const formatProduct = (prod) => ({
     _id: prod._id,
+    shopId: prod.shopId._id,
+    vendorId: prod.vendorId,
     shopName: prod.shopId?.name || "",
     primary_image: prod.primary_image,
     shortDescription: prod.shortDescription,

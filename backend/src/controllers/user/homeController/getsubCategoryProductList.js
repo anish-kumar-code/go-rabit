@@ -26,6 +26,8 @@ exports.getsubCategoryProductList = catchAsync(async (req, res, next) => {
             _id: prod._id,
             subCategoryId: prod.subCategoryId,
             name: prod.name,
+            shopId: prod.shopId,
+            vendorId: prod.vendorId,
             image: prod.primary_image,
             shortDescription: prod.shortDescription,
             vendorSellingPrice: prod.vendorSellingPrice,

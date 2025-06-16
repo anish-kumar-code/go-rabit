@@ -1,0 +1,33 @@
+const newCart = require("../../../models/newCart");
+
+exports.removeFromNewCart = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const { shopId, productId } = req.body;
+
+        if (!shopId || !productId) {
+            return res.status(400).json({ message: "shopId and productId are required." });
+        }
+
+        const cart = await newCart.findOne({ userId, status: "active" });
+        if (!cart) return res.status(404).json({ message: "Cart not found." });
+
+        let shopIndex = cart.shops.findIndex(shop => shop.shopId.equals(shopId));
+        if (shopIndex === -1) return res.status(404).json({ message: "Shop not found in cart." });
+
+        // Remove product from shop's items
+        const shop = cart.shops[shopIndex];
+        shop.items = shop.items.filter(item => !item.productId.equals(productId));
+
+        // If no items left in shop group, remove the shop group
+        if (shop.items.length === 0) {
+            cart.shops.splice(shopIndex, 1);
+        }
+
+        await cart.save();
+        return res.status(200).json({ success: true, message: "Item removed from cart", cart });
+    } catch (error) {
+        console.error("RemoveFromCart Error:", error);
+        return res.status(500).json({ success: false, message: "Server error", error: error.message });
+    }
+};

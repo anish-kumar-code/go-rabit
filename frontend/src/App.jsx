@@ -26,6 +26,7 @@ import Charges from './pages/admin/Settings/components/Charges'
 import TermConditions from './pages/admin/Settings/components/Term&Conditions'
 import PrivacyPolicyPage from './pages/admin/Settings/components/PrivacyPolicyPage'
 import RefundPolicy from './pages/admin/Settings/components/RefundPolicy'
+import AboutUs from './pages/admin/Settings/components/AboutUs'
 import Order from './pages/admin/Order/Order'
 import OrderDetails from './pages/admin/Order/components/OrderDetails'
 import OrderDetailsPage from './pages/admin/Order/components/OrderDetailsPage'
@@ -81,12 +82,12 @@ function App() {
           <Route path='vendor/shops/:id' element={<VendorProducts />} />
           <Route path='products/:produtSlug' element={<ProductDetails />} />
           <Route path='product-flags' element={<ProductFlags />} />
-          <Route path='store199' element={<Store199 />} />
+          {/* <Route path='store199' element={<Store199 />} /> */}
           <Route path='shop' element={<Shop />} />
           <Route path='order' element={<Order />} />
           <Route path="order/:id" element={<OrderDetailsPage />} />
-          <Route path="request/vendor" element={<PaymentRequest />} />
-          <Route path="request/driver" element={<PaymentRequest />} />
+          <Route path="request/:type" element={<PaymentRequest />} />
+          {/* <Route path="request/driver" element={<PaymentRequest />} /> */}
           <Route path='explore' element={<Explore />} />
           <Route path='explore/:exploreId' element={<ExploreSectionTable />} />
           <Route path='explore-section' element={<ExploreSection />} />
@@ -97,6 +98,7 @@ function App() {
           <Route path='terms-and-conditions/:type' element={<TermConditions />} />
           <Route path='privacy-policy/:type' element={<PrivacyPolicyPage />} />
           <Route path='refund-policy/:type' element={<RefundPolicy />} />
+          <Route path='about-us/:type' element={<AboutUs />} />
         </Route>
 
         {/* vendor route */}
@@ -114,7 +116,7 @@ function App() {
           <Route path='wallet/:shopId' element={<ShopWalletHistory />} />
           <Route path='wallet/history' element={<WalletHistory />} />
           <Route path='profile' element={<VendorProfile />} />
-          <Route path='settings' element={<VendorSettings />} />
+          {/* <Route path='settings' element={<VendorSettings />} /> */}
           <Route path='coupon' element={<CouponVendor />} />
         </Route>
         <Route path='*' element={<LandingPage />} />

@@ -6,18 +6,19 @@ import { getAllCms, updateCms } from '../../../../services/admin/apiCms';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-function PrivacyPolicyPage() {
-    const [privacyPolicy, setPrivacyPolicy] = useState('');
+function AboutUs() {
+    const [aboutUs, setAboutUs] = useState('');
     const [data, setData] = useState(null);
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(true);
     const [updateLoading, setUpdateLoading] = useState(false);
+
     const { type } = useParams();
 
     const fetchCms = async () => {
         try {
             const res = await getAllCms(type);
-            setPrivacyPolicy(res.cmsData.privacyPolicy || '');
+            setAboutUs(res.cmsData.aboutUs || '');
             setData(res.cmsData);
         } catch (error) {
             message.error('Failed to load CMS data.');
@@ -32,12 +33,11 @@ function PrivacyPolicyPage() {
 
     const onFinish = async () => {
         setUpdateLoading(true);
-
         try {
-            await updateCms(data._id, { privacyPolicy });
-            message.success('Privacy Policy updated');
+            await updateCms(data._id, { aboutUs });
+            message.success('About Us section updated successfully.');
         } catch (error) {
-            message.error('Error updating Privacy Policy');
+            message.error('Error updating About Us section.');
         } finally {
             setUpdateLoading(false);
         }
@@ -47,18 +47,18 @@ function PrivacyPolicyPage() {
 
     return (
         <div className="p-6">
-            <h2 className="text-2xl font-bold mb-6">Privacy Policy</h2>
+            <h2 className="text-2xl font-bold mb-6">About Us</h2>
             <Form form={form} layout="vertical" onFinish={onFinish}>
-                <Form.Item label="Privacy Policy" required>
+                <Form.Item label="About Us Content" required>
                     <CKEditor
                         editor={ClassicEditor}
-                        data={privacyPolicy}
+                        data={aboutUs}
                         onChange={(event, editor) => {
                             const data = editor.getData();
-                            setPrivacyPolicy(data);
+                            setAboutUs(data);
                         }}
                         config={{
-                            placeholder: "Write the privacy policy here...",
+                            placeholder: 'Enter About Us content here...',
                         }}
                     />
                 </Form.Item>
@@ -79,4 +79,4 @@ function PrivacyPolicyPage() {
     );
 }
 
-export default PrivacyPolicyPage;
+export default AboutUs;

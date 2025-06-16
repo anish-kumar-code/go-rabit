@@ -42,6 +42,14 @@ function Vendor() {
         });
     };
 
+    const handleSettleSuccess = (vendorId) => {
+        // Logic to refresh vendor data
+        setData(prevData => prevData.map(vendor =>
+            vendor._id === vendorId ? { ...vendor, wallet_balance: 0 } : vendor
+        ));
+    };
+
+
     return (
         <>
             <div className='lg:px-10 px-5 my-8 md:flex items-center gap-4 justify-between '>
@@ -55,7 +63,7 @@ function Vendor() {
                     size="large"
                 />
             </div>
-            <VendorTable data={dataSource} searchText={searchText} onDelete={handleDelete} loading={loading} />
+            <VendorTable data={dataSource} searchText={searchText} onDelete={handleDelete} loading={loading} onSettleSuccess={handleSettleSuccess}/>
         </>
     )
 }

@@ -50,6 +50,8 @@ exports.getNightCafe = catchAsync(async (req, res) => {
     const trending = productList.map(prod => ({
         _id: prod._id,
         name: prod.name || "",
+        shopId: prod.shopId?._id || "",
+        vendorId: prod.vendorId || "",
         shopName: prod.shopId?.name || "",
         primary_image: prod.primary_image || "public/images/default-product.png",
         price: prod.vendorSellingPrice || 0,
