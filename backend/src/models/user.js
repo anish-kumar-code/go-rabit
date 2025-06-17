@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
     email: { type: String, trim: true, lowercase: true },
     profileImage: { type: String, default: '' },
     userType: { type: String, enum: ['veg', 'nonveg'], default: 'veg' },
+    serviceType: { type: String, enum: ['food', 'grocery'], default: 'food' },
     status: { type: Boolean, default: true },
     otp: { code: String, expiresAt: Date },
     lastLogin: { type: Date },

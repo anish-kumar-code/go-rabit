@@ -1,6 +1,7 @@
 const VendorProduct = require("../../../models/vendorProduct");
 const Shop = require("../../../models/shop");
 const newCart = require("../../../models/newCart");
+const User = require("../../../models/user");
 
 exports.createNewCart = async (req, res) => {
     try {
@@ -23,6 +24,11 @@ exports.createNewCart = async (req, res) => {
             }
         }
 
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
         // Get shop & vendor from product
         const product = await VendorProduct.findById(productId).populate("shopId vendorId");
         if (!product) return res.status(404).json({ message: "Product not found." });
@@ -35,12 +41,13 @@ exports.createNewCart = async (req, res) => {
         const finalPrice = (price + toppingsCost) * quantity;
 
         // Find existing cart
-        let cart = await newCart.findOne({ userId, status: "active" });
+        let cart = await newCart.findOne({ userId, status: "active", serviceType: user.serviceType });
 
         if (!cart) {
             // If cart doesn't exist, create one
             cart = new newCart({
                 userId,
+                serviceType: user.serviceType,
                 shops: [{
                     shopId,
                     vendorId,

@@ -22,6 +22,7 @@ const ShopCartSchema = new Schema({
 
 const CartSchema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: "User", required: true, index: true },
+    serviceType: { type: String, enum: ["food", "grocery"], default: "food" },
     shops: [ShopCartSchema],
     status: {
         type: String,

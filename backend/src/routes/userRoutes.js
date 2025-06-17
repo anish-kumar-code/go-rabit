@@ -1,5 +1,5 @@
 const express = require("express")
-const { createAddeess } = require("../controllers/user/addressController/createAddress")
+const { createAddress } = require("../controllers/user/addressController/createAddress")
 const sendOtp = require("../controllers/user/authController/sendOtp");
 const { verifyOtp } = require("../controllers/user/authController/verifyOtp");
 const { getProfile } = require("../controllers/user/authController/getProfile");
@@ -51,6 +51,13 @@ const { getNewCart } = require("../controllers/user/newCartController/getNewCart
 const { updateCartItemQuantity } = require("../controllers/user/newCartController/updateCartItemQuantity");
 const { removeFromNewCart } = require("../controllers/user/newCartController/removeFromNewCart");
 const { clearNewCart } = require("../controllers/user/newCartController/clearNewCart");
+const { changeUserService } = require("../controllers/user/authController/changeUserService");
+const { createNewOrder } = require("../controllers/user/newOrderController/createNewOrder");
+const { getNewOrder } = require("../controllers/user/newOrderController/getNewOrder");
+const { getNewOrderDetails } = require("../controllers/user/newOrderController/getNewOrderDetails");
+const { updateAddress } = require("../controllers/user/addressController/updateAddress");
+const { deleteAddress } = require("../controllers/user/addressController/deleteAddress");
+const { validateNewCartDelivery } = require("../controllers/user/newCartController/validateNewCartDelivery");
 const router = express.Router()
 
 // router.get("/test", (req,res)=>{
@@ -66,6 +73,7 @@ router.get('/profile', userAuthenticate, getProfile);
 router.patch('/profile', userAuthenticate, fileUploader("user", [{ name: "image", maxCount: 1 }]), updateProfile);
 router.patch('/location', userAuthenticate, updateLatLong);
 router.post('/profile/type', userAuthenticate, changeUserType);
+router.post('/profile/service', userAuthenticate, changeUserService);
 
 
 //------------------------------------------------
@@ -133,6 +141,7 @@ router.delete("/cart/:cartItemId", userAuthenticate, deleteCart)
 router.post("/newcart", userAuthenticate, createNewCart)
 router.get("/newcart", userAuthenticate, getNewCart)
 router.post("/newcart/quantity", userAuthenticate, updateCartItemQuantity)
+router.post("/newcart/validate-address", userAuthenticate, validateNewCartDelivery)
 router.post("/newcart/remove", userAuthenticate, removeFromNewCart)
 router.get("/newcart/clear", userAuthenticate, clearNewCart)
 // router.delete("/cart/:cartItemId", userAuthenticate, deleteCart)
@@ -142,7 +151,9 @@ router.get("/newcart/clear", userAuthenticate, clearNewCart)
 // address
 //------------------------------------------------
 router.get("/address", userAuthenticate, getAddress)
-router.post("/address", userAuthenticate, createAddeess)
+router.post("/address", userAuthenticate, createAddress)
+router.patch("/address/:addressId", userAuthenticate, updateAddress)
+router.delete("/address/:addressId", userAuthenticate, deleteAddress)
 
 
 
@@ -154,6 +165,16 @@ router.post("/order", userAuthenticate, createOrder)
 router.get("/order/:orderId", userAuthenticate, getOrderDetail)
 router.get("/order/:orderId/status", userAuthenticate, getOrderStatus)
 
+
+//------------------------------------------------
+// new order
+//------------------------------------------------
+router.post("/neworder", userAuthenticate, createNewOrder)
+router.get("/neworder", userAuthenticate, getNewOrder)
+router.get("/neworder/:orderId", userAuthenticate, getNewOrderDetails)
+// router.post("/newcart/remove", userAuthenticate, removeFromNewCart)
+// router.get("/newcart/clear", userAuthenticate, clearNewCart)
+// router.delete("/cart/:cartItemId", userAuthenticate, deleteCart)
 
 
 //------------------------------------------------

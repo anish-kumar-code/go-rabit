@@ -1,3 +1,6 @@
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
+
 const ProductDataSchema = new Schema({
     productId: { type: Schema.Types.ObjectId, ref: 'VendorProduct', required: true },
     price: { type: Number, required: true },
@@ -15,7 +18,7 @@ const OrderSchema = new Schema({
     booking_id: { type: String, required: true, unique: true },
     shopId: { type: Schema.Types.ObjectId, ref: 'Shop', required: true },
     vendorId: { type: Schema.Types.ObjectId, ref: 'Vendor', required: true },
-    productData: { type: [ProductDataSchema], required: true }, // << changed to array
+    productData: { type: [ProductDataSchema], required: true },
     itemTotal: { type: Number, required: true },
     couponId: { type: Schema.Types.ObjectId, ref: 'Coupon', default: null },
     couponCode: { type: String, default: "" },
@@ -27,8 +30,9 @@ const OrderSchema = new Schema({
     deliveryTime: { type: String, required: true },
     deliveryCharge: { type: Number, default: 0 },
     packingCharge: { type: Number, default: 0 },
-    commissionRate: { type: Number, required: true },
-    commissionAmount: { type: Number, required: true },
+    serviceType: { type: String, enum: ['food', 'grocery'], default: 'food' },
+    // commissionRate: { type: Number, required: true },
+    // commissionAmount: { type: Number, required: true },
     finalTotalPrice: { type: Number, required: true },
     orderStatus: {
         type: String,

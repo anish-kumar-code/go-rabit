@@ -90,13 +90,13 @@ function AllProduct() {
             align: "center",
             render: (_, record) => (<>{record.categoryId?.name}</>)
         },
-        {
-            title: 'Sub Category',
-            dataIndex: 'subcategory',
-            key: 'subcategory',
-            align: "center",
-            render: (_, record) => (<>{record.subCategoryId?.name}</>)
-        },
+        // {
+        //     title: 'Sub Category',
+        //     dataIndex: 'subcategory',
+        //     key: 'subcategory',
+        //     align: "center",
+        //     render: (_, record) => (<>{record.subCategoryId?.name}</>)
+        // },
         {
             title: 'Type',
             dataIndex: 'type',
