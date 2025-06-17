@@ -58,6 +58,7 @@ const { getNewOrderDetails } = require("../controllers/user/newOrderController/g
 const { updateAddress } = require("../controllers/user/addressController/updateAddress");
 const { deleteAddress } = require("../controllers/user/addressController/deleteAddress");
 const { validateNewCartDelivery } = require("../controllers/user/newCartController/validateNewCartDelivery");
+const newOrderinvoicePDF = require("../controllers/user/newOrderController/newOrderinvoice");
 const router = express.Router()
 
 // router.get("/test", (req,res)=>{
@@ -196,7 +197,8 @@ router.get("/coupon", userAuthenticate, getCoupons);
 //------------------------------------------------
 // invoice
 //------------------------------------------------
-router.get('/invoice/:orderId', getInvoicePdf);
+router.get('/invoice/:orderId', newOrderinvoicePDF);
+// router.get('/invoice/:orderId', getInvoicePdf);
 
 //------------------------------------------------
 // delete user

@@ -14,6 +14,7 @@ const formatProduct = (prod) => ({
     price: prod.vendorSellingPrice,
     mrp: prod.mrp,
     offer: calculateOffer(prod.mrp, prod.vendorSellingPrice),
+    isRecommended: prod.isRecommended,
 });
 
 exports.getProductOfShop = catchAsync(async (req, res) => {
@@ -38,7 +39,7 @@ exports.getProductOfShop = catchAsync(async (req, res) => {
         });
     }
 
-    const products = productsRaw.map(formatProduct);
+    const products = productsRaw.sort((a, b) => (b.isRecommended === true) - (a.isRecommended === true)).map(formatProduct);
 
     res.status(200).json({
         success: true,

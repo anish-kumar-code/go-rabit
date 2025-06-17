@@ -50,6 +50,16 @@ export const updateProductStatus = async (id, status) => {
     }
 }
 
+export const updateProductRecommended = async (id, isRecommended) => {
+    try {
+        const response = await axiosInstance.patch(`/api/vendor/copy/product/recommended/${id}`, { isRecommended });
+        message.success('product status update');
+        return response.data.data;
+    } catch (error) {
+        message.error('Error updating product status');
+    }
+}
+
 export const deleteProduct = async (id) => {
     try {
         const response = await axiosInstance.delete(`/api/vendor/copy/product/delete/${id}`)
@@ -67,4 +77,8 @@ export const updateProduct = async (id, data) => {
     } catch (error) {
         message.error('"Product not updated"');
     }
+}
+
+export const toggleProductFlag = async () => {
+   console.log("work")
 }

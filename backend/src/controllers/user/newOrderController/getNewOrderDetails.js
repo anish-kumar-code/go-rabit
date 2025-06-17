@@ -1,4 +1,4 @@
-const Order = require("../../../models/newOrder"); // Use the new model file
+const newOrder = require("../../../models/newOrder");
 const catchAsync = require("../../../utils/catchAsync");
 
 exports.getNewOrderDetails = catchAsync(async (req, res, next) => {
@@ -6,7 +6,7 @@ exports.getNewOrderDetails = catchAsync(async (req, res, next) => {
         const { orderId } = req.params;
 
         // Populate fields as per new schema key names
-        const order = await Order.findById(orderId)
+        const order = await newOrder.findById(orderId)
             .populate("productData.productId") // Note: productId instead of product_id
             .populate("productData.toppings.toppingId") // Populate toppings if needed
             .populate("userId", "name email")

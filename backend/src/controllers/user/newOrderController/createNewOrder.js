@@ -9,15 +9,15 @@ const Address = require('../../../models/address');
 exports.createNewOrder = async (req, res) => {
     try {
         const userId = req.user.id;
-        const { deliveryDate, deliveryTime, paymentMode, deliveryCharges = [], coupon = {} } = req.body;
+        const { deliveryDate, deliveryTime, paymentMode, deliveryCharges = [], coupon = {}, paymentId, paymentStatus } = req.body;
 
         const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found.' });
         }
 
-        const addressId = await Address.find({userId, isDefault: true});
-        if (!addressId || !addressId.length) {
+        const addressId = await Address.findOne({ userId, isDefault: true });
+        if (!addressId) {
             return res.status(400).json({ message: 'Default address not found.' });
         }
 
@@ -72,7 +72,8 @@ exports.createNewOrder = async (req, res) => {
                 packingCharge,
                 finalTotalPrice,
                 serviceType: cart.serviceType,
-                paymentStatus: 'pending',
+                paymentId,
+                paymentStatus,
             });
 
             await order.save();

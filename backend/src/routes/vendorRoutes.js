@@ -58,6 +58,7 @@ const { getAllCoupons } = require("../controllers/vendor/couponController/getAll
 const { updateCoupon } = require("../controllers/vendor/couponController/updateCoupon");
 const { deleteCoupon } = require("../controllers/vendor/couponController/deleteCoupon");
 const { statusNightCafe } = require("../controllers/vendor/shopController/statusNightCafe");
+const { updateCopyProductRecommended } = require("../controllers/vendor/copyProductController/updateCopyProductRecommended");
 
 // router.get("/test", test);
 
@@ -194,6 +195,7 @@ router.get("/copy/product/all", vendorAuthenticate, getAllProductForAssign)
 router.get("/shop/product/:shopId", vendorAuthenticate, getAllProductOfShop)
 router.get("/copy/product/:id", vendorAuthenticate, getCopyProductDetail)
 router.patch("/copy/product/status/:id", vendorAuthenticate, updateCopyProductStatus)
+router.patch("/copy/product/recommended/:id", vendorAuthenticate, updateCopyProductRecommended)
 router.post("/copy/product/bulk/create", vendorAuthenticate, createBulkCopyProduct)
 router.delete("/copy/product/delete/:id", vendorAuthenticate, deleteCopyProduct)
 router.patch("/copy/product/update/:id", vendorAuthenticate, updateCopyProduct)

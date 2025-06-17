@@ -4,7 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router';
 import { getAllProductOfShop, updateProductStatus } from '@services/vendor/apiProduct';
 import { EyeOutlined, PlusOutlined } from '@ant-design/icons';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import { deleteProduct, updateProduct } from '../../../services/vendor/apiProduct';
+import { deleteProduct, updateProduct, updateProductRecommended } from '../../../services/vendor/apiProduct';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 function AllProduct() {
@@ -110,6 +110,15 @@ function AllProduct() {
             key: 'original_price',
             align: "center",
             render: (_, record) => (<>{`₹ ${record.vendorSellingPrice}`}</>)
+        },
+        {
+            title: 'Recommended',
+            dataIndex: 'isRecommended',
+            key: 'isRecommended',
+            align: "center",
+            render: (_, record) => (
+                <Switch defaultChecked={record?.isRecommended} onChange={(checked) => updateProductRecommended(record._id, checked)} />
+            )
         },
         {
             title: 'Status',

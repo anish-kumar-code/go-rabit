@@ -47,7 +47,7 @@ const OrderSchema = new Schema({
         enum: ['cash', 'card', 'upi', 'wallet', 'cod', 'online'],
         required: true
     },
-    paymentStatus: { type: String, enum: ['pending', 'paid', 'failed'], default: 'pending' },
+    paymentStatus: { type: String, enum: ['pending', 'success', 'paid', 'failed'], default: 'pending' },
     paymentId: { type: String, default: null },
     assignedDriver: { type: Schema.Types.ObjectId, ref: 'Driver', default: null },
     razorpayOrderId: { type: String, default: null },
