@@ -1,4 +1,4 @@
-const { default: axios } = require("axios");
+const { axios } = require("axios");
 const Address = require("../../../models/address");
 const newCart = require("../../../models/newCart");
 const Setting = require("../../../models/settings");

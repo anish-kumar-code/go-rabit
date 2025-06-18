@@ -7,8 +7,7 @@ exports.getAllOrder = catchAsync(async (req, res, next) => {
         const vendorId = req.vendor._id;
 
         const orders = await newOrder.find({ vendorId })
-            .populate("productData.productId") // Correct field name
-            .populate("productData.toppings.toppingId") // Populate toppings
+            .populate("productData.productId", "name primary_image") 
             .populate("couponId") // If a coupon was applied
             .populate("addressId") // Full address
             .populate("shopId", "name location packingCharge") // Shop info

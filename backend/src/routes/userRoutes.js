@@ -59,6 +59,7 @@ const { updateAddress } = require("../controllers/user/addressController/updateA
 const { deleteAddress } = require("../controllers/user/addressController/deleteAddress");
 const { validateNewCartDelivery } = require("../controllers/user/newCartController/validateNewCartDelivery");
 const newOrderinvoicePDF = require("../controllers/user/newOrderController/newOrderinvoice");
+const { getNewCartTotal } = require("../controllers/user/newCartController/getNewCartTotal");
 const router = express.Router()
 
 // router.get("/test", (req,res)=>{
@@ -143,6 +144,7 @@ router.post("/newcart", userAuthenticate, createNewCart)
 router.get("/newcart", userAuthenticate, getNewCart)
 router.post("/newcart/quantity", userAuthenticate, updateCartItemQuantity)
 router.post("/newcart/validate-address", userAuthenticate, validateNewCartDelivery)
+router.get("/newcart/total", userAuthenticate, getNewCartTotal);
 router.post("/newcart/remove", userAuthenticate, removeFromNewCart)
 router.get("/newcart/clear", userAuthenticate, clearNewCart)
 // router.delete("/cart/:cartItemId", userAuthenticate, deleteCart)

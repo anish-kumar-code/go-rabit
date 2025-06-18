@@ -1,4 +1,5 @@
 const newCart = require("../../../models/newCart");
+const User = require("../../../models/user");
 
 exports.removeFromNewCart = async (req, res) => {
     try {
@@ -9,7 +10,12 @@ exports.removeFromNewCart = async (req, res) => {
             return res.status(400).json({ message: "shopId is required." });
         }
 
-        const cart = await newCart.findOne({ userId, status: "active" });
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        const cart = await newCart.findOne({ userId, status: "active", serviceType: user.serviceType });
         if (!cart) return res.status(404).json({ message: "Cart not found." });
 
         const shopIndex = cart.shops.findIndex(shop => shop.shopId.equals(shopId));

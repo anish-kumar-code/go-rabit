@@ -1,10 +1,16 @@
 const newCart = require("../../../models/newCart");
+const User = require("../../../models/user");
 
 exports.clearNewCart = async (req, res) => {
     try {
         const userId = req.user.id;
 
-        const cart = await newCart.findOne({ userId, status: "active" });
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        const cart = await newCart.findOne({ userId, status: "active" , serivceType: user.serviceType });
 
         if (!cart) {
             return res.status(404).json({ success: false, message: "No active cart found to clear." });

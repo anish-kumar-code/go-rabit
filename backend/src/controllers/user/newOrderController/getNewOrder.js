@@ -12,17 +12,17 @@ exports.getNewOrder = async (req, res) => {
 
         let filter = {};
 
-        if (type === "today") {
-            filter.deliveryDate = { $gte: today, $lt: tomorrow };
-        } else if (type === "previous") {
-            filter.deliveryDate = { $lt: today };
-        }
-
-        // if (type === "active") {
-        //     filter.orderStatus = { $in: ["pending", "accepted", "preparing", "ready", "out_for_delivery"] };
-        // } else if (type === "completed") {
-        //     filter.orderStatus = { $in: ["delivered", "cancelled"] };
+        // if (type === "today") {
+        //     filter.deliveryDate = { $gte: today, $lt: tomorrow };
+        // } else if (type === "previous") {
+        //     filter.deliveryDate = { $lt: today };
         // }
+
+        if (type === "today") {
+            filter.orderStatus = { $in: ["pending", "accepted", "preparing", "ready", "out_for_delivery"] };
+        } else if (type === "previous") {
+            filter.orderStatus = { $in: ["delivered", "cancelled"] };
+        }
 
         let orders = await newOrder.find(filter)
             .populate("productData.productId", "name primary_image vendorSellingPrice shortDescription")

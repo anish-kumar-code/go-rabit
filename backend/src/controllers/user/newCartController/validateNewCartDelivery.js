@@ -1,6 +1,7 @@
 const Address = require("../../../models/address");
 const newCart = require("../../../models/newCart");
 const Setting = require("../../../models/settings");
+const User = require("../../../models/user");
 const getDistanceAndTime = require("../../../utils/getDistanceAndTime");
 
 exports.validateNewCartDelivery = async (req, res) => {
@@ -18,7 +19,12 @@ exports.validateNewCartDelivery = async (req, res) => {
       return res.status(400).json({ message: "Address not found or has no location" });
     }
 
-    const cart = await newCart.findOne({ userId, status: "active" })
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    const cart = await newCart.findOne({ userId, status: "active", serviceType: user.serviceType })
       .populate("shops.shopId");
 
     if (!cart || cart.shops.length === 0) {

@@ -2,7 +2,6 @@ const PDFDocument = require('pdfkit');
 const fs = require('fs');
 const path = require('path');
 
-
 const generateInvoice = async (order, filePath) => {
     return new Promise((resolve, reject) => {
         const dir = path.dirname(filePath);
@@ -80,8 +79,10 @@ const generateInvoice = async (order, filePath) => {
 
         doc.moveDown(2);
 
-        // 💰 Charges Section
-        doc.fontSize(13).text('Summary & Charges', { underline: true });
+        // 💰 Charges Section (Improved Layout)
+        // 💰 Charges Section (Enhanced Layout)
+        doc.moveDown(2);
+        doc.fontSize(13).fillColor('#000').text('Summary & Charges', 400, doc.y, { align: 'right', underline: true });
         doc.moveDown(0.5);
 
         const charges = [
@@ -92,19 +93,28 @@ const generateInvoice = async (order, filePath) => {
         ];
 
         charges.forEach(c => {
-            doc.fontSize(11).text(`${c.label}:`, { continued: true }).text(` Rs. ${c.value}`, { align: 'right' });
+            const label = c.label.padEnd(20, ' ');
+            const value = `Rs. ${c.value}`;
+            doc.fontSize(11)
+                .text(label, 350, doc.y, { continued: true })
+                .text(value, { align: 'right' });
+            doc.moveDown(0.3);
         });
 
         doc.moveDown(0.5);
-        doc.fontSize(14).fillColor('#000').text(`Final Total: Rs. ${order.finalTotalPrice}`, { align: 'right' });
-        doc.moveDown();
+        doc.fontSize(13).font('Helvetica-Bold')
+            .text('Final Total:', 350, doc.y, { continued: true })
+            .text(`Rs. ${order.finalTotalPrice}`, { align: 'right' });
+
+        doc.font('Helvetica').moveDown();
 
         // 📦 Order Footer
         doc.fontSize(11).fillColor('#333');
-        doc.text(`Payment Mode: ${order.paymentMode?.toUpperCase()}`);
-        doc.text(`Payment Status: ${order.paymentStatus}`);
-        doc.text(`Order Status: ${order.orderStatus}`);
-        doc.text(`Delivery Date: ${new Date(order.deliveryDate).toLocaleString()}`);
+        doc.text(`Payment Mode: ${order.paymentMode?.toUpperCase()}`, 350);
+        doc.text(`Payment Status: ${order.paymentStatus}`, 350);
+        doc.text(`Order Status: ${order.orderStatus}`, 350);
+        doc.text(`Delivery Date: ${new Date(order.deliveryDate).toLocaleString()}`, 350);
+
 
         doc.end();
 
@@ -114,6 +124,7 @@ const generateInvoice = async (order, filePath) => {
 };
 
 module.exports = generateInvoice;
+
 
 
 // const generateInvoice = async (order, filePath) => {
@@ -188,57 +199,6 @@ module.exports = generateInvoice;
 //         doc.text(`Payment Status: ${order.paymentStatus}`);
 //         doc.text(`Order Status: ${order.orderStatus}`);
 //         doc.text(`Delivery Date: ${new Date(order.deliveryDate).toLocaleString()}`);
-//         doc.end();
-
-//         stream.on('finish', () => resolve(filePath));
-//         stream.on('error', reject);
-//     });
-// };
-
-// module.exports = generateInvoice;
-
-
-
-
-
-// const PDFDocument = require('pdfkit');
-// const fs = require('fs');
-// const path = require('path');
-
-// const generateInvoice = async (order, filePath) => {
-//     return new Promise((resolve, reject) => {
-//         const dir = path.dirname(filePath);
-//         if (!fs.existsSync(dir)) {
-//             fs.mkdirSync(dir, { recursive: true });
-//         }
-
-//         const doc = new PDFDocument({ margin: 50 });
-//         const stream = fs.createWriteStream(filePath);
-//         doc.pipe(stream);
-
-//         // ✅ Gorabit Branding
-//         doc.fontSize(22).text('Gorabit', { align: 'center' });
-//         // doc.fontSize(12).text('Empowering Digital Solutions', { align: 'center' });
-//         doc.moveDown();
-//         doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke(); // line separator
-//         doc.moveDown();
-
-//         // 🧾 Invoice Header
-//         doc.fontSize(14).text(`Booking ID: ${order.booking_id}`);
-//         doc.text(`Customer: ${order.userId?.name}`);
-//         doc.text(`Shop: ${order.shopId?.name}`);
-//         doc.text(`Date: ${new Date(order.createdAt).toLocaleDateString()}`);
-//         doc.moveDown();
-
-//         // 📦 Order Summary
-//         doc.fontSize(16).text('Order Summary');
-//         doc.moveDown();
-
-//         doc.fontSize(12).text(`Product: ${order.productData?.product_id?.name}`);
-//         doc.text(`Price: Rs. ${order.productData?.price}`);
-//         doc.text(`Quantity: ${order.productData?.quantity}`);
-//         doc.text(`Total: Rs. ${order.finalTotalPrice}`);
-
 //         doc.end();
 
 //         stream.on('finish', () => resolve(filePath));

@@ -45,49 +45,38 @@ const OrderDetailsModal = ({ selectedOrder, isModalVisible, handleModalClose }) 
                         <Title level={5} className="text-base font-semibold text-gray-700">Product Details</Title>
                         <Divider className="my-3" />
                     </div>
-                    <Row gutter={24}>
-                        <Col span={8}>
-                            <Image
-                                src={`${BASE_URL}/${selectedOrder.productData?.product_id?.primary_image}`}
-                                alt="Product"
-                                className="rounded-lg border border-gray-200"
-                                preview={false}
-                            />
-                            <div className="mt-3 flex space-x-2">
-                                {selectedOrder.productData?.product_id?.gallery_image?.map((img, index) => (
-                                    <Image
-                                        key={index}
-                                        src={`${BASE_URL}/${img}`}
-                                        alt={`Gallery ${index + 1}`}
-                                        width={60}
-                                        height={60}
-                                        className="rounded border border-gray-200"
-                                        preview={false}
-                                    />
-                                ))}
-                            </div>
-                        </Col>
-                        <Col span={16}>
-                            <div className="space-y-3">
-                                <div className="flex justify-between">
-                                    <Text strong className="text-gray-600">Product Name:</Text>
-                                    <Text className="text-gray-800">{selectedOrder.productData?.product_id?.name}</Text>
+                    {selectedOrder.productData.map((product, index) => (
+                        <Row gutter={24} key={index} className="mb-4">
+                            <Col span={8}>
+                                <Image
+                                    src={`${BASE_URL}/${product.productId?.primary_image}`}
+                                    alt="Product"
+                                    className="rounded-lg border border-gray-200"
+                                    preview={false}
+                                />
+                            </Col>
+                            <Col span={16}>
+                                <div className="space-y-3">
+                                    <div className="flex justify-between">
+                                        <Text strong className="text-gray-600">Product Name:</Text>
+                                        <Text className="text-gray-800">{product.productId?.name}</Text>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <Text strong className="text-gray-600">Quantity:</Text>
+                                        <Text className="text-gray-800">{product.quantity}</Text>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <Text strong className="text-gray-600">Unit Price:</Text>
+                                        <Text className="text-gray-800">₹ {product.price}</Text>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <Text strong className="text-gray-600">Final Price:</Text>
+                                        <Text className="text-blue-600 font-semibold">₹ {product.finalPrice}</Text>
+                                    </div>
                                 </div>
-                                <div className="flex justify-between">
-                                    <Text strong className="text-gray-600">Quantity:</Text>
-                                    <Text className="text-gray-800">{selectedOrder.productData?.quantity}</Text>
-                                </div>
-                                <div className="flex justify-between">
-                                    <Text strong className="text-gray-600">Unit Price:</Text>
-                                    <Text className="text-gray-800">₹ {selectedOrder.productData?.price}</Text>
-                                </div>
-                                <div className="flex justify-between">
-                                    <Text strong className="text-gray-600">Final Price:</Text>
-                                    <Text className="text-blue-600 font-semibold">₹ {selectedOrder.productData?.finalPrice}</Text>
-                                </div>
-                            </div>
-                        </Col>
-                    </Row>
+                            </Col>
+                        </Row>
+                    ))}
                 </Card>
 
                 {/* Pricing Summary */}
@@ -175,6 +164,7 @@ const OrderDetailsModal = ({ selectedOrder, isModalVisible, handleModalClose }) 
                     </div>
                     <div className="text-gray-800 leading-relaxed">
                         {selectedOrder.addressId?.address1},<br />
+                        {selectedOrder.addressId?.address2 && `${selectedOrder.addressId.address2},<br />`}
                         {selectedOrder.addressId?.city}, {selectedOrder.addressId?.state}<br />
                         PIN: {selectedOrder.addressId?.pincode}
                     </div>
