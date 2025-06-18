@@ -44,6 +44,7 @@ const OrderTable = ({ searchText, onDelete }) => {
             dataIndex: 'deliveryDate',
             key: 'deliveryDate',
             align: 'center',
+            render: (deliveryDate) => `${convertDate(deliveryDate)}`,
         },
         {
             title: 'Delivery Time',
@@ -66,9 +67,9 @@ const OrderTable = ({ searchText, onDelete }) => {
             render: (status) => (
                 <Tag
                     color={
-                        status === 'Delivered'
+                        status === 'delivered'
                             ? 'green'
-                            : status === 'Confirmed'
+                            : status === 'accepted'
                                 ? 'blue'
                                 : 'orange'
                     }
@@ -85,9 +86,9 @@ const OrderTable = ({ searchText, onDelete }) => {
             render: (status) => (
                 <Tag
                     color={
-                        status === 'Paid'
+                        status == 'paid'
                             ? 'green'
-                            : status === 'Pending'
+                            : status == 'pending'
                                 ? 'orange'
                                 : 'red'
                     }

@@ -10,36 +10,39 @@ exports.getNewCart = async (req, res) => {
   try {
     const userId = req.user.id;
     const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
-    }
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
 
-    const defaultAddress = await Address.findOne({ userId, isDefault: true });
-    if (!defaultAddress) {
-      return res.status(400).json({ success: false, message: "Default address not set" });
-    }
+        const defaultAddress = await Address.findOne({ userId, isDefault: true });
+
+        let destination;
+        if (defaultAddress) {
+            destination = {
+                lat: defaultAddress.location.coordinates[0],
+                long: defaultAddress.location.coordinates[1],
+            };
+        } else if (user.lat && user.long) {
+            destination = {
+                lat: Number(user.lat),
+                long: Number(user.long),
+            };
+        } else {
+            return res.status(400).json({
+                success: false,
+                message: "No delivery location found (default address or user location missing)",
+            });
+        }
 
     const cartDoc = await newCart.findOne({
       userId,
       status: "active",
       serviceType: user.serviceType,
     })
-      .populate({
-        path: "shops.shopId",
-        select: "name address packingCharge lat long",
-      })
-      .populate({
-        path: "shops.vendorId",
-        select: "name",
-      })
-      .populate({
-        path: "shops.items.productId",
-        select: "name price primary_image",
-      })
-      .populate({
-        path: "shops.items.toppings.toppingId",
-        select: "name price",
-      });
+      .populate({path: "shops.shopId",select: "name address packingCharge lat long",})
+      .populate({path: "shops.vendorId",select: "name",})
+      .populate({path: "shops.items.productId",select: "name price primary_image",})
+      .populate({path: "shops.items.toppings.toppingId",select: "name price",});
 
       const setting = await Setting.findById("680f1081aeb857eee4d456ab");
     const apiKey = setting?.googleMapApiKey;
@@ -54,7 +57,7 @@ exports.getNewCart = async (req, res) => {
       });
     }
 
-    console.log(typeof(plateformFee), "plateformFee");
+    // console.log(typeof(plateformFee), "plateformFee");
 
     const cart = cartDoc.toObject();
     const platformFee = plateformFee;
@@ -72,10 +75,10 @@ exports.getNewCart = async (req, res) => {
         long: shop.shopId?.long,
       };
 
-      const destination = {
-        lat: defaultAddress.location.coordinates[0],
-        long: defaultAddress.location.coordinates[1],
-      };
+      // const destination = {
+      //   lat: defaultAddress.location.coordinates[0],
+      //   long: defaultAddress.location.coordinates[1],
+      // };
 
       const { distanceKm, durationText, deliveryCharge } = await getDeliveryCharge(origin, destination, apiKey);
 
@@ -118,7 +121,8 @@ exports.getNewCart = async (req, res) => {
       };
     }));
 
-    const gst = Number(((subtotal + totalPackingCharge + totalDeliveryCharge + platformFee) * 0.18).toFixed(2));
+    // const gst = Number(((subtotal + totalPackingCharge + totalDeliveryCharge + platformFee) * 0.18).toFixed(2));
+    const gst = Math.ceil((subtotal + totalPackingCharge + totalDeliveryCharge + platformFee) * 0.18);
     const grandTotal = subtotal + totalPackingCharge + totalDeliveryCharge + platformFee + gst;
 
     return res.status(200).json({

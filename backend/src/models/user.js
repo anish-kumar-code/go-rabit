@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
     // ✅ New GeoJSON location field
     location: {
         type: { type: String, enum: ['Point'], default: 'Point' },
-        coordinates: { type: [Number], }
+        coordinates: { type: [Number], default: [0,0] } // [longitude, latitude]
     },
 }, {
     timestamps: true

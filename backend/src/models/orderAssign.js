@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const AssignmentSchema = new Schema({
-    orderId: { type: Schema.Types.ObjectId, ref: 'Order', required: true },
+    orderId: { type: Schema.Types.ObjectId, ref: 'newOrder', required: true },
     driverId: { type: Schema.Types.ObjectId, ref: 'Driver', required: true },
     assignedAt: { type: Date, default: Date.now },
     status: {

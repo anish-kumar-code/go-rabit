@@ -3,7 +3,7 @@ import axiosInstance from "../../utils/axiosInstance";
 
 export const getAllOrder = async () => {
     try {
-        const response = await axiosInstance.get(`/api/admin/order?orderStatus=all`);
+        const response = await axiosInstance.get(`/api/admin/neworder?orderStatus=all`);
         // console.log(response)
         return response.data;
     } catch (error) {
@@ -14,7 +14,7 @@ export const getAllOrder = async () => {
 
 export const getOrderDetails = async (id) => {
     try {
-        const response = await axiosInstance.get(`/api/admin/order/${id}`);
+        const response = await axiosInstance.get(`/api/admin/neworder/${id}`);
         // console.log(response)
         return response.data;
     } catch (error) {
@@ -25,7 +25,7 @@ export const getOrderDetails = async (id) => {
 
 export const getAllDrivers = async (id) => {
     try {
-        const response = await axiosInstance.get(`/api/admin/order/${id}/driverlist`)
+        const response = await axiosInstance.get(`/api/admin/neworder/${id}/driverlist`)
         // console.log(response.data.data)
         return response.data;
     } catch (error) {
@@ -36,7 +36,7 @@ export const getAllDrivers = async (id) => {
 
 export const assignDriver = async (id, driverId) => {
     try {
-        const response = await axiosInstance.patch(`/api/admin/order/assign/${id}`, { driverId });
+        const response = await axiosInstance.patch(`/api/admin/neworder/assign/${id}`, { driverId });
         // console.log(response)
         return response.data;
     } catch (error) {

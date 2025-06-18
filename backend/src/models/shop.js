@@ -25,7 +25,7 @@ const shopSchema = new mongoose.Schema({
     status: { type: String, enum: ['active', 'inactive'], default: 'active' },
     location: {
         type: { type: String, enum: ['Point'], default: 'Point' },
-        coordinates: { type: [Number], }
+        coordinates: { type: [Number], } // [longitude, latitude]
     },
     createdAt: { type: Date, default: Date.now }
 })

@@ -8,7 +8,7 @@ const addressSchema = mongoose.Schema({
     city: { type: String, required: true },
     pincode: { type: Number, required: true },
     state: { type: String, required: true },
-    isDefault: { type: Boolean, default: "false" },
+    isDefault: { type: Boolean, default: "true" },
     status: { type: String, enum: ["active", "inactive"], default: "active" },
     location: {
         type: { type: String, enum: ['Point'], default: 'Point' },

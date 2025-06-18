@@ -34,6 +34,14 @@ exports.createNewOrder = async (req, res) => {
             const shop = await Shop.findById(shopId);
             if (!shop) continue;
 
+            const orderCount = await newOrder.countDocuments();
+
+            // Get shop short code or use _id
+            // const shopCode = `ORD${String(shopId).slice(-3).toUpperCase()}`; // Example: SHOP1A2
+            const orderNumber = (orderCount + 1).toString().padStart(4, '0'); // e.g., 0001
+
+            const booking_id = `ORD${orderNumber}`;
+
             const deliveryChargeObj = deliveryCharges.find(d => d.shopId === shopId.toString());
             const deliveryCharge = deliveryChargeObj ? deliveryChargeObj.charge : 0;
 
@@ -54,7 +62,7 @@ exports.createNewOrder = async (req, res) => {
             const finalTotalPrice = afterCouponAmount + deliveryCharge + packingCharge;
 
             const order = new newOrder({
-                booking_id: uuidv4(),
+                booking_id,
                 shopId,
                 vendorId,
                 userId,
@@ -80,8 +88,8 @@ exports.createNewOrder = async (req, res) => {
             orders.push(order);
         }
 
-        // cart.status = 'ordered';
-        // await cart.save();
+        cart.status = 'ordered';
+        await cart.save();
 
         res.status(201).json({
             success: true,

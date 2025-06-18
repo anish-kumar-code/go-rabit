@@ -1,19 +1,20 @@
-const Order = require("../../../models/order");
+const newOrder = require("../../../models/newOrder");
 
-const getAllOrder = async (req, res) => {
+exports.getAllNewOrder = async (req, res) => {
     try {
+
         const orderStatus = req.query.orderStatus;
 
         let ordersRaw;
 
         if (orderStatus === "all") {
-            ordersRaw = await Order.find().populate("productData.product_id").populate("couponId").populate("addressId").populate("shopId", "name location packingCharge").populate("vendorId", "name email").populate("assignedDriver", "name").sort({ createdAt: -1 });
+            ordersRaw = await newOrder.find().populate("productData.productId").populate("couponId").populate("addressId").populate("shopId", "name location packingCharge").populate("vendorId", "name email").populate("assignedDriver", "name").sort({ createdAt: -1 });
         } else {
-            ordersRaw = await Order.find({ orderStatus }).populate("productData.product_id").populate("couponId").populate("addressId").populate("shopId", "name location packingCharge").populate("vendorId", "name email").populate("assignedDriver", "name").sort({ createdAt: -1 });
+            ordersRaw = await newOrder.find({ orderStatus }).populate("productData.productId").populate("couponId").populate("addressId").populate("shopId", "name location packingCharge").populate("vendorId", "name email").populate("assignedDriver", "name").sort({ createdAt: -1 });
         }
 
         if (!ordersRaw || ordersRaw.length === 0) {
-            return res.status(404).json({
+            return res.status(404).json({  
                 success: false,
                 message: 'No orders found'
             });
@@ -40,5 +41,3 @@ const getAllOrder = async (req, res) => {
         return res.status(500).json({ success: false, message: "Server Error", error: error.message });
     }
 };
-
-module.exports = getAllOrder;

@@ -80,6 +80,10 @@ const { toggleBlockStatus } = require("../controllers/admin/driverController/tog
 const { assignProductToExploreSection } = require("../controllers/admin/exploreSectionController/assignProductToExploreSection");
 const { settleVendorWallet } = require("../controllers/admin/walletController/settleVendorWallet");
 const { settleDriverWallet } = require("../controllers/admin/walletController/settleDriverWallert");
+const { getAllNewOrder } = require("../controllers/admin/neworderController/getAllNewOrder");
+const { getNewOrder } = require("../controllers/admin/neworderController/getNewOrder");
+const { getAllDriverForThisNewOrder } = require("../controllers/admin/neworderController/getAllDriverForThisNewOrder");
+const { assignNewDriver } = require("../controllers/admin/neworderController/assignNewDriver");
 const router = express.Router()
 
 router.get("/test/admin", (req, res) => {
@@ -235,6 +239,18 @@ router.get("/order/:orderId", adminAuthenticate, getOrder)
 router.get("/order/:orderId/driverlist", adminAuthenticate, getAllDriverForThisOrder)
 
 router.patch("/order/assign/:orderId", adminAuthenticate, assignedDriver)
+
+
+//------------------------------------------------
+// new order
+//------------------------------------------------
+router.get("/neworder", adminAuthenticate, getAllNewOrder)
+// router.patch("/neworder/status/:orderId", adminAuthenticate, orderComplete)
+router.get("/neworder/:orderId", adminAuthenticate, getNewOrder)
+router.get("/neworder/:orderId/driverlist", adminAuthenticate, getAllDriverForThisNewOrder)
+
+router.patch("/neworder/assign/:orderId", adminAuthenticate, assignNewDriver)
+
 
 
 //------------------------------------------------

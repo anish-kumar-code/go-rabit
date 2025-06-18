@@ -15,7 +15,7 @@ const ProductDataSchema = new Schema({
 }, { _id: false });
 
 const OrderSchema = new Schema({
-    booking_id: { type: String, required: true, unique: true },
+    booking_id: { type: String, required: true },
     shopId: { type: Schema.Types.ObjectId, ref: 'Shop', required: true },
     vendorId: { type: Schema.Types.ObjectId, ref: 'Vendor', required: true },
     productData: { type: [ProductDataSchema], required: true },

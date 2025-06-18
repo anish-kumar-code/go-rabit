@@ -86,7 +86,7 @@ function App() {
           {/* <Route path='store199' element={<Store199 />} /> */}
           <Route path='shop' element={<Shop />} />
           <Route path='order' element={<Order />} />
-          <Route path="order/:id" element={<OrderDetailsPage />} />
+          <Route path="order/:orderId" element={<OrderDetailsPage />} />
           <Route path="request/:type" element={<PaymentRequest />} />
           {/* <Route path="request/driver" element={<PaymentRequest />} /> */}
           <Route path='explore' element={<Explore />} />
