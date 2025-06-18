@@ -1,23 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Card, Modal, InputNumber, Spin, message, Input, Breadcrumb, Form, Space, Tooltip, Switch } from 'antd';
-import { Link, useNavigate, useParams } from 'react-router';
-import { getAllProductOfShop, updateProductStatus } from '@services/vendor/apiProduct';
+import {
+    Table, Button, Card, Modal, InputNumber, Spin, message,
+    Input, Form, Space, Tooltip, Switch
+} from 'antd';
+import { useNavigate, useParams } from 'react-router';
+import {
+    getAllProductOfShop, updateProductStatus, updateProductRecommended,
+    deleteProduct, updateProduct
+} from '@services/vendor/apiProduct';
 import { EyeOutlined, PlusOutlined } from '@ant-design/icons';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import { deleteProduct, updateProduct, updateProductRecommended } from '../../../services/vendor/apiProduct';
+import AddVendorProductModal from './components/AddVendorProductModal';
+import { getAllCategory, getAllSubCategory } from '../../../services/apiCategory';
+import { getAllVendor } from '../../../services/apiVendor';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 function AllProduct() {
     const [products, setProducts] = useState([]);
-    const [vendorDetails, setVendorDetails] = useState()
-    const [shopDetails, setShopDetails] = useState()
+    const [vendorDetails, setVendorDetails] = useState();
+    const [shopDetails, setShopDetails] = useState();
     const [loading, setLoading] = useState(true);
     const [searchText, setSearchText] = useState('');
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [currentProduct, setCurrentProduct] = useState(null);
+    const [categories, setCategories] = useState([]);
+    const [subCategories, setSubCategories] = useState([]);
+    const [brand, setBrand] = useState([]);
+    const [vendor, setVendor] = useState([]);
 
-    const { shopId } = useParams()
-
+    const { shopId } = useParams();
     const navigate = useNavigate();
 
     const fetchProduct = async (shopId) => {
@@ -33,7 +45,6 @@ function AllProduct() {
                 setShopDetails(res.data.shopDetails);
             }
         } catch (error) {
-            // console.log(error)
             message.error('Error fetching product list');
         } finally {
             setLoading(false);
@@ -41,18 +52,38 @@ function AllProduct() {
     };
 
     useEffect(() => {
+        const fetchMetaData = async () => {
+            const categoryList = await getAllCategory();
+            const subCategoryList = await getAllSubCategory();
+            const brandList = await getAllBrand();
+            const vendorList = await getAllVendor();
+            setCategories(categoryList);
+            setSubCategories(subCategoryList);
+            setBrand(brandList);
+            setVendor(vendorList);
+        };
+        fetchMetaData();
+    }, []);
+
+    useEffect(() => {
         fetchProduct(shopId);
     }, []);
 
+    const transformedSubCategories = subCategories.reduce((acc, subCat) => {
+        const catId = subCat.cat_id._id;
+        if (!acc[catId]) acc[catId] = [];
+        acc[catId].push(subCat);
+        return acc;
+    }, {});
+
     const onDelete = async (id) => {
         try {
-            const res = await deleteProduct(id)
-            // console.log(res);
+            await deleteProduct(id);
             fetchProduct(shopId);
         } catch (error) {
-            message.error("Error in deleting product")
+            message.error("Error in deleting product");
         }
-    }
+    };
 
     const onEdit = (product) => {
         setCurrentProduct(product);
@@ -64,7 +95,7 @@ function AllProduct() {
             title: '#',
             key: 'avatar',
             align: "center",
-            render: (_, { primary_image, name }) => (
+            render: (_, { primary_image }) => (
                 <div className='flex items-center gap-3'>
                     <img
                         src={`${BASE_URL}/${primary_image}` || '?'}
@@ -72,7 +103,6 @@ function AllProduct() {
                         style={{ width: 50, height: 50, objectFit: 'cover', borderRadius: 50 }}
                         loading='lazy'
                     />
-                    {/* <b>{name}</b> */}
                 </div>
             )
         },
@@ -80,36 +110,27 @@ function AllProduct() {
             title: 'Name',
             dataIndex: 'name',
             key: 'name',
-            align: "center",
-            render: (_, record) => (<>{record.name}</>)
+            align: "center"
         },
         {
             title: 'Category',
             dataIndex: 'category',
             key: 'category',
             align: "center",
-            render: (_, record) => (<>{record.categoryId?.name}</>)
+            render: (_, record) => record.categoryId?.name
         },
-        // {
-        //     title: 'Sub Category',
-        //     dataIndex: 'subcategory',
-        //     key: 'subcategory',
-        //     align: "center",
-        //     render: (_, record) => (<>{record.subCategoryId?.name}</>)
-        // },
         {
             title: 'Type',
             dataIndex: 'type',
             key: 'type',
-            align: "center",
-            render: (_, record) => (<>{record.type}</>)
+            align: "center"
         },
         {
             title: 'Price',
-            dataIndex: 'original_price',
-            key: 'original_price',
+            dataIndex: 'vendorSellingPrice',
+            key: 'vendorSellingPrice',
             align: "center",
-            render: (_, record) => (<>{`₹ ${record.vendorSellingPrice}`}</>)
+            render: (value) => `₹ ${value}`
         },
         {
             title: 'Recommended',
@@ -147,7 +168,6 @@ function AllProduct() {
 
     return (
         <>
-
             <Card>
                 <div className='flex justify-between mb-4'>
                     <Input.Search
@@ -156,12 +176,20 @@ function AllProduct() {
                         style={{ maxWidth: 300, borderRadius: '6px' }}
                         size="large"
                     />
-                    <div className="flex justify-between items-center mb-6">
+                    <div className="flex gap-3">
                         <Button
                             type="primary"
                             icon={<PlusOutlined />}
                             className="bg-green-600 hover:bg-green-700"
                             onClick={() => navigate(`/vendor/shop/add/${shopId}`)}
+                        >
+                            Chooese Product
+                        </Button>
+                        <Button
+                            type="primary"
+                            icon={<PlusOutlined />}
+                            className="bg-green-600 hover:bg-green-700"
+                            onClick={() => navigate(`/vendor/shop/${shopId}/add-product`)}
                         >
                             Add Product
                         </Button>
@@ -169,7 +197,6 @@ function AllProduct() {
                 </div>
                 <Table
                     columns={columns}
-                    // dataSource={products}
                     dataSource={products.filter(item => item.name.toLowerCase().includes(searchText.toLowerCase()))}
                     rowKey="_id"
                     pagination={products?.length > 10 ? { pageSize: 10 } : false}
@@ -181,12 +208,11 @@ function AllProduct() {
                 open={isEditModalOpen}
                 onCancel={() => setIsEditModalOpen(false)}
                 onOk={async () => {
-                    const data = {
-                        name: currentProduct.name,
-                        vendorSellingPrice: currentProduct.vendorSellingPrice
-                    }
                     try {
-                        await updateProduct(currentProduct._id, data);
+                        await updateProduct(currentProduct._id, {
+                            name: currentProduct.name,
+                            vendorSellingPrice: currentProduct.vendorSellingPrice
+                        });
                         message.success("Product updated successfully");
                         setIsEditModalOpen(false);
                         fetchProduct(shopId);
@@ -199,9 +225,7 @@ function AllProduct() {
                     <Form.Item label="Name">
                         <Input
                             value={currentProduct?.name}
-                            onChange={(e) =>
-                                setCurrentProduct({ ...currentProduct, name: e.target.value })
-                            }
+                            onChange={(e) => setCurrentProduct({ ...currentProduct, name: e.target.value })}
                         />
                     </Form.Item>
                     <Form.Item label="Vendor Selling Price">
@@ -209,16 +233,13 @@ function AllProduct() {
                             className='w-full'
                             min={0}
                             value={currentProduct?.vendorSellingPrice}
-                            onChange={(value) =>
-                                setCurrentProduct({ ...currentProduct, vendorSellingPrice: value })
-                            }
+                            onChange={(value) => setCurrentProduct({ ...currentProduct, vendorSellingPrice: value })}
                         />
                     </Form.Item>
                 </Form>
             </Modal>
-
         </>
-    )
+    );
 }
 
 export default AllProduct;

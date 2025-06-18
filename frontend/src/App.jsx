@@ -57,6 +57,7 @@ import Explore from './pages/admin/Explore/Explore'
 import ExploreSection from './pages/admin/ExploreSection/ExploreSection'
 import Store199 from './pages/admin/Store199/Store199'
 import ExploreSectionTable from './pages/admin/Explore/components/ExploreSectionTable'
+import AddVendorProduct from './pages/vendor/Shop/AddVendorProduct'
 
 function App() {
   return (
@@ -109,6 +110,7 @@ function App() {
           <Route index element={<VendorDashboard />} />
           <Route path='shop' element={<VendorShop />} />
           <Route path='shop/add/:shopId' element={<AddProduct />} />
+          <Route path='shop/:shopId/add-product' element={<AddVendorProduct />} />
           <Route path='shop/:shopId' element={<AllProduct />} />
           <Route path='shop/:shopId/product/:productId' element={<ProductDetailsForVendor />} />
           <Route path='order' element={<VendorOrder />} />

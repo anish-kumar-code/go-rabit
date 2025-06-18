@@ -14,7 +14,7 @@ const VendorProductSchema = new mongoose.Schema({
     productId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product',
-        required: true
+        default: null
     },
     categoryId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -29,7 +29,7 @@ const VendorProductSchema = new mongoose.Schema({
     brandId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Brand',
-        required: true
+        default: null
     },
     serviceId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -37,6 +37,7 @@ const VendorProductSchema = new mongoose.Schema({
     },
     sku: {
         type: String,
+        unique: false,
         default: ""
     },
     type: {

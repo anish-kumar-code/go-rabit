@@ -59,6 +59,7 @@ const { updateCoupon } = require("../controllers/vendor/couponController/updateC
 const { deleteCoupon } = require("../controllers/vendor/couponController/deleteCoupon");
 const { statusNightCafe } = require("../controllers/vendor/shopController/statusNightCafe");
 const { updateCopyProductRecommended } = require("../controllers/vendor/copyProductController/updateCopyProductRecommended");
+const { createVendorProduct } = require("../controllers/vendor/vendorProductController/createVendorProduct");
 
 // router.get("/test", test);
 
@@ -199,6 +200,17 @@ router.patch("/copy/product/recommended/:id", vendorAuthenticate, updateCopyProd
 router.post("/copy/product/bulk/create", vendorAuthenticate, createBulkCopyProduct)
 router.delete("/copy/product/delete/:id", vendorAuthenticate, deleteCopyProduct)
 router.patch("/copy/product/update/:id", vendorAuthenticate, updateCopyProduct)
+
+//------------------------------------------------
+// add product on vendorProduct
+//------------------------------------------------
+router.post("/vendorproduct", vendorAuthenticate, fileUploader("product", [{ name: "primary_image", maxCount: 1 }, { name: "gallery_image", maxCount: 10 }]), createVendorProduct);
+// router.get("/vendorproduct/list", vendorAuthenticate, getAllProduct)
+// router.get("/vendorproduct/list/:id", vendorAuthenticate, getProductViaService)
+// router.get("/vendorproduct/:id", vendorAuthenticate, getProductDetail)
+// router.patch("/vendorproduct/:id", fileUploader("product", [{ name: "primary_image", maxCount: 1 }, { name: "gallery_image", maxCount: 10 }]), updateProduct);
+// router.patch('/vendorproduct/:id/toggle-status', updateProductStatus);
+// router.delete("/vendorproduct/:id", vendorAuthenticate, deleteProduct);
 
 
 //------------------------------------------------

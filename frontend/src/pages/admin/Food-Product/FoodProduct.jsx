@@ -37,9 +37,7 @@ const FoodProduct = () => {
         }
     };
 
-    useEffect(() => {
-        fetchProduct(activeTab);
-    }, [activeTab]);
+    useEffect(() => { fetchProduct(activeTab) }, [activeTab]);
 
     useEffect(() => {
         const fetchMetaData = async () => {

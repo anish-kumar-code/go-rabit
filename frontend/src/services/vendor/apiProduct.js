@@ -1,6 +1,17 @@
 import { message } from "antd";
 import axiosInstance from "@utils/axiosInstance"
 
+
+
+export const addProduct = async (formData) => {
+    const response = await axiosInstance.post("/api/vendor/vendorproduct", formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    });
+    return response.data;
+};
+
 export const getAllProducts = async () => {
     try {
         const response = await axiosInstance.get(`/api/vendor/copy/product/all`);
@@ -80,5 +91,5 @@ export const updateProduct = async (id, data) => {
 }
 
 export const toggleProductFlag = async () => {
-   console.log("work")
+    console.log("work")
 }
