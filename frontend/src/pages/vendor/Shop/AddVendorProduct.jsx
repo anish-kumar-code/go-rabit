@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import {
-    Form, Input, InputNumber, Select, Upload, Button, Row, Col, Avatar, message
-} from 'antd';
+import {Form, Input, InputNumber, Select, Upload, Button, Row, Col, Avatar, message} from 'antd';
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
-import { getAllCategory, getAllSubCategory } from '@services/apiCategory';
 import { addProduct } from '../../../services/vendor/apiProduct';
 import { useParams } from 'react-router';
+import { getAllCategory, getAllSubCategory } from '../../../services/vendor/apiCategory';
 
 const { Option } = Select;
 
@@ -91,7 +89,7 @@ const AddVendorProduct = () => {
 
     return (
         <div className="lg:px-10 px-5 py-6">
-            <h2 className="text-xl font-semibold mb-4">Add New Food Product</h2>
+            <h2 className="text-xl font-semibold mb-4">Add New Product</h2>
             <Form form={form} layout="vertical" onFinish={onFinish}>
                 <Row gutter={16}>
                     {[

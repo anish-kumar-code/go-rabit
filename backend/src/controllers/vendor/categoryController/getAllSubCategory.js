@@ -2,7 +2,7 @@ const Category = require("../../../models/category");
 const catchAsync = require("../../../utils/catchAsync");
 
 exports.getAllSubCategory = catchAsync(async (req, res, next) => {
-    let { cat_id } = req.body;
+    let { cat_id } = req.params;
 
     let allSubCategory;
     if (cat_id) {

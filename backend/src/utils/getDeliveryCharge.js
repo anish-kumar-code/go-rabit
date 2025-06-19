@@ -7,13 +7,7 @@ const deliveryPriceInfo = [
     { range: "20-2000", price: 10 }
 ];
 
-/**
- * Get delivery charge based on shop and user location using Google Maps API
- * @param {Object} origin - { lat, long }
- * @param {Object} destination - { lat, long }
- * @param {String} apiKey - Google Maps API key
- * @returns {Object} { distanceKm, durationText, deliveryCharge }
- */
+
 const getDeliveryCharge = async (origin, destination, apiKey) => {
     try {
         const url = "https://maps.googleapis.com/maps/api/distancematrix/json";
@@ -29,22 +23,15 @@ const getDeliveryCharge = async (origin, destination, apiKey) => {
         if (data.status === "OK" && data.rows[0].elements[0].status === "OK") {
             const element = data.rows[0].elements[0];
             const distanceMeters = element.distance.value;
-            const distanceKm = distanceMeters / 1000;
+            const distanceKm = Math.ceil(distanceMeters / 1000);
             const durationText = element.duration.text;
 
-            let deliveryCharge = 10; // default
-            for (const rangeObj of deliveryPriceInfo) {
-                const [min, max] = rangeObj.range.split("-").map(Number);
-                if (distanceKm >= min && distanceKm < max) {
-                    deliveryCharge = rangeObj.price;
-                    break;
-                }
-            }
+            let deliveryCharge = 10;
 
             return {
-                distanceKm: Number(distanceKm.toFixed(2)),
+                distanceKm,
                 durationText,
-                deliveryCharge
+                deliveryCharge: Math.ceil(distanceKm * deliveryCharge)
             };
         } else {
             return {

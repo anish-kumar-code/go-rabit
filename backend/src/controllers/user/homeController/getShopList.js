@@ -26,6 +26,15 @@ exports.getShopList = catchAsync(async (req, res, next) => {
         const limit = 10;
         const skip = (page - 1) * limit;
 
+        // serviceId - 67ecc79120a93fc0b92a8b19 food // 67ecc79a20a93fc0b92a8b1b grocery
+        let serviceId;
+        if (user.serviceType == "food") {
+            serviceId = "67ecc79120a93fc0b92a8b19"
+        } else {
+            serviceId = "67ecc79a20a93fc0b92a8b1b"
+        }
+
+
         const shopTypeFilter = userType === "veg"
             ? { shopType: { $in: ["veg", "both"] } }
             : {};
@@ -33,7 +42,8 @@ exports.getShopList = catchAsync(async (req, res, next) => {
         // Step 1: Get all nearby shops (no pagination yet)
         const allNearbyShops = await Shop.find({
             status: "active",
-            ...shopTypeFilter
+            ...shopTypeFilter,
+            // serviceId
         });
 
         // Step 2: Get shopIds

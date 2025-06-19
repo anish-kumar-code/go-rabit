@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Category = require("../../../models/category");
 const Toppins = require("../../../models/toppins");
 const User = require("../../../models/user");
@@ -16,9 +17,8 @@ exports.getProductDetail = catchAsync(async (req, res, next) => {
         }
 
         const productId = req.params.productId;
-
+        // test - 6848061dd9a8dae4b3b21c4b
         const product = await VendorProduct.findById({ _id: productId }).populate("shopId");
-        const toppins = await Toppins.find({ status: 'active' })
 
         if (!product) {
             return res.status(404).json({
@@ -26,6 +26,8 @@ exports.getProductDetail = catchAsync(async (req, res, next) => {
                 message: 'No products found'
             });
         }
+
+        const toppins = await Toppins.find({ productId: product._id, status: 'active' })
 
         const vendorId = product.vendorId;
         const vendor = await Vendor.findById({ _id: vendorId });
@@ -53,20 +55,12 @@ exports.getProductDetail = catchAsync(async (req, res, next) => {
             packingCharge: product.shopId.packingCharge,
         }
 
-        // const shopData = {
-        //     _id: product.shopId._id,
-        //     name: product.shopId.name,
-        //     address:`${product.shopId.address}, ${product.shopId.pincode}`,
-        //     lat: product.shopId.lat,
-        //     long: product.shopId.long,
-        // }
-
 
         return res.status(200).json({
             success: true,
             message: 'Product retrieved successfully',
             productData,
-            toppins
+            toppins: toppins || []
         });
 
     } catch (error) {

@@ -189,7 +189,7 @@ router.post("/razorpay-webhook", express.raw({ type: 'application/json' }), veri
 //------------------------------------------------
 // cms
 //------------------------------------------------
-router.get("/cms", userAuthenticate, getCms);
+router.get("/cms", getCms);
 
 //------------------------------------------------
 // coupon

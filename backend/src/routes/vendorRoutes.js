@@ -60,6 +60,9 @@ const { deleteCoupon } = require("../controllers/vendor/couponController/deleteC
 const { statusNightCafe } = require("../controllers/vendor/shopController/statusNightCafe");
 const { updateCopyProductRecommended } = require("../controllers/vendor/copyProductController/updateCopyProductRecommended");
 const { createVendorProduct } = require("../controllers/vendor/vendorProductController/createVendorProduct");
+const { getToppins } = require("../controllers/vendor/toppinsController/getToppins");
+const { deleteToppins } = require("../controllers/vendor/toppinsController/deleteToppins");
+const { updateToppins } = require("../controllers/vendor/toppinsController/updateToppins");
 
 // router.get("/test", test);
 
@@ -129,7 +132,8 @@ router.get("/service/list", getAllService)
 //------------------------------------------------
 router.post("/category/create", vendorAuthenticate, fileUploader("category", [{ name: "image", maxCount: 1 }]), createCategory)
 router.get("/category/list", getAllCategory)
-router.post("/subcategory/list", getAllSubCategory)
+router.get("/subcategory/list/:cat_id", getAllSubCategory)
+router.get("/subcategory/list", getAllSubCategory)
 
 
 //------------------------------------------------
@@ -142,7 +146,10 @@ router.get("/brand/list", getAllBrand)
 //------------------------------------------------
 // toppins
 //------------------------------------------------
-router.post("/toppins/create", vendorAuthenticate, createToppins);
+router.post("/toppins/:productId", vendorAuthenticate, createToppins);
+router.get("/toppins/:productId", vendorAuthenticate, getToppins);
+router.patch("/toppins/:id", vendorAuthenticate, updateToppins);
+router.delete("/toppins/:id", vendorAuthenticate, deleteToppins);
 
 
 //------------------------------------------------

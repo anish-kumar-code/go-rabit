@@ -10,9 +10,8 @@ import {
 } from '@services/vendor/apiProduct';
 import { EyeOutlined, PlusOutlined } from '@ant-design/icons';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import AddVendorProductModal from './components/AddVendorProductModal';
-import { getAllCategory, getAllSubCategory } from '../../../services/apiCategory';
 import { getAllVendor } from '../../../services/apiVendor';
+import { getAllCategory, getAllSubCategory } from '../../../services/vendor/apiCategory';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 function AllProduct() {
@@ -27,7 +26,7 @@ function AllProduct() {
     const [categories, setCategories] = useState([]);
     const [subCategories, setSubCategories] = useState([]);
     const [brand, setBrand] = useState([]);
-    const [vendor, setVendor] = useState([]);
+    // const [vendor, setVendor] = useState([]);
 
     const { shopId } = useParams();
     const navigate = useNavigate();
@@ -55,8 +54,8 @@ function AllProduct() {
         const fetchMetaData = async () => {
             const categoryList = await getAllCategory();
             const subCategoryList = await getAllSubCategory();
-            const brandList = await getAllBrand();
-            const vendorList = await getAllVendor();
+            // const brandList = await getAllBrand();
+            // const vendorList = await getAllVendor();
             setCategories(categoryList);
             setSubCategories(subCategoryList);
             setBrand(brandList);
@@ -156,6 +155,7 @@ function AllProduct() {
             align: "right",
             render: (_, record) => (
                 <Space size="small">
+                    <Tooltip title="Add Toppins"><Button type="primary" icon={<PlusOutlined />} onClick={() => navigate(`/vendor/shop/${shopId}/${record._id}/add-toppins`)} /></Tooltip>
                     <Tooltip title="Details"><Button type="primary" icon={<EyeOutlined />} onClick={() => navigate(`/vendor/shop/${shopId}/product/${record._id}`)} /></Tooltip>
                     <Tooltip title="Edit"><Button type="primary" icon={<FaEdit />} onClick={() => onEdit(record)}></Button></Tooltip>
                     <Tooltip title="Delete"><Button type="primary" danger icon={<FaTrash />} onClick={() => onDelete(record._id)}></Button></Tooltip>

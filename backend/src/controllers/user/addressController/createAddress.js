@@ -5,7 +5,7 @@ const AppError = require("../../../utils/AppError");
 const catchAsync = require("../../../utils/catchAsync");
 
 exports.createAddress = catchAsync(async (req, res, next) => {
-    let { name, address1, address2, city, pincode, state, isDefault = true } = req.body;
+    let { name, address1, address2, city, pincode, state, personName, personMob, isDefault = true } = req.body;
 
     const userId = req.user._id;
     if (!userId) return next(new AppError("User not found", 404));
@@ -20,9 +20,7 @@ exports.createAddress = catchAsync(async (req, res, next) => {
 
     let location = null;
     try {
-        const response = await axios.get(
-            `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(addressStr)}&key=${apiKey}`
-        );
+        const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(addressStr)}&key=${apiKey}`);
         if (response.data.status === "OK" && response.data.results[0]) {
             const { lat, lng } = response.data.results[0].geometry.location;
             location = {
@@ -54,6 +52,8 @@ exports.createAddress = catchAsync(async (req, res, next) => {
         pincode,
         state,
         location,
+        personName,
+        personMob,
         isDefault
     });
 
