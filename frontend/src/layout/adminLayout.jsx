@@ -12,7 +12,7 @@
 
 //     return (
 //         <>
-//         <title>Go Rabbit | Admin Panel</title>
+//         <title>GoRabit | Admin Panel</title>
 //             <Layout>
 //                 <AdminSidebar collapsed={collapsed} setCollapsed={setCollapsed} />
 //                 <Layout>
@@ -107,7 +107,7 @@ function AdminLayout() {
 
     return (
         <>
-            <title>Go Rabbit | Admin Panel</title>
+            <title>GoRabit | Admin Panel</title>
             <Layout style={{ minHeight: '100vh' }}>
                 <AdminSidebar collapsed={collapsed} setCollapsed={setCollapsed} settingData={settingData}/>
                 <Layout>

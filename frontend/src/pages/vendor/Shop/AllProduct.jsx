@@ -157,6 +157,7 @@ function AllProduct() {
                 <Space size="small">
                     <Tooltip title="Add Toppins"><Button type="primary" icon={<PlusOutlined />} onClick={() => navigate(`/vendor/shop/${shopId}/${record._id}/add-toppins`)} /></Tooltip>
                     <Tooltip title="Details"><Button type="primary" icon={<EyeOutlined />} onClick={() => navigate(`/vendor/shop/${shopId}/product/${record._id}`)} /></Tooltip>
+                    <Tooltip title="Images"><Button type="primary" icon={<PlusOutlined />} onClick={() => navigate(`/vendor/shop/${shopId}/product/${record._id}/images`)} /></Tooltip>
                     <Tooltip title="Edit"><Button type="primary" icon={<FaEdit />} onClick={() => onEdit(record)}></Button></Tooltip>
                     <Tooltip title="Delete"><Button type="primary" danger icon={<FaTrash />} onClick={() => onDelete(record._id)}></Button></Tooltip>
                 </Space>

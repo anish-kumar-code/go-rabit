@@ -15,6 +15,10 @@ const updateDriverLocation = require("../controllers/driver/auth/updateLocation"
 const { getDriverWallet } = require("../controllers/driver/wallet/getDriverWallet");
 const { createWalletRequest } = require("../controllers/driver/wallet/createWalletRequest");
 const { getWalletRequest } = require("../controllers/driver/wallet/getWalletRequest");
+const { showDeletePage } = require("../controllers/driver/auth/showDeletePage");
+const { findDriver } = require("../controllers/driver/auth/findDriver");
+const { deleteDriver } = require("../controllers/driver/auth/deleteDriver");
+const { getHomeData } = require("../controllers/driver/home/getHomeData");
 
 
 //------------------------------------------------
@@ -49,6 +53,11 @@ router.patch("/status/:driverId", toggleStatus);
 // router.patch("/block/status/:driverId", toggleBlockStatus);
 router.patch('/update-location/:driverId', updateDriverLocation);
 
+//------------------------------------------------
+// order
+//------------------------------------------------
+router.get("/home", driverAuthenticate, getHomeData)
+
 
 //------------------------------------------------
 // order
@@ -63,6 +72,13 @@ router.patch("/order/:orderId", driverAuthenticate, orderStatusChange)
 router.get("/wallet", driverAuthenticate, getDriverWallet)
 router.post("/wallet/request", driverAuthenticate, createWalletRequest)
 router.get("/wallet/request", driverAuthenticate, getWalletRequest)
+
+//------------------------------------------------
+// delete driver
+//------------------------------------------------
+router.get("/delete-driver", showDeletePage);
+router.post("/find-driver", findDriver);
+router.post("/delete-driver/:id", deleteDriver);
 
 
 

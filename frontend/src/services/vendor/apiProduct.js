@@ -2,7 +2,6 @@ import { message } from "antd";
 import axiosInstance from "@utils/axiosInstance"
 
 
-
 export const addProduct = async (formData) => {
     const response = await axiosInstance.post("/api/vendor/vendorproduct", formData, {
         headers: {
@@ -68,6 +67,20 @@ export const updateProductRecommended = async (id, isRecommended) => {
         return response.data.data;
     } catch (error) {
         message.error('Error updating product status');
+    }
+}
+
+export const updateProductImages = async (productId, formData) => { 
+    console.log(productId)
+    formData.forEach((p,a)=>{
+        console.log(p,a)
+    })
+    try {
+        const res = await axiosInstance.patch(`/api/vendor/product/images/${productId}`, formData);
+        console.log(res)
+    } catch (error) {
+        console.log(error)
+        message.error('Error updating product image');
     }
 }
 

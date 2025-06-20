@@ -5,6 +5,7 @@ const updateDriverLocation = async (req, res) => {
     try {
         const { driverId } = req.params;
         const { latitude, longitude } = req.body;
+        console.log(latitude, longitude)
 
         if (!latitude || !longitude) {
             return res.status(400).json({ success: false, message: "Latitude and Longitude are required" });

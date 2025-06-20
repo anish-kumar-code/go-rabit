@@ -60,6 +60,9 @@ const { deleteAddress } = require("../controllers/user/addressController/deleteA
 const { validateNewCartDelivery } = require("../controllers/user/newCartController/validateNewCartDelivery");
 const newOrderinvoicePDF = require("../controllers/user/newOrderController/newOrderinvoice");
 const { getNewCartTotal } = require("../controllers/user/newCartController/getNewCartTotal");
+const { showDeletePage2 } = require("../controllers/user/authController/showDeletePage2");
+const { findUser } = require("../controllers/user/authController/findUser");
+const { deleteUser2 } = require("../controllers/user/authController/deleteUser2");
 const router = express.Router()
 
 // router.get("/test", (req,res)=>{
@@ -205,8 +208,12 @@ router.get('/invoice/:orderId', newOrderinvoicePDF);
 //------------------------------------------------
 // delete user
 //------------------------------------------------
-router.get("/delete-user/:id", showDeletePage);
-router.post("/delete-user/:id", deleteUser);
+router.get("/delete-user/:id", showDeletePage2);
+// router.post("/delete-user/:id", deleteUser);
+
+router.get("/delete-user", showDeletePage2);
+router.post("/find-user", findUser);
+router.post("/delete-user/:id", deleteUser2);
 
 
 //------------------------------------------------

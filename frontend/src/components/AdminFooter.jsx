@@ -6,7 +6,7 @@ function AdminFooter() {
     return (
         <>
             <Footer style={{ textAlign: 'center' }}>
-                Go Rabbit ©{new Date().getFullYear()} Created by <a href="https://www.teknikoglobal.com/">Tekniko Global</a>
+                GoRabit ©{new Date().getFullYear()} Created by <a href="https://www.teknikoglobal.com/">Tekniko Global</a>
             </Footer>
         </>
     )

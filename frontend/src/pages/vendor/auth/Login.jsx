@@ -34,7 +34,7 @@ function VendorLogin() {
 
     return (
         <>
-            <title>Go Rabbit | Vendor Login</title>
+            <title>GoRabit | Vendor Login</title>
             <div className="flex min-h-screen bg-gray-100 lg:h-screen">
                 {/* Left image */}
                 <div className="hidden lg:flex w-1/2 justify-center items-center bg-gray-200">

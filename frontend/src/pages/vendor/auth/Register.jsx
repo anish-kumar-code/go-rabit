@@ -91,7 +91,7 @@ const Register = () => {
 
     return (
         <>
-            <title>Go Rabbit | Vendor Registration</title>
+            <title>GoRabit | Vendor Registration</title>
             <div className="flex min-h-screen bg-gray-100">
                 {/* Left Side Image */}
                 <div className="hidden lg:flex w-1/2 justify-center items-center bg-white">
@@ -107,8 +107,8 @@ const Register = () => {
                 <div className="flex w-full lg:w-1/2 justify-center items-center px-4 sm:px-6 py-4">
                     <div className="w-full max-w-3xl bg-white shadow-2xl rounded-2xl p-2 sm:p-10">
                         <h2 className="text-3xl font-bold text-center text-green-600 mb-2">Vendor Registration</h2>
-                        <p className="text-sm text-gray-500 text-center mb-8">Go Rabbit Business partner!</p>
-                        {/* <p className="text-sm text-gray-500 text-center mb-8">Become a seller with Go Rabbit!</p> */}
+                        <p className="text-sm text-gray-500 text-center mb-8">GoRabit Business partner!</p>
+                        {/* <p className="text-sm text-gray-500 text-center mb-8">Become a seller with GoRabit!</p> */}
 
                         <Steps
                             current={current}

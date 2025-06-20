@@ -59,6 +59,7 @@ import Store199 from './pages/admin/Store199/Store199'
 import ExploreSectionTable from './pages/admin/Explore/components/ExploreSectionTable'
 import AddVendorProduct from './pages/vendor/Shop/AddVendorProduct'
 import AddVendorProductToppings from './pages/vendor/Shop/AddVendorProductToppins'
+import ProductImages from './pages/vendor/Products/ProductImages'
 
 function App() {
   return (
@@ -115,6 +116,7 @@ function App() {
           <Route path='shop/:shopId/:productId/add-toppins' element={<AddVendorProductToppings />} />
           <Route path='shop/:shopId' element={<AllProduct />} />
           <Route path='shop/:shopId/product/:productId' element={<ProductDetailsForVendor />} />
+          <Route path="shop/:shopId/product/:productId/images" element={<ProductImages />} />
           <Route path='order' element={<VendorOrder />} />
           <Route path='wallet' element={<Wallet />} />
           <Route path='wallet/:shopId' element={<ShopWalletHistory />} />

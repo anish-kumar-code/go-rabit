@@ -36,7 +36,7 @@ function Home() {
 
     return (
         <>
-            <title>Go Rabbit</title>
+            <title>GoRabit</title>
             <div className="font-sans text-gray-800">
                 <Header data={settingData} loading={loading} />
                 <Hero />

@@ -34,7 +34,7 @@ function Login() {
 
     return (
         <>
-            <title>Go Rabbit | Admin Login</title>
+            <title>GoRabit | Admin Login</title>
             <div className="flex min-h-screen bg-gray-100">
                 {/* Left image */}
                 <div className="hidden lg:flex w-1/2 justify-center items-center bg-gray-200">

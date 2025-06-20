@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const banner = require("../../../models/banner");
 const Category = require("../../../models/category");
 const Explore = require("../../../models/explore");
@@ -42,7 +43,7 @@ exports.getSpecialGroceryProduct = catchAsync(async (req, res) => {
         queryFilters.isRecommended = true
     } else if (specialGrocery == "Kitchen") {
         // queryFilters.isKitchen = true
-        queryFilters.isFruitOfTheDay = true
+        queryFilters.categoryId = new mongoose.Types.ObjectId("6854ffe193a2cab5ddcba4cf");
     } else if (specialGrocery == "All") {
         // No additional filters needed for all products
     } else {

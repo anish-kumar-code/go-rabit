@@ -3,6 +3,7 @@ const Address = require("../../../models/address");
 const Setting = require("../../../models/settings");
 const AppError = require("../../../utils/AppError");
 const catchAsync = require("../../../utils/catchAsync");
+const User = require("../../../models/user");
 
 exports.createAddress = catchAsync(async (req, res, next) => {
     let { name, address1, address2, city, pincode, state, personName, personMob, isDefault = true } = req.body;
@@ -25,17 +26,17 @@ exports.createAddress = catchAsync(async (req, res, next) => {
             const { lat, lng } = response.data.results[0].geometry.location;
             location = {
                 type: "Point",
-                coordinates: [lng, lat] // ⚠️ GeoJSON format: [longitude, latitude]
+                coordinates: [lng, lat] // GeoJSON: [long, lat]
             };
         }
     } catch (err) {
         console.error("Google Maps API error:", err);
     }
 
-    // Get user's existing default address
+    // Check if user already has a default address
     const defaultExists = await Address.exists({ userId, isDefault: true });
 
-    // If `isDefault` is passed true, unset all other default addresses
+    // If setting new default address, unset other defaults
     if (isDefault === true || (!defaultExists && isDefault !== false)) {
         await Address.updateMany({ userId }, { isDefault: false });
         isDefault = true;
@@ -43,21 +44,23 @@ exports.createAddress = catchAsync(async (req, res, next) => {
         isDefault = false;
     }
 
-    const address = new Address({
-        userId,
-        name,
-        address1,
-        address2,
-        city,
-        pincode,
-        state,
-        location,
-        personName,
-        personMob,
-        isDefault
-    });
+    const address = new Address({ userId, name, address1, address2, city, pincode, state, location, personName, personMob, isDefault });
 
     await address.save();
+
+    // ✅ Update user's lat/long and location if this address isDefault
+    if (isDefault && location?.coordinates?.length === 2) {
+        const [lng, lat] = location.coordinates;
+
+        await User.findByIdAndUpdate(userId, {
+            lat: lat.toString(),
+            long: lng.toString(),
+            location: {
+                type: "Point",
+                coordinates: [lng, lat]
+            }
+        });
+    }
 
     return res.status(201).json({
         status: true,
@@ -67,12 +70,13 @@ exports.createAddress = catchAsync(async (req, res, next) => {
     });
 });
 
-
+// -----------------------------------------------------
+// create address but not set to user location ( Old code )
+// -----------------------------------------------------
 // exports.createAddress = catchAsync(async (req, res, next) => {
+//     let { name, address1, address2, city, pincode, state, personName, personMob, isDefault = true } = req.body;
 
-//     let { name, address1, address2, city, pincode, state } = req.body;
-
-//     const userId = req.user._id
+//     const userId = req.user._id;
 //     if (!userId) return next(new AppError("User not found", 404));
 //     if (!address1) return next(new AppError("Address 1 is required", 404));
 //     if (!city) return next(new AppError("City is required", 404));
@@ -85,22 +89,43 @@ exports.createAddress = catchAsync(async (req, res, next) => {
 
 //     let location = null;
 //     try {
-//         const response = await axios.get(
-//             `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(addressStr)}&key=${apiKey}`
-//         );
+//         const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(addressStr)}&key=${apiKey}`);
 //         if (response.data.status === "OK" && response.data.results[0]) {
 //             const { lat, lng } = response.data.results[0].geometry.location;
 //             location = {
 //                 type: "Point",
-//                 coordinates: [lat, lng] // GeoJSON uses [latitude, longitude]
+//                 coordinates: [lng, lat] // ⚠️ GeoJSON format: [longitude, latitude]
 //             };
 //         }
 //     } catch (err) {
-//         // Optional: Log error or handle gracefully
 //         console.error("Google Maps API error:", err);
 //     }
 
-//     let address = new Address({ userId, name, address1, address2, city, pincode, state, location })
+//     // Get user's existing default address
+//     const defaultExists = await Address.exists({ userId, isDefault: true });
+
+//     // If `isDefault` is passed true, unset all other default addresses
+//     if (isDefault === true || (!defaultExists && isDefault !== false)) {
+//         await Address.updateMany({ userId }, { isDefault: false });
+//         isDefault = true;
+//     } else {
+//         isDefault = false;
+//     }
+
+//     const address = new Address({
+//         userId,
+//         name,
+//         address1,
+//         address2,
+//         city,
+//         pincode,
+//         state,
+//         location,
+//         personName,
+//         personMob,
+//         isDefault
+//     });
+
 //     await address.save();
 
 //     return res.status(201).json({
@@ -109,5 +134,6 @@ exports.createAddress = catchAsync(async (req, res, next) => {
 //         data: { address },
 //         newAddress: true,
 //     });
+// });
 
-// })
+

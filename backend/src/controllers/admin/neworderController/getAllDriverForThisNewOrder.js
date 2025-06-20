@@ -23,7 +23,7 @@ exports.getAllDriverForThisNewOrder = catchAsync(async (req, res) => {
     const earthRadius = 6378.1;
 
     // Radius in which to find drivers (5 km)
-    const radius = 5 / earthRadius;
+    const radius = 100 / earthRadius;
 
     // Find all active drivers within the specified radius
     // const allDriver = await Driver.find({
@@ -38,30 +38,32 @@ exports.getAllDriverForThisNewOrder = catchAsync(async (req, res) => {
     //     }
     // });
 
-    const allDriver = await Driver.aggregate([
-        {
-            $geoNear: {
-                near: {
-                    type: "Point",
-                    coordinates: deliveryLocation, // [lng, lat]
-                },
-                distanceField: "distanceInMeters",
-                spherical: true,
-                maxDistance: 5000, // 5 km in meters
-                query: {
-                    status: "active"
-                }
-            }
-        },
-        {
-            $project: {
-                name: 1,
-                mobileNo: 1,
-                location: 1,
-                distanceInMeters: 1 / 1000
-            }
-        }
-    ]);
+    // const allDriver = await Driver.aggregate([
+    //     {
+    //         $geoNear: {
+    //             near: {
+    //                 type: "Point",
+    //                 coordinates: deliveryLocation, // [lng, lat]
+    //             },
+    //             distanceField: "distanceInMeters",
+    //             spherical: true,
+    //             maxDistance: 10000, // 10 km in meters
+    //             query: {
+    //                 status: "active"
+    //             }
+    //         }
+    //     },
+    //     {
+    //         $project: {
+    //             name: 1,
+    //             mobileNo: 1,
+    //             location: 1,
+    //             distanceInMeters: 1 / 1000
+    //         }
+    //     }
+    // ]);
+
+    const allDriver = await Driver.find();
 
 
     return res.status(200).json({

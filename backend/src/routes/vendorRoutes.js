@@ -63,6 +63,7 @@ const { createVendorProduct } = require("../controllers/vendor/vendorProductCont
 const { getToppins } = require("../controllers/vendor/toppinsController/getToppins");
 const { deleteToppins } = require("../controllers/vendor/toppinsController/deleteToppins");
 const { updateToppins } = require("../controllers/vendor/toppinsController/updateToppins");
+const { updateProductImages } = require("../controllers/vendor/productController/updateProductImages");
 
 // router.get("/test", test);
 
@@ -192,7 +193,17 @@ router.patch(
     updateProduct
 );
 router.delete("/product/delete/:id", vendorAuthenticate, deleteProduct);
-router.post("/product/delete/bulk", vendorAuthenticate, deleteMultipleProducts)
+router.post("/product/delete/bulk", vendorAuthenticate, deleteMultipleProducts);
+
+router.patch(
+    "/product/images/:id",
+    vendorAuthenticate,
+    fileUploader("product", [
+        { name: "primary_image", maxCount: 1 },
+        { name: "gallery_image", maxCount: 1 },
+    ]),
+    updateProductImages
+);
 
 
 //------------------------------------------------

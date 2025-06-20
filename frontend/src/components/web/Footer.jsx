@@ -21,7 +21,7 @@ function Footer({ data }) {
                                 <span className="text-2xl font-bold text-green-900">GR</span>
                                 <img src="" alt="" />
                             </div>
-                            <h2 className="text-2xl font-bold text-green-300">Go Rabbit</h2>
+                            <h2 className="text-2xl font-bold text-green-300">GoRabit</h2>
                         </div>
                         <p className="text-sm text-green-100 leading-relaxed">
                             Revolutionizing food & grocery commerce through technology and community empowerment.
@@ -148,7 +148,7 @@ function Footer({ data }) {
                     className="flex flex-col md:flex-row justify-between items-center gap-4 text-center"
                 >
                     <div className="text-xs text-green-300">
-                        © {new Date().getFullYear()} Go Rabbit. All rights reserved.
+                        © {new Date().getFullYear()} GoRabit. All rights reserved.
                     </div>
 
                     <div className="flex items-center gap-4">

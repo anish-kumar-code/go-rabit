@@ -10,7 +10,7 @@ const catchAsync = require("../../../utils/catchAsync");
 const formatProduct = (prod) => ({
     _id: prod._id,
     name: prod.name,
-    shopId: prod.shopId._id,
+    shopId: prod.shopId._id || null,
     vendorId: prod.vendorId,
     primary_image: prod.primary_image,
     sellingUnit: prod.sellingUnit,
@@ -27,14 +27,15 @@ exports.getHomeDataGrocery = catchAsync(async (req, res) => {
 
     const queryCommon = { status: "active", serviceId, ...typeFilter };
 
-    const [banners, categories, explore, featuredRaw, seasonalRaw, vegRaw, fruitRaw] = await Promise.all([
+    const [banners, categories, explore, featuredRaw, seasonalRaw, vegRaw, fruitRaw, kitchenRaw] = await Promise.all([
         banner.find({ serviceId }).select("image").sort({ createdAt: -1 }),
         Category.find({ cat_id: null, serviceId }).select("name image").limit(8).sort({ createdAt: -1 }),
-        Explore.find({serviceId}).select("name icon"),
+        Explore.find({ serviceId }).select("name icon"),
         VendorProduct.find({ ...queryCommon, isFeatured: true }).limit(10).populate("shopId", "name lat long"),
         VendorProduct.find({ ...queryCommon, isSeasonal: true }).limit(10).populate("shopId", "name lat long"),
         VendorProduct.find({ ...queryCommon, isVegetableOfTheDay: true }).limit(10).populate("shopId", "name lat long"),
         VendorProduct.find({ ...queryCommon, isFruitOfTheDay: true }).limit(10).populate("shopId", "name lat long"),
+        VendorProduct.find({ categoryId: "6854ffe193a2cab5ddcba4cf" }).limit(5).populate("shopId", "name lat long"),
     ]);
 
     res.status(200).json({
@@ -48,7 +49,7 @@ exports.getHomeDataGrocery = catchAsync(async (req, res) => {
             seasonalProducts: seasonalRaw.map(formatProduct),
             vegetableslProducts: vegRaw.map(formatProduct),
             fruitsProducts: fruitRaw.map(formatProduct),
-            kitchenProducts: fruitRaw.map(formatProduct),
+            kitchenProducts: kitchenRaw.map(formatProduct),
         },
     });
 });
