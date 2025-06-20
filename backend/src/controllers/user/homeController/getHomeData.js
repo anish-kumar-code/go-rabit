@@ -9,6 +9,7 @@ const VendorProduct = require("../../../models/vendorProduct");
 const { calculateOffer } = require("../../../utils/calculateOffer");
 const catchAsync = require("../../../utils/catchAsync");
 const getDistanceAndTime = require("../../../utils/getDistanceAndTime");
+const findNearbyShops = require("../../../utils/findNearbyShops");
 
 
 const formatProduct = async (prod, userCoords, apiKey) => {
@@ -50,23 +51,30 @@ exports.getHomeData = catchAsync(async (req, res) => {
     const typeFilter = user.userType === "veg" ? { type: "veg" } : {};
 
     // ✅ STEP 1: Find nearby shop IDs (within 20km)
-    const nearbyShops = await Shop.aggregate([
-        {
-            $geoNear: {
-                near: {
-                    type: "Point",
-                    coordinates: [77.3773193, 28.6259444],
-                },
-                distanceField: "distance",
-                maxDistance: 100000, // 20km in meters
-                query: { status: "active" , serviceId},
-                spherical: true
-            }
-        },
-        { $project: { _id: 1 } }
-    ]);
-    console.log(nearbyShops)
+    // const nearbyShops = await Shop.aggregate([
+    //     {
+    //         $geoNear: {
+    //             near: {
+    //                 type: "Point",
+    //                 coordinates: [77.3773193, 28.6259444],
+    //             },
+    //             distanceField: "distance",
+    //             maxDistance: 100000, // 20km in meters
+    //             query: { status: "active" , serviceId},
+    //             spherical: true
+    //         }
+    //     },
+    //     { $project: { _id: 1 } }
+    // ]);
+    // console.log(nearbyShops)
 
+    // const shopIdsInRadius = nearbyShops.map(shop => shop._id);
+
+    const shopTypeFilter = user.userType === "veg"
+        ? { shopType: { $in: ["veg", "both"] } }
+        : {};
+
+    const nearbyShops = await findNearbyShops(userCoords, serviceId, 20, shopTypeFilter);
     const shopIdsInRadius = nearbyShops.map(shop => shop._id);
 
     // ✅ STEP 2: Common product query with radius shop filter
